@@ -75,7 +75,7 @@ canvas{
 .presentation_2{
 	background-color: rgba(37, 21, 76, 0.746);
 	order: 2;
-	height: 15vh;
+	/* height: 15vh; */
 	border-radius: 2vh;
 	padding: 1vh;
 	margin-right:2vw;
@@ -101,7 +101,7 @@ canvas{
 	order: 2;
 	border-radius: 2vh;
 	padding: 1vh;
-	height:15vh;
+	/* height:15vh; */
 	margin-right:2vw;
 
 }
@@ -116,21 +116,51 @@ canvas{
 .presentation_3:nth-child(3){
 	grid-column: 2;
 	grid-row: 2;
-	background-color: blue;
+	background-color: rgba(39, 39, 191, 0.716);
 	grid-area: right2;
 }
 
-.blocks_1:first-child
+.blocks_1
 {
-	grid-column: 1;
-	grid-row: 1;
-	grid-area: left;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto;
+	gap: 1vw;
 	height: 20vh;
 	background-color: rgba(37, 21, 76, 0.746);
 	border-radius: 15px;
 	padding: 1vh;
-	
 }
+
+.blocks_1:nth-child(1)
+{
+	grid-column: 1;
+	grid-row: 1; 
+	height: 20vh;
+	border-radius: 15px;
+	object-fit: contain; 
+
+}
+
+.blocks_1:nth-child(2)
+{
+	grid-column: 1;
+	grid-row: 1;
+	display: flex; 
+	align-items: center;
+	justify-content: center;
+	color: white;
+}
+
+/* #minishell_img{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover; 
+	z-index: 1; 
+	border-radius: 15px;
+} */
 
 .blocks_2:first-child
 {
