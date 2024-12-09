@@ -41,13 +41,21 @@ canvas{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	background-color: rgba(132, 31, 183, 0.549);
+	padding : 2vh;
+	MARGIN: 5vh 15vw 3vh 15vw;
+	border-radius: 2vh;
 	align-items: center;
-	margin-bottom: 3vh;
 }
 
 .presentation_1{
-	background-color: green;
+	background-color: rgba(37, 21, 76, 0.746);
 	order: 2;
+	border-radius: 2vh;
+	padding: 1vh;
+	margin-right:2vw;
+
+
 }
 
 .presentation_1:nth-child(2)
@@ -60,14 +68,18 @@ canvas{
 .presentation_1:nth-child(3){
 	grid-column: 2;
 	grid-row: 2;
-	background-color: blue;
+	background-color: rgba(39, 39, 191, 0.716);
 	grid-area: right2;
 }
 
 .presentation_2{
-	background-color: green;
+	background-color: rgba(37, 21, 76, 0.746);
 	order: 2;
-	height: 20vh;
+	height: 15vh;
+	border-radius: 2vh;
+	padding: 1vh;
+	margin-right:2vw;
+
 }
 
 .presentation_2:nth-child(2)
@@ -80,14 +92,18 @@ canvas{
 .presentation_2:nth-child(3){
 	grid-column: 2;
 	grid-row: 2;
-	background-color: blue;
+	background-color: rgba(39, 39, 191, 0.716);
 	grid-area: right2;
 }
 
 .presentation_3{
-	background-color: green;
+	background-color: rgba(37, 21, 76, 0.746);
 	order: 2;
-	height:20vh;
+	border-radius: 2vh;
+	padding: 1vh;
+	height:15vh;
+	margin-right:2vw;
+
 }
 
 .presentation_3:nth-child(2)
@@ -104,27 +120,17 @@ canvas{
 	grid-area: right2;
 }
 
-.blocks{
-	display: grid;
-	background-color: red;
-	grid-template-columns: repeat(auto-fit, minmax(1vw, 1fr));
-	grid-template-rows: repeat(auto-fit, minmax(1vw, 1fr));
-	grid-column: 1;
-	grid-area: left;
-	order: 1;
-
-
-}
-
 .blocks_1:first-child
 {
 	grid-column: 1;
 	grid-row: 1;
 	grid-area: left;
 	height: 20vh;
-	background-color: turquoise;
+	background-color: rgba(37, 21, 76, 0.746);
+	border-radius: 15px;
+	padding: 1vh;
+	
 }
-
 
 .blocks_2:first-child
 {
@@ -132,7 +138,11 @@ canvas{
 	grid-row: 2;
 	grid-area: left;
 	height: 20vh;
-	background-color: yellow;
+	background-color: rgba(37, 21, 76, 0.746);
+	border-radius: 15px;
+	padding: 1vh;
+
+
 }
 
 .blocks_3:first-child
@@ -141,7 +151,10 @@ canvas{
 	grid-row: 3;
 	grid-area: left;
 	height: 20vh;
-	background-color: orange;
+	background-color: rgba(37, 21, 76, 0.746);
+	border-radius: 15px;
+	padding: 1vh;
+
 }
 
 .blocks_container{
@@ -154,6 +167,7 @@ canvas{
 	"left right2";
 	align-content:stretch;
 	grid-auto-columns: 50%;
+	order: 1;
 
 }
 

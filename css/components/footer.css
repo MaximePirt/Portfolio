@@ -8,6 +8,8 @@ footer {
 	padding: 15px;
 	margin-top: 50vh;
 	text-align: center;
+	height: 5vh;
+	border-radius: 1vh;
 }
 footer p {
 	margin: 0;
