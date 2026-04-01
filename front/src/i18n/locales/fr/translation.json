@@ -1,0 +1,17 @@
+{
+  "hero": {
+    "title": "Maxime-Pierrot",
+    "subtitle": "Fullstack Developer",
+    "cta": "XXXXXXXXXX",
+    "tagline": "Passionné par la création de solutions innovantes"
+  },
+  "footer": {
+    "rights": "Tous droits réservés"
+  },
+  "nav": {
+    "home": "Accueil",
+    "contact": "Contact",
+    "back": "Retour",
+    "copy": "Copier"
+  }
+}

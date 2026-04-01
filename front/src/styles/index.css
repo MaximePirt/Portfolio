@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+:root {
+
+	--bg-main: #242e2b;
+	--bg-shell: #242e2b97;
+
+	--primary: #6b785b;
+	--secondary: #242e2b;
+	--accent: #e04500;
+
+	--background: #4d5752;
+
+	--text: #ffffff;
+	--text-light: #989797;
+
+	--border-thick: 2px solid #DDDDDD;
+	--border-thin: 1px solid #DDDDDD;
+
+	--shadow-card: 0px 2px 12px rgba(0, 0, 0, 0.08);
+	--shadow-btn: 0px 1px 4px rgba(0, 0, 0, 0.12);
+
+	--background-img: none;
+	--background-size: none;
+
+
+	--border-thin: 1px solid #000000;
+	--background-img: linear-gradient(45deg, 	--bg-shell: #D8D0C1, 25%, transparent 25%),
+	linear-gradient(-45deg, #e5e 25%, transparent 25%),
+	linear-gradient(45deg, transparent 75%, #D8D0C1 75%),
+	linear-gradient(-45deg, transparent 75%, #e5e 75%);
+	--background-size: 20px 20px;
+}
+
+.header {
+	background-color: var(--primary);
+	border-bottom: var(--border-thin);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+}
+
+.header-nav-link {
+	color: var(--text);
+	font-weight: 500;
+	font-size: 0.95rem;
+	transition: opacity 0.15s ease;
+}
+
+.header-nav-link:hover {
+	opacity: 0.5;
+}
+
+.lang-btn {
+	border: var(--border-thin);
+	color: var(--text);
+	font-size: 0.8rem;
+	font-weight: 500;
+	padding: 4px 10px;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: all 0.15s ease;
+	background: transparent;
+}
+
+.lang-btn:hover {
+	background-color: var(--bg-main);
+}
+
+.lang-btn.active {
+	background-color: var(--primary);
+	color: #FFFFFF;
+	border-color: var(--primary);
+}
+
+/* ── Boutons principaux ── */
+.btn-primary {
+	background-color: var(--primary);
+	color: #FFFFFF;
+	border-radius: 8px;
+	padding: 12px 24px;
+	font-weight: 600;
+	font-size: 0.95rem;
+	box-shadow: var(--shadow-btn);
+	transition: all 0.15s ease;
+	cursor: pointer;
+}
+
+.btn-primary:hover {
+	opacity: 0.85;
+	box-shadow: var(--shadow-card);
+}
+
+.btn-primary:active {
+	transform: scale(0.98);
+}
+
+.nav-card {
+	background-color: var(--bg-shell);
+	border: var(--border-thin);
+	border-radius: 16px;
+	box-shadow: var(--shadow-card);
+	transition: all 0.2s ease;
+	color: var(--text);
+	font-weight: 500;
+}
+
+.nav-card:hover {
+	box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+	transform: translateY(-2px);
+}
+
+.nav-card:active {
+	transform: translateY(0px) scale(0.99);
+}
+
+.footer {
+	background-color: var(--secondary);
+	border-top: var(--border-thin);
+	padding: 20px 0;
+	margin-top: auto;
+	text-align: center;
+}
+
+.footer-link:hover {
+	opacity: 0.5;
+}
+
+.info-card {
+	background-color: var(--bg-main);
+	border: var(--border-thin);
+	border-radius: 12px;
+	padding: 20px;
+	width: 100%;
+	box-shadow: var(--shadow-card);
+	transition: box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.info-card-title {
+	font-size: 0.8rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--text-light);
+	margin-bottom: 12px;
+}
+
+.info-card-divider {
+	border: none;
+	border-top: var(--border-thin);
+	margin: 10px 0;
+}
+
+.info-card:hover {
+	box-shadow: 0 4px 16px oklch(0.2 0.01 80 / 0.10),
+				0 1px 3px  oklch(0.2 0.01 80 / 0.06);
+	transform: translateY(-2px);
+}
