@@ -2,16 +2,15 @@
 
 :root {
 
-	--bg-main: #242e2b;
-	--bg-shell: #242e2b97;
+	--primary: #3d4c46;
+	--secondary: #6c7a75;
+	--accent: #ff7818;
 
-	--primary: #6b785b;
-	--secondary: #242e2b;
-	--accent: #e04500;
-
-	--background: #4d5752;
-
-	--text: #ffffff;
+	--background: #dbdfd8;
+	/* --background-offset: #c8ccc5; */
+	--background-offset: color-mix(in oklab, var(--background), var(--secondary) 10%);
+	
+	--text: #040316;
 	--text-light: #989797;
 
 	--border-thick: 2px solid #DDDDDD;
@@ -32,9 +31,22 @@
 	--background-size: 20px 20px;
 }
 
+[data-theme="dark"] {
+	--primary: #3d4c46;
+	--secondary: #6c7a75;
+	--accent: #ff7818;
+	--background: #1e1e1e;
+	--background-offset: color-mix(in oklab, var(--background), var(--secondary) 10%);
+	--text: #f0f0f0;
+	--text-light: #b0b0b0;
+	--border-thin: 1px solid #333333;
+	--background-img: none;
+	--background-size: none;
+}
+
 .header {
-	background-color: var(--primary);
-	border-bottom: var(--border-thin);
+	background-color: var(--background);
+	/* border-bottom: var(--border-thin); TODO: Remove */
 	backdrop-filter: blur(12px);
 	-webkit-backdrop-filter: blur(12px);
 }
@@ -52,6 +64,7 @@
 
 .lang-btn {
 	border: var(--border-thin);
+	background-color: var(--background-offset);
 	color: var(--text);
 	font-size: 0.8rem;
 	font-weight: 500;
@@ -59,26 +72,23 @@
 	border-radius: 20px;
 	cursor: pointer;
 	transition: all 0.15s ease;
-	background: transparent;
 }
 
 .lang-btn:hover {
-	background-color: var(--bg-main);
+	background-color: var(--background-offset);
 }
 
 .lang-btn.active {
-	background-color: var(--primary);
-	color: #FFFFFF;
+	background-color: var(--secondary);
+	color: var(--text);
 	border-color: var(--primary);
 }
 
 /* ── Boutons principaux ── */
 .btn-primary {
-	background-color: var(--primary);
-	color: #FFFFFF;
+	background-color: var(--background-offset);
+	color: var(--text);
 	border-radius: 8px;
-	padding: 12px 24px;
-	font-weight: 600;
 	font-size: 0.95rem;
 	box-shadow: var(--shadow-btn);
 	transition: all 0.15s ease;
@@ -114,7 +124,7 @@
 }
 
 .footer {
-	background-color: var(--secondary);
+	background-color: var(--background-offset);
 	border-top: var(--border-thin);
 	padding: 20px 0;
 	margin-top: auto;

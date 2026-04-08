@@ -5,11 +5,13 @@ import Footer from './components/layout/Footer'
 import Home from './pages/Home'
 import Contact from './pages/Contact'
 import Infos from './pages/Infos'
+import LanguageSwitcher from './components/ui/LanguageSwitcher'
 
 function App() {
   return (
     <BrowserRouter>
-      {/* <Header /> */}
+      <Header />
+      <LanguageSwitcher />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
