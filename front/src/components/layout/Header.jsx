@@ -29,7 +29,7 @@ function Header() {
 				style={{ boxShadow: 'var(--shadow-btn)' }}>
 				<img src="/logo.png" alt="Logo" className="w-full h-full object-cover" />
 			</Link>
-			<p className="text-sm md:text-lg font-bold truncate  whitespace-nowrap">{t('hero.title')}</p>
+			<p className="text-sm md:text-lg font-bold truncate  whitespace-nowrap">{t('profile.name')}</p>
 		</div>
 
 	</div>

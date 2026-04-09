@@ -1,12 +1,17 @@
 {
   "hero": {
-    "title": "Maxime Pierrot",
-    "subtitle": "Fullstack Developer",
+    "title": "Software Architect",
+    "subtitle": "A fresh perspective on technological challenges, ready to join your team.",
     "cta": "XXXXXXXXXX",
     "tagline": "Passionate about creating innovative solutions"
   },
   "footer": {
     "rights": "All rights reserved"
+  },
+  "profile": {
+    "name": "Maxime Pierrot",
+    "role": "Fullstack Developer",
+    "description": "Passionate about creating innovative solutions"
   },
   "nav": {
     "home": "Home",

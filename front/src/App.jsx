@@ -6,12 +6,14 @@ import Home from './pages/Home'
 import Contact from './pages/Contact'
 import Infos from './pages/Infos'
 import LanguageSwitcher from './components/ui/LanguageSwitcher'
+import HeroSection from './components/ui/HeroSection'
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
       <LanguageSwitcher />
+        <HeroSection />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
