@@ -219,23 +219,75 @@
 
 @media (max-width: 960px) {
 	.banner-content {
-		width: min(100%, 420px);
-		margin: 12rem auto 0;
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-	}
-
-	.banner-portrait {
-		max-width: 300px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.25rem;
+		margin-top: 10rem;
 	}
 
 	.banner-card {
+		position: relative;
+		left: auto;
+		bottom: auto;
+		width: 100%;
+		max-width: 100%;
 		order: 2;
 	}
 
 	.banner-portrait {
+		position: relative;
+		top: auto;
+		right: auto;
+		width: 220px;
+		height: 190px;
 		order: 1;
 	}
 }
+@media (min-width: 768px) and (max-width: 1100px) {
+	.banner-section {
+		min-height: 980px;
+	}
 
+	.banner-content {
+		position: relative;
+		width: min(720px, calc(100% - 4rem));
+		height: 380px;
+		margin: 7rem auto 0;
+		display: block;
+	}
 
+	.banner-card {
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: min(420px, 100%);
+		max-width: 420px;
+		padding: 1.35rem 1.4rem;
+		border-radius: 1.5rem;
+	}
+
+	.banner-card__text {
+		font-size: 1.05rem;
+		line-height: 1.42;
+	}
+
+	.banner-portrait {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 250px;
+		height: 190px;
+	}
+
+	.banner-portrait::before {
+		width: 210px;
+		height: 160px;
+		top: 54%;
+	}
+
+	.banner-portrait__image {
+		width: 205px;
+		transform: translateX(-50%) scale(1.34);
+	}
+}

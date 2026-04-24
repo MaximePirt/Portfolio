@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import BannerBubbles from './BannerBubble'
 import BannerCard from './BannerCard'
-import './banner.css'
+import '../../../styles/banner.css'
 
 function Banner() {
 	const { t } = useTranslation()
