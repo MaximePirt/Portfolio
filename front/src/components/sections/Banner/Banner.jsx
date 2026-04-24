@@ -16,7 +16,7 @@ function Banner() {
 
 	return (
 		<section className="banner-section">
-		<div className="banner-nav-wrapper">
+		<div className="banner-nav-wrapper" style={{ backgroundColor: 'var(--background-offset)' }} >
 			<nav className="banner-nav">
 			{navItems.map((item) => (
 				<a
@@ -36,9 +36,20 @@ function Banner() {
 			<p className="banner-heading__subtitle">{t('hero.tagline')}</p>
 		</div>
 
+			<div className="banner-content" >
+				<BannerCard />
+
+				<div className="banner-portrait">
+					<img
+						src="/character.png"
+						alt="Portrait de Maxime Pierrot"
+						className="banner-portrait__image"
+					/>
+				</div>
+			</div>
 
 		<BannerBubbles />
-		<BannerCard />
+		{/* <BannerCard /> */}
 		</section>
 	)
 }

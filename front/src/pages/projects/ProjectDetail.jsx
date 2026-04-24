@@ -1,10 +1,13 @@
 import ProjectPreview from './ProjectPreview'
+import { useTranslation } from 'react-i18next'
 
 function ProjectDetail({ project }) {
+	const { t } = useTranslation()
+
 	if (!project) {
 		return (
 			<section className="project-detail project-detail--empty">
-				<p>Sélectionne un projet pour afficher son aperçu.</p>
+				<p>{t('projectsSection.empty')}</p>
 			</section>
 		)
 	}
@@ -13,10 +16,13 @@ function ProjectDetail({ project }) {
 		<section className="project-detail" aria-labelledby={`project-title-${project.id}`}>
 			<div className="project-detail__header">
 				<div>
-					<p className="project-detail__label">Projet sélectionné</p>
+					<p className="project-detail__label">
+						{t('projectsSection.selectedProject')}
+					</p>
 					<h3 id={`project-title-${project.id}`} className="project-detail__title">
-						{project.title}
+						{t(project.titleKey)}
 					</h3>
+					<p className="project-detail__meta">{t(project.metaKey)}</p>
 				</div>
 
 				<div className="project-detail__links">
@@ -35,12 +41,16 @@ function ProjectDetail({ project }) {
 
 			<div className="project-detail__top">
 				<div className="project-card-block project-trailer">
-					<p className="project-card-block__label">Preview</p>
+					<p className="project-card-block__label">
+						{t('projectsSection.preview')}
+					</p>
 					<ProjectPreview project={project} />
 				</div>
 
 				<div className="project-card-block project-stack">
-					<p className="project-card-block__label">Stack</p>
+					<p className="project-card-block__label">
+						{t('projectsSection.stack')}
+					</p>
 					<ul className="project-stack__list">
 						{project.stack.map((tech) => (
 							<li key={tech} className="project-stack__chip">
@@ -52,8 +62,12 @@ function ProjectDetail({ project }) {
 			</div>
 
 			<div className="project-card-block project-description">
-				<p className="project-card-block__label">Description</p>
-				<p className="project-description__text">{project.description}</p>
+				<p className="project-card-block__label">
+					{t('projectsSection.description')}
+				</p>
+				<p className="project-description__text">
+					{t(project.descriptionKey)}
+				</p>
 			</div>
 		</section>
 	)

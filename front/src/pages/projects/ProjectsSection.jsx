@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { PROJECTS, PROJECT_FILTERS } from './projects.data'
+import { useTranslation } from 'react-i18next'
 import ProjectsList from './ProjectsList'
 import ProjectDetail from './ProjectDetail'
 import '../../styles/projects.css'
@@ -7,6 +8,7 @@ import '../../styles/projects.css'
 function ProjectsSection() {
 	const [activeFilter, setActiveFilter] = useState('all')
 	const [selectedProjectId, setSelectedProjectId] = useState(PROJECTS[0]?.id ?? null)
+	const { t } = useTranslation()
 
 	const filteredProjects = useMemo(() => {
 		if (activeFilter === 'all') return PROJECTS
@@ -45,7 +47,7 @@ function ProjectsSection() {
 											? PROJECTS
 											: PROJECTS.filter((project) =>
 													project.categories.includes(filter.value)
-											  )
+											)
 
 									if (!nextProjects.some((project) => project.id === selectedProjectId)) {
 										setSelectedProjectId(nextProjects[0]?.id ?? null)
@@ -53,7 +55,7 @@ function ProjectsSection() {
 								}}
 								aria-pressed={isActive}
 							>
-								{filter.label}
+								{t(filter.labelKey)}
 							</button>
 						)
 					})}

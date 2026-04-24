@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import GitHubCalendar from 'github-calendar'
 import FloatingShape from '../../ui/FloatingBubble'
 import 'github-calendar/dist/github-calendar-responsive.css'
@@ -93,6 +94,7 @@ const ACTIVITY_SHAPES = [
 
 
 function GithubActivitySection() {
+	const { t } = useTranslation()
 	const calendarRef = useRef(null)
 	const sectionRef = useRef(null)
 	const clusterRef = useRef(null)
@@ -117,30 +119,28 @@ function GithubActivitySection() {
 		>
 			<div className="github-activity-shell">
 				<header className="github-activity-header">
-					<p className="github-activity-header__eyebrow">GitHub</p>
-					<h2 className="github-activity-header__title">ACTIVITY</h2>
+					<p className="github-activity-header__eyebrow">{t('githubActivity.activity')}</p>
+					<h2 className="github-activity-header__title">{t('githubActivity.title')}</h2>
 					<p className="github-activity-header__subtitle">
-						Une vue rapide de mes contributions récentes.
+						{t('githubActivity.subtitle')}
 					</p>
 				</header>
 
 				<div className="github-heatmap-card">
 					<div ref={calendarRef} className="github-calendar-wrapper">
-						Chargement de la heatmap…
+						{t('githubActivity.loading')}
 					</div>
 				</div>
 
 				<div className="github-activity-note">
-					<p className="github-activity-note__title">À savoir</p>
+					<p className="github-activity-note__title">{t('githubActivity.know')}</p>
 
 					<ul className="github-activity-note__list">
 						<li>
-							L’affichage des commits dépend des règles GitHub liées aux contributions visibles
-							sur le profil, à la visibilité des dépôts et aux paramètres du compte.
+							{t('githubActivity.note1')}
 						</li>
 						<li>
-							Cette section montre donc les contributions reconnues par GitHub, pas
-							forcément tout le travail réalisé localement.
+							{t('githubActivity.note2')}
 						</li>
 					</ul>
 				</div>

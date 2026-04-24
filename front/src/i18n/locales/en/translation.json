@@ -2,7 +2,6 @@
   "hero": {
     "title": "Data and Database Architect",
     "subtitle": "A fresh perspective on technological challenges, ready to join your team.",
-    "cta": "XXXXXXXXXX",
     "tagline": "Passionate about creating innovative solutions"
   },
   "footer": {
@@ -22,5 +21,66 @@
     "contact": "Contact",
     "back": "Back",
     "copy": "Copy"
+  },
+	"filters": {
+		"all": "All",
+		"school42": "42",
+		"frontend": "Frontend",
+		"backend": "Backend",
+		"freelance": "Freelance"
+	},
+	"projects": {
+		"ft_transcendance": {
+			"title": "Ft_Transcendance",
+			"meta": "42 • Full-stack",
+			"description": "Multiplayer web project developed at 42, centered on a quiz, real-time interaction, user management and a complete application micro-service architecture."
+		},
+		"portfolio": {
+			"title": "Portfolio",
+			"meta": "React • UI / UX",
+			"description": "Personal portfolio oriented towards visual experience, reusable components and editorial identity."
+		},
+		"minishell": {
+			"title": "Minishell",
+			"meta": "42 • C / Unix",
+			"description": "Reproduction of a Unix shell with command management, pipes and signals."
+		}
+	},
+  "projectsSection": {
+    "empty": "Select a project to view its preview.",
+    "selectedProject": "Selected Project",
+    "preview": "Preview",
+    "stack": "Stack",
+    "description": "Description"
+  },
+  "githubActivity": {
+    "activity": "Activity",
+    "title": "GitHub Activity",
+    "subtitle": "Here's a snapshot of my recent activity on GitHub, highlighting my contributions, projects, and collaborations.",
+    "noActivity": "No recent activity to display.",
+    "loading": "Loading heatmap…",
+    "know": "To know",
+    "note1": "The display of commits depends on GitHub's rules related to visible contributions on the profile, repository visibility, and account settings.",
+    "note2": "This section therefore shows contributions recognized by GitHub, not necessarily all the work done locally."
+  },
+  "contact": {
+    "contact": "Contact",
+    "title": "Let's talk about your project.",
+    "subtitle": "Interested in collaborating or just want to chat? Feel free to contact me!",
+    "tagline": "I'm open to new opportunities and exciting collaborations.",
+    "text": "Whether you have a project in mind or want to discuss potential collaborations, don't hesitate to contact me. I'm always excited to connect with like-minded professionals and explore new opportunities together.",
+    "mailText": "Send me an email",
+    "linkedinText": "Connect on LinkedIn",
+    "githubText": "View my GitHub profile",
+    "email-label": "Email",
+    "email": "pierrot.maxime.49@icloud.com",
+    "stack-label": "Stack",
+    "availability-label": "Disponibility",
+    "availability": "Open to freelance projects, internships and full-time opportunities",
+    "label-location": "Based in",
+    "location": "Angers, France",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
   }
+
 }

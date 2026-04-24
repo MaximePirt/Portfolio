@@ -3,10 +3,10 @@
 	--projects-bg-mid: color-mix(in oklab, var(--background) 78%, var(--primary) 22%);
 	--projects-bg-bottom: color-mix(in oklab, var(--background) 68%, var(--primary) 32%);
 	--activity-bg: color-mix(in oklab, var(--background) 92%, var(--primary) 8%);
-	--section-fade-size: 180px;
+	--section-fade-size: 130px;
 
 	position: relative;
-	padding: 12rem 1rem 5rem;
+	padding: 12rem 1rem 18rem;
 	background: linear-gradient(
 		180deg,
 		var(--projects-bg-top) 0%,

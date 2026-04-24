@@ -2,7 +2,6 @@
   "hero": {
     "title": "Architecte data & bases de données",
     "subtitle": "Un regard neuf sur les défis technologiques, prêt a rejoindre votre équipe.",
-    "cta": "XXXXXXXXXX",
     "tagline": "Passionné par la création de solutions innovantes"
   },
   "footer": {
@@ -22,5 +21,65 @@
     "contact": "Contact",
     "back": "Retour",
     "copy": "Copier"
+  },
+	"filters": {
+		"all": "Tous",
+		"school42": "42",
+		"frontend": "Frontend",
+		"backend": "Backend",
+		"freelance": "Freelance"
+	},
+	"projects": {
+		"ft_transcendance": {
+			"title": "Ft_Transcendance",
+			"meta": "42 • Full-stack",
+			"description": "Projet web multijoueur réalisé à 42, centré sur un quiz, une interaction temps réel, la gestion utilisateur et une architecture micro-service applicative complète."
+		},
+		"portfolio": {
+			"title": "Portfolio",
+			"meta": "React • UI / UX",
+			"description": "Portfolio personnel orienté expérience visuelle, composants réutilisables et identité plus éditoriale."
+		},
+		"minishell": {
+			"title": "Minishell",
+			"meta": "42 • C / Unix",
+			"description": "Reproduction d’un shell Unix avec gestion des commandes, pipes et signaux."
+		}
+	},
+  "projectsSection": {
+    "empty": "Sélectionne un projet pour afficher son aperçu.",
+    "selectedProject": "Projet sélectionné",
+    "preview": "Preview",
+    "stack": "Stack",
+    "description": "Description"
+  },
+  "githubActivity": {
+    "activity": "Activité",
+    "title": "Activité GitHub",
+    "subtitle": "Voici un aperçu de mon activité récente sur GitHub, mettant en avant mes contributions, projets et collaborations.",
+    "noActivity": "Aucune activité récente à afficher.",
+    "loading": "Chargement de l'activité GitHub...",
+    "know": "À savoir :",
+    "note1": "L’affichage des commits dépend des règles GitHub liées aux contributions visibles sur le profil, à la visibilité des dépôts et aux paramètres du compte.",
+    "note2": "Cette section montre donc les contributions reconnues par GitHub et non l'ensemble du travail réalisé localement."
+  },
+  "contact": {
+    "contact": "Contact",
+    "title": "Parlons de votre projet.",
+    "subtitle": "Intéressé par une collaboration ou simplement envie de discuter ? N'hésitez pas à me contacter !",
+    "tagline": "Je suis ouvert à de nouvelles opportunités et collaborations passionnantes.",
+    "text": "Que vous ayez un projet en tête ou que vous souhaitiez discuter d'éventuelles collaborations, n'hésitez pas à me contacter. Je suis toujours ravie de rencontrer des professionnels qui partagent mes idées et d'explorer ensemble de nouvelles opportunités.",
+    "mailText": "M'écrire par email",
+    "linkedinText": "Me rejoindre sur LinkedIn",
+    "githubText": "Voir mon profil GitHub",
+    "email-label": "Email",
+    "email": "pierrot.maxime.49@icloud.com",
+    "stack-label": "Stack",
+    "availability-label": "Disponibilité",
+    "availability": "Ouvert aux missions freelance et aux projets web sur mesure",
+    "label-location": "Basé à",
+    "location": "Angers, France",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
   }
 }

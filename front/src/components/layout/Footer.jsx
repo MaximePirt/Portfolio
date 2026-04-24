@@ -13,7 +13,7 @@ function Footer() {
 
 		{/* Copyright */}
 		<p className="text-xs text-center" style={{ color: 'var(--text-light)' }}>
-			© {year} {t('hero.name')} — {t('footer.rights')}
+			© {year} {t('profile.name')} — {t('footer.rights')}
 		</p>
 
 		</div>
