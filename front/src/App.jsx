@@ -10,6 +10,8 @@ import HeroSection from './components/ui/HeroSection'
 import Bubble from './components/ui/Bubble'
 import ProjectsSection from './pages/projects/ProjectsSection'
 import GithubActivitySection from './components/sections/GithubActivity/GithubActivitySection'
+import { Analytics } from "@vercel/analytics/react"
+
 
 
 
@@ -30,6 +32,8 @@ function App() {
       <Contact />
 
       <Footer />
+      <Analytics />
+
     </BrowserRouter>
   )
 }
