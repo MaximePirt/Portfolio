@@ -1,22 +1,21 @@
-import { motion, useMotionValue, useSpring } from 'motion/react'
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import Bubble from './Bubble'
+import FloatingShape from './FloatingBubble'
 
+import '../../styles/bubble.css'
 
+const CLUSTER_BASE_SIZE = 520
 
 const SHAPES = [
 	{
 		id: 1,
-		x: 80,
-		y: 2,
-		size: 150,
+		x: 84,
+		y: 14,
+		size: 22,
 		rotate: 0,
 		delay: 0,
-		bg: 'var(--accent)',
-		border: '2px solid var(--primary)',
-		opacity: 0.8,
-		radius: '100%',
-		clipPath: 'none',
+		variant: 'bubble-orange',
 		floatY: 10,
 		floatRotate: 4,
 		repelRadius: 180,
@@ -25,200 +24,157 @@ const SHAPES = [
 	{
 		id: 2,
 		x: 45,
-		y: 5,
-		size: 150,
+		y: 16,
+		size: 20,
 		rotate: 0,
-		delay: 0.4,
-		bg: 'var(--accent)',
-		border: '1px solid var(--primary)',
-		opacity: 0.5,
-		radius: '100%',
-		clipPath: 'none',
-		floatY: 16,
-		floatRotate: 7,
-		repelRadius: 220,
-		repelForce: 90,
+		delay: 0.3,
+		variant: 'bubble-grey',
+		floatY: 12,
+		floatRotate: 5,
+		repelRadius: 180,
+		repelForce: 70,
 	},
 	{
 		id: 3,
 		x: 45,
-		y: 22,
-		size: 150,
+		y: 44,
+		size: 20,
 		rotate: 0,
-		delay: 0.4,
-		bg: 'var(--secondary)',
-		border: '1px solid var(--primary)',
-		opacity: 1,
-		radius: '100%',
-		clipPath: 'none',
-		floatY: 16,
-		floatRotate: 7,
-		repelRadius: 220,
-		repelForce: 90,
+		delay: 0.15,
+		variant: 'bubble-green-light',
+		floatY: 10,
+		floatRotate: 4,
+		repelRadius: 190,
+		repelForce: 75,
 	},
 	{
 		id: 4,
-		x: 55,
-		y: 22,
-		size: 150,
+		x: 66,
+		y: 44,
+		size: 20,
 		rotate: 0,
-		delay: 0.4,
-		bg: 'var(--secondary)',
-		border: '1px solid var(--primary)',
-		opacity: 1,
-		radius: '100%',
-		clipPath: 'none',
-		floatY: 16,
-		floatRotate: 7,
-		repelRadius: 220,
-		repelForce: 90,
+		delay: 0.45,
+		variant: 'bubble-grey',
+		floatY: 10,
+		floatRotate: 4,
+		repelRadius: 190,
+		repelForce: 75,
 	},
 	{
 		id: 5,
-		x: 55,
-		y: 39,
-		size: 150,
+		x: 66,
+		y: 68,
+		size: 20,
 		rotate: 0,
-		delay: 0.4,
-		bg: 'var(--secondary)',
-		border: '1px solid var(--primary)',
-		opacity: 1,
-		radius: '100%',
-		clipPath: 'none',
-		floatY: 16,
-		floatRotate: 7,
-		repelRadius: 220,
-		repelForce: 90,
+		delay: 0.25,
+		variant: 'bubble-green-light',
+		floatY: 10,
+		floatRotate: 4,
+		repelRadius: 190,
+		repelForce: 75,
 	},
 	{
-		id: 5,
-		x: 65,
-		y: 39,
-		size: 150,
+		id: 6,
+		x: 87,
+		y: 68,
+		size: 20,
 		rotate: 0,
-		delay: 0.4,
-		bg: 'var(--secondary)',
-		border: '1px solid var(--primary)',
-		opacity: 1,
-		radius: '100%',
-		clipPath: 'none',
-		floatY: 16,
-		floatRotate: 7,
-		repelRadius: 220,
-		repelForce: 90,
+		delay: 0.55,
+		variant: 'bubble-green-dark',
+		floatY: 10,
+		floatRotate: 4,
+		repelRadius: 190,
+		repelForce: 75,
 	},
 ]
 
-function FloatingShape({ x, y, size, rotate, delay, bg, border, opacity, radius, clipPath, floatY, floatRotate, repelRadius, repelForce, sectionRef }) {
-	const rawX = useMotionValue(0)
-	const rawY = useMotionValue(0)
-	const springX = useSpring(rawX, { stiffness: 90, damping: 16 })
-	const springY = useSpring(rawY, { stiffness: 90, damping: 16 })
 
-	useEffect(() => {
-	const section = sectionRef.current
-	if (!section) return
-
-	const handleMouseMove = (e) => {
-		const rect = section.getBoundingClientRect()
-		const mouseX = e.clientX - rect.left
-		const mouseY = e.clientY - rect.top
-		const shapeCX = (x / 100) * rect.width  + size / 2
-		const shapeCY = (y / 100) * rect.height + size / 2
-		const dx = mouseX - shapeCX
-		const dy = mouseY - shapeCY
-		const dist = Math.sqrt(dx * dx + dy * dy)
-
-		if (dist < repelRadius && dist > 0) {
-		const force = (repelRadius - dist) / repelRadius
-		rawX.set(-(dx / dist) * force * repelForce)
-		rawY.set(-(dy / dist) * force * repelForce)
-		} else {
-		rawX.set(0)
-		rawY.set(0)
-		}
-	}
-
-	section.addEventListener('mousemove', handleMouseMove)
-	return () => section.removeEventListener('mousemove', handleMouseMove)
-	}, [x, y, size, repelRadius, repelForce, sectionRef, rawX, rawY])
-
+function MobileHeroShapes() {
 	return (
-		<motion.div
-			className="absolute hidden md:block"
-			style={{ left: `${x}%`, top: `${y}%` }}
-			animate={{
-				y: [0, -floatY, 0],
-				rotate: [rotate, rotate + floatRotate, rotate],
-			}}
-			transition={{
-				duration: 4 + delay,
-				repeat: Infinity,
-				ease: 'easeInOut',
-				delay,
-			}}
-		>
-			<motion.div
-			style={{
-				width: size,
-				height: size,
-				x: springX,
-				y: springY,
-				backgroundColor: bg,
-				border,
-				opacity,
-				borderRadius: radius,
-				clipPath: clipPath === 'none' ? undefined : clipPath,
-				backdropFilter: 'blur(2px)',
-			}}
+		<div className="absolute inset-0 md:hidden pointer-events-none overflow-hidden">
+			<Bubble
+				variant="bubble-orange"
+				size="clamp(120px, 32vw, 180px)"
+				absolute
+				x="auto"
+				y="12%"
+				style={{ right: '-8%', opacity: 0.22 }}
 			/>
-		</motion.div>
+
+			<Bubble
+				variant="bubble-green-light"
+				size="clamp(90px, 24vw, 140px)"
+				absolute
+				x="auto"
+				y="28%"
+				style={{ right: '18%', opacity: 0.28 }}
+			/>
+
+			<Bubble
+				variant="bubble-grey"
+				size="clamp(110px, 28vw, 160px)"
+				absolute
+				style={{ left: '-10%', bottom: '10%', opacity: 0.16 }}
+			/>
+		</div>
 	)
 }
+
+
+
+
 
 function HeroSection() {
 	const { t } = useTranslation()
 	const sectionRef = useRef(null)
+	const clusterRef = useRef(null)
 
 	return (
 	<section
 		ref={sectionRef}
-		className="relative w-full h-screen overflow-hidden flex items-center justify-start"
+		id="home"
+		className="relative min-h-screen overflow-hidden flex items-center"
 		style={{ backgroundColor: 'var(--background)' }}
 	>
-		{SHAPES.map(shape => (
-		<FloatingShape
-			key={shape.id}
-			x={shape.x}
-			y={shape.y}
-			size={shape.size}
-			rotate={shape.rotate}
-			delay={shape.delay}
-			bg={shape.bg}
-			border={shape.border}
-			opacity={shape.opacity}
-			radius={shape.radius}
-			clipPath={shape.clipPath}
-			floatY={shape.floatY}
-			floatRotate={shape.floatRotate}
-			repelRadius={shape.repelRadius}
-			repelForce={shape.repelForce}
-			sectionRef={sectionRef}
-		/>
-		))}
-
-		<div className="relative z-10 text-left px-6 pl-12 md:pl-20 max-w-md md:max-w-lg">
+		<MobileHeroShapes />
+		<div className="relative z-10 w-full max-w-[92vw] md:max-w-[60vw] px-6 sm:px-10 md:px-16 lg:px-40">
 		<h1
-			className="text-6xl md:text-8xl font-bold mb-4"
-			style={{ color: 'var(--primary)' }}>
+			className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 leading-none "
+			style={{ color: 'var(--primary)' }}
+		>
 			{t('hero.title')}
 		</h1>
+
 		<p
-			className="text-lg md:text-xl"
-			style={{ color: 'var(--text-light)' }}>
+			className="text-base sm:text-lg md:text-xl max-w-[32rem]"
+			style={{ color: 'var(--text-light)' }}
+		>
 			{t('hero.subtitle')}
 		</p>
 		</div>
+
+	<div
+	ref={clusterRef}
+	className="absolute pointer-events-none hidden md:block"
+	style={{
+		'--cluster-size': 'clamp(320px, 42vw, 680px)',
+		width: 'var(--cluster-size)',
+		height: 'var(--cluster-size)',
+		left: '50%',
+		top: '50%',
+		transform: 'translate(-50%, -50%)',
+	}}
+	>
+		{SHAPES.map((shape) => (
+			<FloatingShape
+			key={shape.id}
+			{...shape}
+			sectionRef={sectionRef}
+			clusterRef={clusterRef}
+			/>
+		))}
+	</div>
+
 	</section>
 	)
 }

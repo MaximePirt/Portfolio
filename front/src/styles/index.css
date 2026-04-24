@@ -1,10 +1,16 @@
 @import "tailwindcss";
 
+html {
+	scroll-behavior: smooth;
+}
+
+
 :root {
 
 	--primary: #3d4c46;
 	--secondary: #6c7a75;
 	--accent: #ff7818;
+	--green: #8f9c85;
 
 	--background: #dbdfd8;
 	/* --background-offset: #c8ccc5; */
@@ -29,6 +35,16 @@
 	linear-gradient(45deg, transparent 75%, #D8D0C1 75%),
 	linear-gradient(-45deg, transparent 75%, #e5e 75%);
 	--background-size: 20px 20px;
+
+
+	--bubble-green-dark: color-mix(in oklab, var(--green) 78%, var(--background-offset));
+	--bubble-green-mid: color-mix(in oklab, var(--green) 58%, var(--background-offset));
+	--bubble-green-light: color-mix(in oklab, var(--green) 32%, var(--background-offset));
+	--bubble-grey-green: color-mix(in oklab, var(--green) 48%, var(--background-offset) 52%);
+	--bubble-orange-main: color-mix(in oklab, var(--accent) 78%, #d5a06d);
+	--bubble-orange-dark: color-mix(in oklab, var(--accent) 58%, #6b6258);
+	--bubble-highlight: color-mix(in oklab, white 75%, var(--background));
+
 }
 
 [data-theme="dark"] {

@@ -1,6 +1,6 @@
 {
   "hero": {
-    "title": "Software Architect",
+    "title": "Data and Database Architect",
     "subtitle": "A fresh perspective on technological challenges, ready to join your team.",
     "cta": "XXXXXXXXXX",
     "tagline": "Passionate about creating innovative solutions"
@@ -12,6 +12,10 @@
     "name": "Maxime Pierrot",
     "role": "Fullstack Developer",
     "description": "Passionate about creating innovative solutions"
+  },
+  "banner": {
+    "title": "Welcome to my portfolio",
+    "subtitle": "Passionate about creating modern web solutions, I develop full-stack projects combining polished frontend, backend logic, and clean architecture. Trained at École 42, I am currently building my portfolio, freelance projects, and interactive applications in React and Node.js."
   },
   "nav": {
     "home": "Home",

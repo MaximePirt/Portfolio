@@ -1,0 +1,47 @@
+.bubble-base {
+	border-radius: 9999px;
+	opacity: 0.98;
+	box-shadow: none;
+	flex-shrink: 0;
+}
+
+.bubble-green-dark {
+	background:
+		radial-gradient(ellipse at 26% 24%, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 28%),
+		linear-gradient(135deg, #7f8a84 0%, #73807a 55%, #69746f 100%);
+}
+
+.bubble-green-light {
+	background:
+		radial-gradient(ellipse at 26% 24%, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 28%),
+		linear-gradient(135deg, #b4bcaf 0%, #a7aea1 55%, #9aa194 100%);
+}
+
+.bubble-grey {
+	background:
+		radial-gradient(ellipse at 26% 24%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 28%),
+		linear-gradient(135deg, #a6afaa 0%, #9ba49f 55%, #8f9893 100%);
+}
+
+.bubble-orange {
+	background:
+		radial-gradient(ellipse at 26% 24%, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 28%),
+		linear-gradient(135deg, #ef9a58 0%, #e7904d 55%, #da8746 100%);
+}
+
+/* Utilitaires de layout réutilisables */
+.bubble-absolute {
+	position: absolute;
+	left: 0;
+	top: 0;
+	transform: translate(-50%, -50%);
+}
+
+.bubble-decor-layer {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+
