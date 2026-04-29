@@ -29,7 +29,7 @@ function ContactSection() {
 
 							<a
 								className="contact-button contact-button--ghost"
-								href="www.linkedin.com/in/maxime-pierrot-42479420b"
+								href="https://www.linkedin.com/in/maxime-pierrot-42479420b"
 								target="_blank"
 								rel="noopener noreferrer"
 							>
