@@ -1,5 +1,12 @@
 # Conventions
 
+## Qualité du code (garde-fou n°10)
+- Code propre et modulable, pensé pour être retravaillé : une responsabilité par fichier/fonction, logique pure (sans React ni Node) dans des modules `lib/`, composants d'affichage minces.
+- Style de Maxime : composants `function Nom() {}` + `export default Nom`, tabulations, quotes simples, **pas de point-virgule**, pas de TS, noms explicites en anglais, commentaires courts en français uniquement quand ils expliquent un « pourquoi ».
+- Constantes nommées en `UPPER_SNAKE` en tête de fichier plutôt que des nombres magiques.
+- Points d'extension explicites plutôt que des `if` dispersés (ex. `getProjectActions` pour les boutons d'un projet).
+- Pas de dépendance ajoutée pour ce qui tient en quelques lignes ; pas de code mort ni de conversion de formats abandonnés.
+
 ## Code
 - JS/JSX uniquement (pas de TS). Composants = `function Nom() {}` + `export default Nom`.
 - Indentation : tabulations. Quotes simples majoritaires.
@@ -20,12 +27,16 @@
 
 ## i18n
 - `front/src/i18n/locales/{fr,en}/translation.json`, mêmes clés dans les deux (vérifié par `.claude/hooks/i18n-parity.mjs`).
-- Namespaces existants : `hero`, `footer`, `profile`, `banner`, `nav`, `filters`, `projects`, `projectsSection`, `githubActivity`, `contact`, `github`.
+- Namespaces existants : `hero`, `footer`, `profile`, `banner`, `nav`, `filters`, `origins`, `projects`, `projectsSection`, `githubActivity`, `contact`, `github`.
+- `projects.<id>.{title, summary, description}` surcharge les textes venant de GitHub (optionnel).
 - Langue par défaut et fallback : `fr`. Pas de détection navigateur ni persistance.
 - Utilisation : `const { t } = useTranslation()` puis `t('namespace.cle')`.
 
 ## Assets
-- `front/public/projects/<id>/poster.webp` (cover + poster) et `trailer.webm` (préférer webm, mp4 optionnel).
+- `front/public/projects/<id>/poster.webp` (cover + poster) et `trailer.webm` (préférer webm, mp4 optionnel) ; détectés automatiquement par la synchro. Sans média, une cover de bulles est générée (`ProjectCover`).
+
+## Flags des repos GitHub
+Référence complète (topics, champs de `.github/portfolio.yml`, YAML accepté) : `docs/portfolio-flags.md`. Toute évolution du schéma (`lib/projectSchema.js`, `scripts/lib/buildProject.mjs`) met ce fichier à jour dans le même changement.
 - Images globales : `/logo.png`, `/character.png`.
 
 ## Git

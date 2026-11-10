@@ -3,10 +3,7 @@
 Cocher `[x]` puis supprimer l'entrée au commit suivant quand c'est réglé. Ajouter toute découverte ici.
 
 ## i18n
-- [ ] `ProjectsSection.jsx` : titre « PROJECTS », sous-titre et `aria-label` en dur.
-- [ ] `ProjectsList.jsx` : message vide et `aria-label` en dur (FR).
-- [ ] `ProjectDetail.jsx` : libellés « GitHub » / « Demo » en dur.
-- [ ] `ProjectPreview.jsx` : `alt` utilise `project.title` (inexistant → « Aperçu de undefined »), devrait utiliser `t(project.titleKey)`.
+- [x] Section Projets : textes en dur (titre, sous-titre, aria-labels, état vide, GitHub/Demo) et `alt` de la preview — passés en `t()`.
 - [ ] `Banner.jsx` : libellés de nav en dur (ACCUEIL, PRESENTATION…).
 - [ ] `Contact.jsx` : liste de stack en dur.
 
@@ -14,6 +11,7 @@ Cocher `[x]` puis supprimer l'entrée au commit suivant quand c'est réglé. Ajo
 - [ ] `index.css` : `--background-img` contient une déclaration cassée (`--bg-shell: #D8D0C1` au milieu d'un gradient) ; `--border-thin` défini deux fois.
 - [ ] Variables utilisées mais jamais définies : `--bg-secondary`, `--bg-main`, `--bg-shell`.
 - [ ] Dark mode : `--green` et les `--bubble-*` ne sont pas redéfinis ; le choix n'est pas persisté.
+- [ ] Dark mode section Projets : les cartes (`.project-card-block`, filtres) ont des fonds clairs en dur alors que `--text` devient clair → libellés illisibles (préexistant, `projects.css`).
 
 ## Structure
 - [ ] `Contact` rendu deux fois sur `/contact` (route + section fixe dans `App.jsx`).
@@ -25,8 +23,13 @@ Cocher `[x]` puis supprimer l'entrée au commit suivant quand c'est réglé. Ajo
 
 ## Assets / HTML
 - [ ] `/favicon.svg` référencé dans `index.html` mais absent de `public/`.
-- [ ] `trailer.mp4` de ft_transcendance référencé mais absent.
+- [x] `trailer.mp4` de ft_transcendance référencé mais absent — seuls les fichiers existants sont référencés désormais.
 - [ ] `index.html` : `lang="en"` alors que la langue par défaut est le français ; pas de meta description.
+
+## Projets / synchro GitHub
+- [ ] `Get_next_line` porte encore un front matter dans son README (format abandonné) et pas de topic `portfolio` : il n'apparaît pas tant que le topic n'est pas ajouté.
+- [ ] `ft_transcendance` reste dans `projects.manual.js` en attendant son topic `portfolio`.
+- [ ] L'Action de synchro n'a pas encore tourné (à lancer via « Run workflow » après push).
 
 ## Déploiement
 - [ ] `nginx/entrypoint.sh` : fallback certificat auto-signé marqué TODO.

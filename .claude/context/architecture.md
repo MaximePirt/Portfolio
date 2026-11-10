@@ -12,6 +12,9 @@ front/
 ├── public/
 │   ├── logo.png, character.png
 │   └── projects/<id>/poster.webp, trailer.webm
+├── scripts/
+│   ├── sync-projects.mjs      # repos GitHub marqués → src/pages/projects/projects.generated.json (--check : valide sans écrire)
+│   └── lib/                   # github.mjs (API + raw), parseYaml.mjs (sous-ensemble YAML), buildProject.mjs (topics/yml → projet)
 └── src/
     ├── main.jsx               # importe i18n + index.css, monte <App/> en StrictMode
     ├── App.jsx                # BrowserRouter + ordre des sections (voir plus bas)
@@ -40,8 +43,15 @@ front/
     │   ├── Infos.jsx          # route "/infos", page quasi vide
     │   ├── Presentation.jsx   # NON importé (exporte une fonction nommée Home)
     │   └── projects/
-    │       ├── projects.data.js     # PROJECT_FILTERS + PROJECTS
+    │       ├── projects.generated.json # écrit par scripts/sync-projects.mjs (ne pas éditer à la main)
+    │       ├── projects.manual.js   # projets hors GitHub (ft_transcendance tant qu'il n'a pas le topic)
+    │       ├── projects.data.js     # fusion généré + manuel → PROJECTS triés ; réexporte PROJECT_FILTERS
+    │       ├── lib/                 # pur JS partagé front/script : projectSchema, projectFilters, projectText, projectActions, generatedCover
+    │       ├── useProjectText.js    # hook getText(project, 'title'|'summary'|'description')
     │       ├── ProjectsSection.jsx  # id="project", filtres + liste + détail — styles/projects.css
+    │       ├── ProjectFilters.jsx   # pills de filtre avec compteur (seulement les filtres non vides)
+    │       ├── ProjectStatusBadge.jsx # badge « En cours »
+    │       ├── ProjectCover.jsx     # cover de bulles générée quand il n'y a ni image ni vidéo
     │       ├── ProjectsList.jsx     # pills (titleKey/metaKey), état vide en dur
     │       ├── ProjectDetail.jsx    # header, liens GitHub/Demo, preview, stack (chips), description
     │       └── ProjectPreview.jsx   # image coverSrc, vidéo webm/mp4 jouée au survol
@@ -57,12 +67,15 @@ Seul le bloc `<Routes>` dépend de l'URL ; le reste est toujours rendu.
 ## Ancres de navigation
 `#home` (HeroSection), `#presentation` (aucune cible actuellement), `#project` (ProjectsSection), `#activity` (GithubActivity), `#contact` (Contact).
 
-## Données projets (`projects.data.js`)
-- `PROJECT_FILTERS` : `{ value, labelKey }` — valeurs `all | 42 | frontend | backend | freelance`, libellés sous `filters.*`.
-- `PROJECTS[]` : `{ id, titleKey, metaKey, descriptionKey, categories[], stack[], coverSrc, previewType: 'video', previewWebm, previewMp4, poster, github, demo }`.
-- Clés i18n : `projects.<id_snake>.{title, meta, description}` (ex. id `ft-transcendance` → clés `projects.ft_transcendance.*`).
-- Actif : `ft-transcendance`. Commentés : `portfolio`, `minishell` (textes déjà traduits).
-- `ProjectsSection` filtre par `categories.includes(filter)` et resélectionne le premier projet si la sélection sort du filtre.
+## Données projets
+- Source : repos GitHub `MaximePirt` avec le topic `portfolio` (et/ou `.github/portfolio.yml`) → `scripts/sync-projects.mjs` → `projects.generated.json` `{ version, projects }`. Action `.github/workflows/sync-projects.yml` : quotidienne + manuelle + `repository_dispatch: sync-projects`, commit sur `main` si le JSON change. Règles : `docs/portfolio-flags.md`.
+- Forme canonique (`lib/projectSchema.js`, `normalizeProject`) : `{ id, repo, title, summary{fr,en}, description{fr,en}, status, origin, domains[], stack[], links{github,demo}, media{cover,webm,mp4}, featured, order, createdAt, run }`. `run` est réservé au futur lancement des projets (non lu par l'UI). `SCHEMA_VERSION` à incrémenter si la forme change.
+- Fusion (`projects.data.js`) : `MANUAL_PROJECTS` puis généré (le généré gagne à id égal), tri `compareProjects` (featured → order → date de création).
+- Filtres (`lib/projectFilters.js`) : `all`, origines `42 | personal | freelance`, domaines `frontend | backend | systems | devops | data` ; un projet matche par `origin` ou `domains`. Libellés `filters.*`, origines `origins.*`.
+- Textes (`lib/projectText.js`) : clé `projects.<id>.<field>` si elle existe, sinon texte du projet (langue courante → fr → en) ; `summary` vide → « origine • 2 technos ».
+- Liste : 6 projets puis « Voir plus » (+6) ; desktop : hauteur calée sur le détail avec défilement interne ; mobile : filtres sur une ligne défilante.
+- Preview : image + vidéo au survol ; vidéo seule → première frame ; rien → `ProjectCover`.
+- Actions du détail (`lib/projectActions.js`) : GitHub, Démo — point d'extension pour un futur « Lancer ».
 
 ## Bulles
 - Variants CSS : `bubble-orange`, `bubble-grey`, `bubble-green-light`, `bubble-green-dark` (bubble.css, couleurs `--bubble-*` d'index.css).

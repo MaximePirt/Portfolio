@@ -1,0 +1,47 @@
+# Syncs the Projects section with the flagged GitHub repos (see docs/portfolio-flags.md).
+# Commits front/src/pages/projects/projects.generated.json to main when it changes → Vercel redeploys.
+name: Sync GitHub projects
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [sync-projects]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-projects
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      OUTPUT_FILE: front/src/pages/projects/projects.generated.json
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sync projects
+        run: node front/scripts/sync-projects.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Commits and pushes the generated file only when its content changed, so no empty commits.
+      - name: Commit changes
+        run: |
+          if git diff --quiet -- "$OUTPUT_FILE"; then
+            echo "Aucun changement de projets."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$OUTPUT_FILE"
+          git commit -m 'chore: sync github projects'
+          git push

@@ -1,35 +1,49 @@
 import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import ProjectCover from './ProjectCover'
 
-function ProjectPreview({ project }) {
+// Without a cover, the #t fragment shows the video's first frame as the preview.
+const FIRST_FRAME = '#t=0.1'
+
+function ProjectPreview({ project, title }) {
 	const [isHovered, setIsHovered] = useState(false)
 	const videoRef = useRef(null)
+	const { t } = useTranslation()
 
-	const hasVideoPreview =
-		project.previewType === 'video' &&
-		(project.previewWebm || project.previewMp4)
+	const { cover, webm, mp4 } = project.media
+	const hasVideo = Boolean(webm || mp4)
+
+	if (!cover && !hasVideo) {
+		return (
+			<div className="project-preview">
+				<ProjectCover project={project} title={title} />
+			</div>
+		)
+	}
+
+	const isVideoVisible = hasVideo && (isHovered || !cover)
+	const videoSuffix = cover ? '' : FIRST_FRAME
 
 	const handleMouseEnter = async () => {
 		setIsHovered(true)
+		if (!videoRef.current) return
 
-		if (hasVideoPreview && videoRef.current) {
-			try {
-				videoRef.current.currentTime = 0
-				await videoRef.current.play()
-			} catch (error) {
-				if (import.meta.env.DEV) {
-					console.debug('Preview video autoplay prevented:', error)
-				}
+		try {
+			videoRef.current.currentTime = 0
+			await videoRef.current.play()
+		} catch (error) {
+			if (import.meta.env.DEV) {
+				console.debug('Preview video autoplay prevented:', error)
 			}
 		}
 	}
 
 	const handleMouseLeave = () => {
 		setIsHovered(false)
+		if (!videoRef.current) return
 
-		if (hasVideoPreview && videoRef.current) {
-			videoRef.current.pause()
-			videoRef.current.currentTime = 0
-		}
+		videoRef.current.pause()
+		videoRef.current.currentTime = 0
 	}
 
 	return (
@@ -38,32 +52,31 @@ function ProjectPreview({ project }) {
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>
-			<img
-				src={project.coverSrc}
-				alt={`Aperçu de ${project.title}`}
-				className={`project-preview__media project-preview__image ${
-					isHovered && hasVideoPreview ? 'is-hidden' : 'is-visible'
-				}`}
-			/>
+			{cover && (
+				<img
+					src={cover}
+					alt={t('projectsSection.previewAlt', { title })}
+					className={`project-preview__media project-preview__image ${
+						isVideoVisible ? 'is-hidden' : 'is-visible'
+					}`}
+				/>
+			)}
 
-			{hasVideoPreview && (
+			{hasVideo && (
 				<video
 					ref={videoRef}
 					className={`project-preview__media project-preview__video ${
-						isHovered ? 'is-visible' : 'is-hidden'
+						isVideoVisible ? 'is-visible' : 'is-hidden'
 					}`}
 					muted
 					playsInline
 					loop
 					preload="metadata"
-					poster={project.poster || project.coverSrc}
+					poster={cover || undefined}
+					aria-label={t('projectsSection.previewAlt', { title })}
 				>
-					{project.previewWebm && (
-						<source src={project.previewWebm} type="video/webm" />
-					)}
-					{project.previewMp4 && (
-						<source src={project.previewMp4} type="video/mp4" />
-					)}
+					{webm && <source src={`${webm}${videoSuffix}`} type="video/webm" />}
+					{mp4 && <source src={`${mp4}${videoSuffix}`} type="video/mp4" />}
 				</video>
 			)}
 		</div>

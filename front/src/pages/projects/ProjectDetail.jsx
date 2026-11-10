@@ -1,8 +1,12 @@
-import ProjectPreview from './ProjectPreview'
 import { useTranslation } from 'react-i18next'
+import { getProjectActions } from './lib/projectActions.js'
+import useProjectText from './useProjectText'
+import ProjectPreview from './ProjectPreview'
+import ProjectStatusBadge from './ProjectStatusBadge'
 
 function ProjectDetail({ project }) {
 	const { t } = useTranslation()
+	const getText = useProjectText()
 
 	if (!project) {
 		return (
@@ -12,30 +16,29 @@ function ProjectDetail({ project }) {
 		)
 	}
 
+	const title = getText(project, 'title')
+	const description = getText(project, 'description')
+
 	return (
 		<section className="project-detail" aria-labelledby={`project-title-${project.id}`}>
 			<div className="project-detail__header">
 				<div>
 					<p className="project-detail__label">
 						{t('projectsSection.selectedProject')}
+						<ProjectStatusBadge status={project.status} />
 					</p>
 					<h3 id={`project-title-${project.id}`} className="project-detail__title">
-						{t(project.titleKey)}
+						{title}
 					</h3>
-					<p className="project-detail__meta">{t(project.metaKey)}</p>
+					<p className="project-detail__meta">{getText(project, 'summary')}</p>
 				</div>
 
 				<div className="project-detail__links">
-					{project.github && (
-						<a href={project.github} target="_blank" rel="noreferrer noopener">
-							GitHub
+					{getProjectActions(project).map((action) => (
+						<a key={action.id} href={action.href} target="_blank" rel="noreferrer noopener">
+							{t(action.labelKey)}
 						</a>
-					)}
-					{project.demo && (
-						<a href={project.demo} target="_blank" rel="noreferrer noopener">
-							Demo
-						</a>
-					)}
+					))}
 				</div>
 			</div>
 
@@ -44,7 +47,7 @@ function ProjectDetail({ project }) {
 					<p className="project-card-block__label">
 						{t('projectsSection.preview')}
 					</p>
-					<ProjectPreview project={project} />
+					<ProjectPreview project={project} title={title} />
 				</div>
 
 				<div className="project-card-block project-stack">
@@ -61,14 +64,14 @@ function ProjectDetail({ project }) {
 				</div>
 			</div>
 
-			<div className="project-card-block project-description">
-				<p className="project-card-block__label">
-					{t('projectsSection.description')}
-				</p>
-				<p className="project-description__text">
-					{t(project.descriptionKey)}
-				</p>
-			</div>
+			{description && (
+				<div className="project-card-block project-description">
+					<p className="project-card-block__label">
+						{t('projectsSection.description')}
+					</p>
+					<p className="project-description__text">{description}</p>
+				</div>
+			)}
 		</section>
 	)
 }

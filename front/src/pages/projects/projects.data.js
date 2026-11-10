@@ -1,55 +1,14 @@
-export const PROJECT_FILTERS = [
-	{ value: 'all', labelKey: 'filters.all' },
-	{ value: '42', labelKey: 'filters.school42' },
-	{ value: 'frontend', labelKey: 'filters.frontend' },
-	{ value: 'backend', labelKey: 'filters.backend' },
-	{ value: 'freelance', labelKey: 'filters.freelance' },
-]
+import generated from './projects.generated.json'
+import { MANUAL_PROJECTS } from './projects.manual'
+import { compareProjects, normalizeProject } from './lib/projectSchema.js'
 
-export const PROJECTS = [
-	{
-		id: 'ft-transcendance',
-		titleKey: 'projects.ft_transcendance.title',
-		metaKey: 'projects.ft_transcendance.meta',
-		descriptionKey: 'projects.ft_transcendance.description',
-		categories: ['42', 'frontend', 'backend'],
-		stack: ['React', 'TypeScript', 'Fastify', 'SQLite', 'Docker', 'Hashicorp Vault'],
-		coverSrc: '/projects/ft_transcendance/poster.webp',
-		previewType: 'video',
-		previewWebm: '/projects/ft_transcendance/trailer.webm',
-		previewMp4: '/projects/ft_transcendance/trailer.mp4',
-		poster: '/projects/ft_transcendance/poster.webp',
-		github: 'https://github.com/MaximePirt/Ft_Transcendance',
-		demo: '',
-	},
-	// {
-	// 	id: 'portfolio',
-	// 	titleKey: 'projects.portfolio.title',
-	// 	metaKey: 'projects.portfolio.meta',
-	// 	descriptionKey: 'projects.portfolio.description',
-	// 	categories: ['frontend'],
-	// 	stack: ['React', 'Vite', 'i18next', 'CSS'],
-	// 	coverSrc: '/projects/portfolio/cover.webp',
-	// 	previewType: 'video',
-	// 	previewWebm: '/projects/portfolio/trailer.webm',
-	// 	previewMp4: '',
-	// 	poster: '/projects/portfolio/cover.webp',
-	// 	github: '',
-	// 	demo: '',
-	// },
-	// {
-	// 	id: 'minishell',
-	// 	titleKey: 'projects.minishell.title',
-	// 	metaKey: 'projects.minishell.meta',
-	// 	descriptionKey: 'projects.minishell.description',
-	// 	categories: ['42', 'backend'],
-	// 	stack: ['C', 'Unix', 'Parsing'],
-	// 	coverSrc: '/projects/minishell/poster.webp',
-	// 	previewType: 'video',
-	// 	previewWebm: '/projects/minishell/trailer.webm',
-	// 	previewMp4: '',
-	// 	poster: '/projects/minishell/poster.webp',
-	// 	github: '',
-	// 	demo: '',
-	// },
-]
+export { PROJECT_FILTERS } from './lib/projectFilters.js'
+
+function mergeProjects(generatedProjects, manualProjects) {
+	const projectsById = new Map(manualProjects.map((project) => [project.id, project]))
+	generatedProjects.forEach((project) => projectsById.set(project.id, project))
+
+	return [...projectsById.values()].map(normalizeProject).sort(compareProjects)
+}
+
+export const PROJECTS = mergeProjects(generated.projects, MANUAL_PROJECTS)

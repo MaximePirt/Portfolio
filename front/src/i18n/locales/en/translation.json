@@ -1,96 +1,118 @@
 {
-  "hero": {
-    "title": "Data and Database Architect",
-    "subtitle": "A fresh perspective on technological challenges, ready to join your team.",
-    "tagline": "Passionate about creating innovative solutions"
-  },
-  "footer": {
-    "rights": "All rights reserved"
-  },
-  "profile": {
-    "name": "Maxime Pierrot",
-    "role": "Fullstack Developer",
-    "description": "Passionate about creating innovative solutions"
-  },
-  "banner": {
-    "title": "Welcome to my portfolio",
-    "subtitle": "Passionate about creating modern web solutions, I develop full-stack projects combining polished frontend, backend logic, and clean architecture. Trained at École 42, I am currently building my portfolio, freelance projects, and interactive applications in React and Node.js."
-  },
-  "nav": {
-    "home": "Home",
-    "contact": "Contact",
-    "back": "Back",
-    "copy": "Copy"
-  },
+	"hero": {
+		"title": "Data and Database Architect",
+		"subtitle": "A fresh perspective on technological challenges, ready to join your team.",
+		"tagline": "Passionate about creating innovative solutions"
+	},
+	"footer": {
+		"rights": "All rights reserved"
+	},
+	"profile": {
+		"name": "Maxime Pierrot",
+		"role": "Fullstack Developer",
+		"description": "Passionate about creating innovative solutions"
+	},
+	"banner": {
+		"title": "Welcome to my portfolio",
+		"subtitle": "Passionate about creating modern web solutions, I develop full-stack projects combining polished frontend, backend logic, and clean architecture. Trained at École 42, I am currently building my portfolio, freelance projects, and interactive applications in React and Node.js."
+	},
+	"nav": {
+		"home": "Home",
+		"contact": "Contact",
+		"back": "Back",
+		"copy": "Copy"
+	},
 	"filters": {
 		"all": "All",
 		"school42": "42",
 		"frontend": "Frontend",
 		"backend": "Backend",
+		"freelance": "Freelance",
+		"personal": "Personal",
+		"systems": "Systems",
+		"devops": "DevOps",
+		"data": "Data"
+	},
+	"origins": {
+		"42": "42",
+		"personal": "Personal",
 		"freelance": "Freelance"
 	},
 	"projects": {
 		"ft_transcendance": {
 			"title": "Ft_Transcendance",
-			"meta": "42 • Full-stack",
+			"summary": "42 • Full-stack",
 			"description": "Multiplayer web project developed at 42, centered on a quiz, real-time interaction, user management and a complete application micro-service architecture."
 		},
 		"portfolio": {
 			"title": "Portfolio",
-			"meta": "React • UI / UX",
+			"summary": "React • UI / UX",
 			"description": "Personal portfolio oriented towards visual experience, reusable components and editorial identity."
 		},
 		"minishell": {
 			"title": "Minishell",
-			"meta": "42 • C / Unix",
+			"summary": "42 • C / Unix",
 			"description": "Reproduction of a Unix shell with command management, pipes and signals."
 		}
 	},
-  "projectsSection": {
-    "empty": "Select a project to view its preview.",
-    "selectedProject": "Selected Project",
-    "preview": "Preview",
-    "stack": "Stack",
-    "description": "Description"
-  },
-  "githubActivity": {
-    "activity": "Activity",
-    "title": "GitHub Activity",
-    "subtitle": "Here's a snapshot of my recent activity on GitHub, highlighting my contributions, projects, and collaborations.",
-    "noActivity": "No recent activity to display.",
-    "loading": "Loading GitHub activity…",
-    "know": "Good to know:",
-    "note1": "The display of commits depends on GitHub's rules related to visible contributions on the profile, repository visibility, and account settings.",
-    "note2": "This section therefore shows contributions recognized by GitHub, not necessarily all the work done locally.",
-    "error": "The activity can't be loaded right now. It is still visible on my GitHub profile.",
-    "statContributions": "Contributions (12 months)",
-    "statActiveDays": "Active days",
-    "statStreak": "Best streak (days)",
-    "less": "Less",
-    "more": "More",
-    "tooltipCount_zero": "No contributions",
-    "tooltipCount_one": "{{formattedCount}} contribution",
-    "tooltipCount_other": "{{formattedCount}} contributions",
-    "graphLabel": "GitHub contribution graph: {{formattedCount}} contributions over the last 12 months."
-  },
-  "contact": {
-    "contact": "Contact",
-    "title": "Let's talk about your project.",
-    "subtitle": "Interested in collaborating or just want to chat? Feel free to contact me!",
-    "tagline": "I'm open to new opportunities and exciting collaborations.",
-    "text": "Whether you have a project in mind or want to discuss potential collaborations, don't hesitate to contact me. I'm always excited to connect with like-minded professionals and explore new opportunities together.",
-    "mailText": "Send me an email",
-    "linkedinText": "Connect on LinkedIn",
-    "githubText": "View my GitHub profile",
-    "email-label": "Email",
-    "email": "pierrot.maxime.49@icloud.com",
-    "stack-label": "Stack",
-    "availability-label": "Disponibility",
-    "availability": "Open to freelance projects, internships and full-time opportunities",
-    "label-location": "Based in",
-    "location": "Angers, France",
-    "linkedin": "LinkedIn",
-    "github": "GitHub"
-  }
-
+	"projectsSection": {
+		"empty": "Select a project to view its preview.",
+		"selectedProject": "Selected Project",
+		"preview": "Preview",
+		"stack": "Stack",
+		"description": "Description",
+		"title": "PROJECTS",
+		"subtitle": "A selection of my technical, school and freelance projects.",
+		"filtersLabel": "Project filters",
+		"listLabel": "Project list",
+		"emptyList": "No project in this category yet.",
+		"showMore": "Show more ({{count}})",
+		"previewAlt": "Preview of {{title}}",
+		"status": {
+			"inProgress": "In progress"
+		},
+		"actions": {
+			"github": "GitHub",
+			"demo": "Demo"
+		}
+	},
+	"githubActivity": {
+		"activity": "Activity",
+		"title": "GitHub Activity",
+		"subtitle": "Here's a snapshot of my recent activity on GitHub, highlighting my contributions, projects, and collaborations.",
+		"noActivity": "No recent activity to display.",
+		"loading": "Loading GitHub activity…",
+		"know": "Good to know:",
+		"note1": "The display of commits depends on GitHub's rules related to visible contributions on the profile, repository visibility, and account settings.",
+		"note2": "This section therefore shows contributions recognized by GitHub, not necessarily all the work done locally.",
+		"error": "The activity can't be loaded right now. It is still visible on my GitHub profile.",
+		"statContributions": "Contributions (12 months)",
+		"statActiveDays": "Active days",
+		"statStreak": "Best streak (days)",
+		"less": "Less",
+		"more": "More",
+		"tooltipCount_zero": "No contributions",
+		"tooltipCount_one": "{{formattedCount}} contribution",
+		"tooltipCount_other": "{{formattedCount}} contributions",
+		"graphLabel": "GitHub contribution graph: {{formattedCount}} contributions over the last 12 months."
+	},
+	"contact": {
+		"contact": "Contact",
+		"title": "Let's talk about your project.",
+		"subtitle": "Interested in collaborating or just want to chat? Feel free to contact me!",
+		"tagline": "I'm open to new opportunities and exciting collaborations.",
+		"text": "Whether you have a project in mind or want to discuss potential collaborations, don't hesitate to contact me. I'm always excited to connect with like-minded professionals and explore new opportunities together.",
+		"mailText": "Send me an email",
+		"linkedinText": "Connect on LinkedIn",
+		"githubText": "View my GitHub profile",
+		"email-label": "Email",
+		"email": "pierrot.maxime.49@icloud.com",
+		"stack-label": "Stack",
+		"availability-label": "Disponibility",
+		"availability": "Open to freelance projects, internships and full-time opportunities",
+		"label-location": "Based in",
+		"location": "Angers, France",
+		"linkedin": "LinkedIn",
+		"github": "GitHub"
+	}
 }

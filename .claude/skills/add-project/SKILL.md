@@ -1,22 +1,27 @@
 ---
 name: add-project
-description: Ajouter (ou réactiver) un projet dans la section Projets du portfolio — données, traductions fr/en, médias et vérifications. À utiliser quand l'utilisateur veut afficher un nouveau projet ou en modifier un.
+description: Ajouter (ou réactiver/modifier) un projet dans la section Projets du portfolio — marquage du repo GitHub (topic portfolio, .github/portfolio.yml), synchro, médias, surcharges de textes et vérifications. À utiliser quand l'utilisateur veut afficher un nouveau projet ou en modifier un.
 ---
 
 # Ajouter un projet
 
-Contexte utile : `.claude/context/architecture.md` (section « Données projets »). Ne pas relire tout `front/src`.
+Les projets viennent des repos GitHub marqués. Référence complète des flags : `docs/portfolio-flags.md`. Données et rendu : `.claude/context/architecture.md` (section « Données projets »). Ne pas relire tout `front/src`.
 
-## Infos à obtenir (demander ce qui manque)
-- `id` en kebab-case (ex. `cub3d`), titre, méta courte (ex. « 42 • C / Graphisme »), description FR **et** EN.
-- Catégories parmi `42 | frontend | backend | freelance` (une nouvelle catégorie = ajouter un filtre, voir étape 4).
-- Stack (liste de technos), lien GitHub, lien démo (optionnels).
-- Médias : `poster.webp` (obligatoire), `trailer.webm` (optionnel).
+## Cas 1 — le projet a un repo GitHub public (cas normal)
+1. **Marquer le repo** (action sur un autre repo : demander l'accord avant) : topics `portfolio` + origine (`42`/`personal`/`freelance`) + domaines, selon `docs/portfolio-flags.md`. Créer `.github/portfolio.yml` seulement si des textes FR/EN ou réglages précis sont utiles. Ne jamais toucher au README pour ça.
+2. **Médias** (optionnels) : `front/public/projects/<id>/poster.webp` (16:10) et `trailer.webm`, `<id>` = nom du repo en minuscules. Détectés automatiquement. Sans média, une cover générée s'affiche. Ne jamais supprimer d'asset existant.
+3. **Synchro** : `npm --prefix front run sync:projects -- --check` puis `npm --prefix front run sync:projects`. Vérifier le diff de `projects.generated.json` (ne jamais l'éditer à la main).
+4. **Textes plus fins (optionnel)** : ajouter `projects.<id>.{title, summary, description}` dans `fr/translation.json` ET `en/translation.json` — ils l'emportent sur le yml.
+5. Si le projet était dans `projects.manual.js`, le retirer une fois qu'il sort de la synchro (le généré gagne de toute façon à id égal).
 
-## Étapes
-1. **Données** — `front/src/pages/projects/projects.data.js` : ajouter un objet dans `PROJECTS` au même format que `ft-transcendance`. Clés i18n en snake_case : `projects.<id_snake>.title|meta|description`. Si le projet est commenté (portfolio, minishell), le décommenter plutôt que dupliquer. Mettre `previewMp4: ''` si pas de mp4.
-2. **Traductions** — ajouter `projects.<id_snake>` dans `fr/translation.json` ET `en/translation.json` (même structure).
-3. **Médias** — vérifier que `front/public/projects/<id_snake_ou_dossier>/poster.webp` existe (et `trailer.webm` si référencé). Ne pas inventer de fichier : si absent, le signaler.
-4. **Nouvelle catégorie ?** — ajouter `{ value, labelKey: 'filters.<cle>' }` dans `PROJECT_FILTERS` + clés `filters.<cle>` fr/en.
-5. **Vérifier** — `node .claude/hooks/i18n-parity.mjs`, `npm --prefix front run lint`, `npm --prefix front run build`. Si possible, ouvrir la preview (`portfolio-front`) et contrôler `#project` (filtre, sélection, vidéo au survol).
-6. **Contexte** — mettre à jour la liste « Actif / Commentés » dans `.claude/context/architecture.md` et `known-issues.md` si un média manque.
+## Cas 2 — pas de repo public (freelance, privé…)
+Ajouter un objet dans `front/src/pages/projects/projects.manual.js` à la forme de `lib/projectSchema.js` (`normalizeProject` complète les champs absents) et ses textes `projects.<id>.*` fr + en.
+
+## Nouvelle origine / nouveau domaine ?
+Modifier `ORIGINS`/`DOMAINS` (`lib/projectSchema.js`), `PROJECT_FILTERS` (`lib/projectFilters.js`), les tables d'inférence (`front/scripts/lib/buildProject.mjs`), les clés `filters.*` / `origins.*` fr + en, et `docs/portfolio-flags.md`.
+
+## Vérifier
+`node .claude/hooks/i18n-parity.mjs`, `npm --prefix front run lint`, `npm --prefix front run build`, puis preview `portfolio-front` sur `#project` (filtre, sélection, preview/cover, mobile 375px).
+
+## Contexte
+Mettre à jour `.claude/context/known-issues.md` (média manquant, projet en attente de topic…).

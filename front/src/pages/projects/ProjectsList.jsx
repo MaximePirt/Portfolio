@@ -1,35 +1,73 @@
-import { useTranslation } from "react-i18next"
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import useProjectText from './useProjectText'
+import ProjectStatusBadge from './ProjectStatusBadge'
 
+// Number of projects revealed on each click of "Show more".
+const PAGE_SIZE = 6
+
+/**
+ * @brief Side list of project pills. Shows the first PAGE_SIZE projects and reveals
+ * PAGE_SIZE more on each click of the "Show more" button. Clicking a pill selects that project.
+ * @param {Object} props
+ * @param {Array<Object>} props.projects - Projects to display, in order.
+ * @param {string|null} props.selectedProjectId - Id of the currently selected project.
+ * @param {(projectId: string) => void} props.onSelect - Called with the id of the clicked project.
+ * @returns {JSX.Element} The project list, or an empty-state message when there are no projects.
+ */
 function ProjectsList({ projects, selectedProjectId, onSelect }) {
+	const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 	const { t } = useTranslation()
+	const getText = useProjectText()
 
 	if (!projects.length) {
 		return (
-			<aside className="projects-list projects-list--empty" aria-label="Liste des projets vide">
-				<p>Aucun projet correspondant encore uploadé.</p>
+			<aside className="projects-list projects-list--empty" aria-label={t('projectsSection.listLabel')}>
+				<p>{t('projectsSection.emptyList')}</p>
 			</aside>
 		)
 	}
 
-	
-	return (
-		<aside className="projects-list" aria-label="Liste des projets">
-			{projects.map((project) => {
-				const isActive = project.id === selectedProjectId
+	const visibleProjects = projects.slice(0, visibleCount)
+	const hiddenCount = projects.length - visibleProjects.length
 
-				return (
+	return (
+		<aside className="projects-list" aria-label={t('projectsSection.listLabel')}>
+			<div className="projects-list__body">
+				<div className="projects-list__scroll">
+					{visibleProjects.map((project, index) => {
+						const isActive = project.id === selectedProjectId
+
+						return (
+							<button
+								key={project.id}
+								type="button"
+								className={`project-pill ${isActive ? 'is-active' : ''}`}
+								style={{ '--pill-delay': index % PAGE_SIZE }}
+								onClick={() => onSelect(project.id)}
+								aria-pressed={isActive}
+							>
+								<span className="project-pill__title">
+									{getText(project, 'title')}
+									<ProjectStatusBadge status={project.status} />
+								</span>
+								<span className="project-pill__meta">{getText(project, 'summary')}</span>
+							</button>
+						)
+					})}
+				</div>
+
+				{hiddenCount > 0 && (
 					<button
-						key={project.id}
 						type="button"
-						className={`project-pill ${isActive ? 'is-active' : ''}`}
-						onClick={() => onSelect(project.id)}
-						aria-pressed={isActive}
+						className="project-pill project-pill--more"
+						style={{ '--pill-delay': PAGE_SIZE }}
+						onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
 					>
-						<span className="project-pill__title">{t(project.titleKey)}</span>
-						<span className="project-pill__meta">{t(project.metaKey)}</span>
+						{t('projectsSection.showMore', { count: hiddenCount })}
 					</button>
-				)
-			})}
+				)}
+			</div>
 		</aside>
 	)
 }
