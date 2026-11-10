@@ -12,7 +12,6 @@
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
-    "github-calendar": "^2.3.4",
     "i18next": "^25.10.10",
     "motion": "^12.38.0",
     "react": "^19.2.4",
