@@ -58,10 +58,20 @@
     "title": "GitHub Activity",
     "subtitle": "Here's a snapshot of my recent activity on GitHub, highlighting my contributions, projects, and collaborations.",
     "noActivity": "No recent activity to display.",
-    "loading": "Loading heatmap…",
-    "know": "To know",
+    "loading": "Loading GitHub activity…",
+    "know": "Good to know:",
     "note1": "The display of commits depends on GitHub's rules related to visible contributions on the profile, repository visibility, and account settings.",
-    "note2": "This section therefore shows contributions recognized by GitHub, not necessarily all the work done locally."
+    "note2": "This section therefore shows contributions recognized by GitHub, not necessarily all the work done locally.",
+    "error": "The activity can't be loaded right now. It is still visible on my GitHub profile.",
+    "statContributions": "Contributions (12 months)",
+    "statActiveDays": "Active days",
+    "statStreak": "Best streak (days)",
+    "less": "Less",
+    "more": "More",
+    "tooltipCount_zero": "No contributions",
+    "tooltipCount_one": "{{formattedCount}} contribution",
+    "tooltipCount_other": "{{formattedCount}} contributions",
+    "graphLabel": "GitHub contribution graph: {{formattedCount}} contributions over the last 12 months."
   },
   "contact": {
     "contact": "Contact",

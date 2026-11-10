@@ -61,7 +61,17 @@
     "loading": "Chargement de l'activité GitHub...",
     "know": "À savoir :",
     "note1": "L’affichage des commits dépend des règles GitHub liées aux contributions visibles sur le profil, à la visibilité des dépôts et aux paramètres du compte.",
-    "note2": "Cette section montre donc les contributions reconnues par GitHub et non l'ensemble du travail réalisé localement."
+    "note2": "Cette section montre donc les contributions reconnues par GitHub et non l'ensemble du travail réalisé localement.",
+    "error": "Impossible de charger l'activité pour le moment. Elle reste visible sur mon profil GitHub.",
+    "statContributions": "Contributions (12 mois)",
+    "statActiveDays": "Jours actifs",
+    "statStreak": "Série record (jours)",
+    "less": "Moins",
+    "more": "Plus",
+    "tooltipCount_zero": "Aucune contribution",
+    "tooltipCount_one": "{{formattedCount}} contribution",
+    "tooltipCount_other": "{{formattedCount}} contributions",
+    "graphLabel": "Graphe des contributions GitHub : {{formattedCount}} contributions sur les 12 derniers mois."
   },
   "contact": {
     "contact": "Contact",
