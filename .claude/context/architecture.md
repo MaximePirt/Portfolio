@@ -50,7 +50,7 @@ front/
     │       ├── projects.snapshot.js # lit projects.snapshot.json (GIT-IGNORÉ, tests seulement) via import.meta.glob ; [] s'il manque
     │       ├── projects.api.js      # fetchRemoteProjects : appelle /api/projects et vérifie la version du schéma
     │       ├── useProjects.js       # hook : projets GitHub + manuels fusionnés, status loading/ready/error
-    │       ├── lib/                 # pur JS partagé front/serveur : projectSchema, projectFilters (catégories + langages), projectText, projectActions, generatedCover, mergeProjects
+    │       ├── lib/                 # pur JS partagé front/serveur : projectSchema, projectFilters (catégories + langages), languages (catalogue des langages), projectText, projectActions, generatedCover, mergeProjects
     │       ├── useProjectText.js    # hook getText(project, 'title'|'summary'|'description')
     │       ├── ProjectsSection.jsx  # id="project", filtres + liste + détail — styles/projects.css
     │       ├── ProjectFilters.jsx   # pills de filtre avec compteur (seulement les filtres non vides)
@@ -81,7 +81,7 @@ Seul le bloc `<Routes>` dépend de l'URL ; le reste est toujours rendu.
 - Fusion (`useProjects` → `lib/mergeProjects.js`) : `MANUAL_PROJECTS` puis projets GitHub (GitHub gagne à id égal), tri `compareProjects` (featured → order → date de création).
 - Snapshot de test : si `/api/projects` échoue ou n'existe pas (`vite preview`, Docker, quota GitHub, hors ligne), `useProjects` remplace les projets GitHub par `projects.snapshot.json` quand il existe. Fichier jamais commité (`.gitignore`) : Vercel build sans lui, la prod reste en direct.
 - Filtres (`lib/projectFilters.js`) : `all`, origines `42 | personal | freelance`, domaines `frontend | backend | systems | devops | data` ; un projet matche par `origin` ou `domains`. Libellés `filters.*`, origines `origins.*`.
-- Filtre langages (`LanguageFilter` + `getAvailableLanguages`/`matchesLanguages`) : langages = valeurs de `stack` regroupées par `toLanguageKey` (casse, séparateurs `. - _ espace`, suffixe « js » et alias JS/TS/Golang… ignorés : « Node.js » = « NodeJS »), multi-sélection en **OU**, combiné (ET) avec la catégorie active ; compteurs calculés sur les projets de la catégorie. Libellés `projectsSection.languageFilter.*`.
+- Filtre langages (`LanguageFilter` + `getAvailableLanguages`/`matchesLanguages`) : chips = langages reconnus dans `stack` par le catalogue `lib/languages.js` (`toLanguageKey` : casse/séparateurs ignorés, alias, standards « C++98 » → C++, TypeScript regroupé sous **JavaScript**, frameworks → leur langage : React/Node.js/Fastify → JavaScript, NumPy/pandas → Python…). Outils et concepts (Docker, Makefile, pthread, TF-IDF…) ignorés ; un projet sans langage reconnu va dans la chip « Autres » (`OTHER_LANGUAGE`, toujours en dernier) pour rester accessible. Multi-sélection en **OU**, combinée (ET) avec la catégorie active ; compteurs calculés sur les projets de la catégorie. Libellés `projectsSection.languageFilter.*`. Nouveau langage/framework → `LANGUAGES`, `LANGUAGE_ALIASES` ou `FRAMEWORK_LANGUAGES`.
 - Textes (`lib/projectText.js`) : clé `projects.<id>.<field>` si elle existe, sinon texte du projet (langue courante → fr → en) ; `summary` vide → « origine • 2 technos ».
 - Liste : « Chargement des projets… » tant que l'API n'a pas répondu ; 6 projets puis « Voir plus » (+6) ; desktop : hauteur calée sur le détail avec défilement interne ; mobile : filtres sur une ligne défilante.
 - Preview : image + vidéo au survol ; vidéo seule → première frame ; rien → `ProjectCover`.

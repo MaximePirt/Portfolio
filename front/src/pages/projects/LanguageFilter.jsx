@@ -10,7 +10,7 @@ const MotionDiv = motion.div
  * @brief "Filter" button placed before the category filters, opening a banner of
  * language chips that can be selected together.
  * @param {Object} props
- * @param {{value: string, label: string, count: number}[]} props.languages - Available languages (key, shown label, count).
+ * @param {{value: string, label: string, labelKey?: string, count: number}[]} props.languages - Available chips (key, label or translation key, count).
  * @param {string[]} props.selected - Currently selected language keys.
  * @param {(language: string) => void} props.onToggle - Called with the key of the clicked language.
  * @param {() => void} props.onReset - Clears the selection.
@@ -88,7 +88,7 @@ function LanguageFilter({ languages, selected, onToggle, onReset, children }) {
 											onClick={() => onToggle(language.value)}
 											aria-pressed={isActive}
 										>
-											{language.label}
+											{language.labelKey ? t(language.labelKey) : language.label}
 											<span className="projects-filter__count">{language.count}</span>
 										</button>
 									)

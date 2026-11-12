@@ -1,5 +1,7 @@
 // Filters of the Projects section: an origin (42, personal, freelance) or a domain, plus a multi-select on the languages of the stack.
 
+import { getLanguageLabel, getStackLanguages } from './languages.js'
+
 export const PROJECT_FILTERS = [
 	{ value: 'all', labelKey: 'filters.all' },
 	{ value: '42', labelKey: 'filters.school42' },
@@ -38,28 +40,29 @@ export function getAvailableFilters(projects) {
 		.filter((filter) => filter.value === 'all' || filter.count > 0)
 }
 
-// Separators ignored when comparing spellings ("Node.js", "Node JS", "node-js"); + and # are kept (C++, C#).
-const LANGUAGE_SEPARATORS = /[\s._-]+/g
-// "Node.js", "NodeJS" and "Node" are one technology; the suffix alone ("JS") is kept.
-const JS_SUFFIX = /(?<=.{2})js$/
-// Abbreviations merged with their full name.
-const LANGUAGE_ALIASES = {
-	js: 'javascript',
-	ts: 'typescript',
-	golang: 'go',
-	postgres: 'postgresql',
-	k8s: 'kubernetes',
+// Chip gathering the projects whose stack names no recognized language (e.g. a Docker-only project).
+export const OTHER_LANGUAGE = { value: 'other', labelKey: 'projectsSection.languageFilter.other' }
+
+/**
+ * @brief Lists the language keys of a project, or the "other" key when its stack names none,
+ * so every project can be reached through the language filter.
+ * @param {object} project - Project with a `stack` field.
+ * @returns {string[]} Language keys.
+ */
+function getProjectLanguages(project) {
+	const languages = getStackLanguages(project.stack)
+	return languages.length ? languages : [OTHER_LANGUAGE.value]
 }
 
 /**
- * @brief Turns a stack entry into its language key, so spellings of the same technology
- * ("Pandas" / "pandas", "Node.js" / "NodeJS" / "Node JS", "JS" / "JavaScript") are one language.
- * @param {string} language - Stack entry as written in the project.
- * @returns {string} Normalized key: lowercase, without separators nor "js" suffix, aliases resolved.
+ * @brief Builds the chip of a language.
+ * @param {string} value - Language key.
+ * @param {number} count - Number of projects using it.
+ * @returns {{value: string, label: string, labelKey?: string, count: number}} Chip data.
  */
-export function toLanguageKey(language) {
-	const key = language.toLowerCase().replace(LANGUAGE_SEPARATORS, '').replace(JS_SUFFIX, '')
-	return LANGUAGE_ALIASES[key] ?? key
+function toLanguageChip(value, count) {
+	if (value === OTHER_LANGUAGE.value) return { ...OTHER_LANGUAGE, label: value, count }
+	return { value, label: getLanguageLabel(value), count }
 }
 
 /**
@@ -70,32 +73,28 @@ export function toLanguageKey(language) {
  */
 export function matchesLanguages(project, languages) {
 	if (!languages.length) return true
-	return project.stack.some((language) => languages.includes(toLanguageKey(language)))
+	return getProjectLanguages(project).some((language) => languages.includes(language))
 }
 
 /**
- * @brief Lists the languages used by the projects, each with its project count,
- * most used first. Spellings differing only by case are merged (the first one seen is shown).
- * Selected languages are always kept so they can be unchecked.
+ * @brief Lists the programming languages used by the projects (see lib/languages.js), each with
+ * its project count, most used first, the "other" chip last. Selected languages are always kept
+ * so they can be unchecked.
  * @param {object[]} projects - Projects to count against.
  * @param {string[]} selected - Currently selected language keys.
- * @returns {{value: string, label: string, count: number}[]} Available languages with counts.
+ * @returns {{value: string, label: string, labelKey?: string, count: number}[]} Chips with counts.
  */
 export function getAvailableLanguages(projects, selected) {
-	const languages = new Map(selected.map((key) => [key, { value: key, label: key, count: 0 }]))
+	const counts = new Map(selected.map((key) => [key, 0]))
 
 	projects.forEach((project) => {
-		new Set(project.stack.map(toLanguageKey)).forEach((key) => {
-			const label = project.stack.find((language) => toLanguageKey(language) === key)
-			const entry = languages.get(key)
-
-			if (!entry) languages.set(key, { value: key, label, count: 1 })
-			else languages.set(key, { ...entry, label: entry.count ? entry.label : label, count: entry.count + 1 })
-		})
+		getProjectLanguages(project).forEach((key) => counts.set(key, (counts.get(key) ?? 0) + 1))
 	})
 
-	return [...languages.values()]
-		.sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+	const isOther = (chip) => chip.value === OTHER_LANGUAGE.value
+	return [...counts]
+		.map(([value, count]) => toLanguageChip(value, count))
+		.sort((a, b) => isOther(a) - isOther(b) || b.count - a.count || a.label.localeCompare(b.label))
 }
 
 /**

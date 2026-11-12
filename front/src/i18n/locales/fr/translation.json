@@ -80,7 +80,8 @@
 			"toggle": "Filtre",
 			"title": "Langages",
 			"reset": "Réinitialiser",
-			"panelLabel": "Filtrer par langage"
+			"panelLabel": "Filtrer par langage",
+			"other": "Autres"
 		}
 	},
 	"githubActivity": {
