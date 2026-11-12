@@ -148,7 +148,7 @@ function HeroSection() {
 		<div className="relative z-10 w-full max-w-[92vw] md:max-w-[60vw] px-6 sm:px-10 md:px-16 lg:px-40">
 		<h1
 			className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 leading-none "
-			style={{ color: 'var(--primary)' }}
+			style={{ color: 'var(--text-primary)' }}
 		>
 			{t('hero.title')}
 		</h1>

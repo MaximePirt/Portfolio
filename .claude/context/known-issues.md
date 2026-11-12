@@ -8,10 +8,11 @@ Cocher `[x]` puis supprimer l'entrée au commit suivant quand c'est réglé. Ajo
 - [ ] `Contact.jsx` : liste de stack en dur.
 
 ## Styles
-- [ ] `index.css` : `--background-img` contient une déclaration cassée (`--bg-shell: #D8D0C1` au milieu d'un gradient) ; `--border-thin` défini deux fois.
-- [ ] Variables utilisées mais jamais définies : `--bg-secondary`, `--bg-main`, `--bg-shell`.
-- [ ] Dark mode : `--green` et les `--bubble-*` ne sont pas redéfinis ; le choix n'est pas persisté.
-- [ ] Dark mode section Projets : les cartes (`.project-card-block`, filtres, y compris les chips du bandeau langages) ont des fonds clairs en dur alors que `--text` devient clair → libellés illisibles (préexistant, `projects.css`).
+- [x] `index.css` : déclaration cassée `--background-img` supprimée (inutilisée). Reste : `--border-thin` défini deux fois dans `:root` (la 2e, `#000000`, l'emporte).
+- [x] `--bg-secondary`, `--bg-main`, `--bg-shell` désormais définies (alias de `--background` / `--background-offset`).
+- [x] Dark mode illisible (titres en `--primary`, cartes/filtres/chips/heatmap en couleurs claires en dur) : sections passées sur les tokens sémantiques (`--text-primary`, `--surface*`, `--line*`, `--heat-*`…).
+- [ ] Dark mode : le choix n'est pas persisté (ni `prefers-color-scheme`). Les bulles (`bubble.css`) gardent leurs dégradés en dur, identiques dans les deux thèmes.
+- [ ] Light mode : `--text-light` (#989797) sur `--background` a un contraste faible (~2:1).
 
 ## Structure
 - [ ] `Contact` rendu deux fois sur `/contact` (route + section fixe dans `App.jsx`).

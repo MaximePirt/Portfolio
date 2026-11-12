@@ -1,13 +1,5 @@
 .github-activity-section {
 	--activity-bg: color-mix(in oklab, var(--background) 92%, var(--primary) 8%);
-	--activity-ink: rgba(60, 76, 70, 0.1);
-
-	/* Graph scale: from light sage to the main green of the site. */
-	--heat-0: rgba(61, 76, 70, 0.07);
-	--heat-1: color-mix(in oklab, var(--green) 62%, #f4f5ef);
-	--heat-2: color-mix(in oklab, var(--green) 80%, var(--primary));
-	--heat-3: color-mix(in oklab, var(--green) 45%, var(--primary));
-	--heat-4: var(--primary);
 
 	position: relative;
 	padding: 5rem 0 4rem;
@@ -45,7 +37,7 @@
 
 .github-activity-header__title {
 	margin: 0;
-	color: var(--primary);
+	color: var(--text-primary);
 	font-size: clamp(2rem, 4vw, 3.4rem);
 	line-height: 0.95;
 }
@@ -64,8 +56,8 @@
 	width: 100%;
 	border-radius: 2rem;
 	padding: 1.5rem 1.5rem 1.25rem;
-	background: rgba(252, 252, 248, 0.82);
-	border: 1px solid var(--activity-ink);
+	background: var(--surface);
+	border: 1px solid var(--line-soft);
 	box-shadow: 0 14px 30px rgba(0, 0, 0, 0.05);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
@@ -79,7 +71,7 @@
 	gap: 1rem 1.5rem;
 	padding-bottom: 1.25rem;
 	margin-bottom: 1.25rem;
-	border-bottom: 1px solid rgba(60, 76, 70, 0.08);
+	border-bottom: 1px solid var(--line-soft);
 }
 
 .github-stats {
@@ -99,7 +91,7 @@
 
 .github-stat__value {
 	margin: 0;
-	color: var(--primary);
+	color: var(--text-primary);
 	font-size: 2rem;
 	font-weight: 600;
 	line-height: 1;
@@ -107,7 +99,7 @@
 }
 
 .github-stat__label {
-	color: var(--secondary);
+	color: var(--text-muted);
 	font-size: 0.7rem;
 	text-transform: uppercase;
 	letter-spacing: 0.12em;
@@ -121,11 +113,11 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 0.5rem;
-	border: 1px solid rgba(60, 76, 70, 0.18);
+	border: 1px solid var(--line);
 	border-radius: 9999px;
 	padding: 0.6rem 1rem;
-	background: rgba(250, 250, 246, 0.72);
-	color: var(--primary);
+	background: var(--surface-soft);
+	color: var(--text-primary);
 	font-size: 0.9rem;
 	text-decoration: none;
 	white-space: nowrap;
@@ -138,8 +130,8 @@
 
 .github-card__link:hover {
 	transform: translateY(-1px);
-	background: #5e6f67;
-	color: #f8f8f4;
+	background: var(--surface-active);
+	color: var(--on-active);
 	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
 
@@ -151,7 +143,7 @@
 .github-card__error {
 	margin: 0;
 	padding: 2.5rem 1rem;
-	color: var(--secondary);
+	color: var(--text-muted);
 	font-size: 0.95rem;
 	text-align: center;
 }
@@ -162,7 +154,7 @@
 	overflow-x: auto;
 	padding-bottom: 0.5rem;
 	scrollbar-width: thin;
-	scrollbar-color: rgba(60, 76, 70, 0.25) transparent;
+	scrollbar-color: var(--line) transparent;
 }
 
 .github-heatmap {
@@ -174,7 +166,7 @@
 	column-gap: 0.6rem;
 	row-gap: 0.45rem;
 	min-width: 640px;
-	color: var(--secondary);
+	color: var(--text-muted);
 	font-size: 0.68rem;
 	line-height: 1;
 }
@@ -281,8 +273,8 @@
 	gap: 0.15rem;
 	padding: 0.5rem 0.8rem;
 	border-radius: 0.9rem;
-	background: var(--primary);
-	color: #f8f8f4;
+	background: var(--surface-active);
+	color: var(--on-active);
 	font-size: 0.75rem;
 	line-height: 1.2;
 	white-space: nowrap;
@@ -314,14 +306,14 @@
 	flex: 1 1 22rem;
 	max-width: 30rem;
 	margin: 0;
-	color: var(--secondary);
+	color: var(--text-muted);
 	font-size: 0.74rem;
 	line-height: 1.55;
 	text-align: left;
 }
 
 .github-card__note-title {
-	color: var(--primary);
+	color: var(--text-primary);
 	font-weight: 600;
 }
 
@@ -330,7 +322,7 @@
 	align-items: center;
 	gap: 0.3rem;
 	margin-left: auto;
-	color: var(--secondary);
+	color: var(--text-muted);
 	font-size: 0.7rem;
 }
 

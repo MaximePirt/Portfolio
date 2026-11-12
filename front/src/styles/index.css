@@ -25,16 +25,32 @@ html {
 	--shadow-card: 0px 2px 12px rgba(0, 0, 0, 0.08);
 	--shadow-btn: 0px 1px 4px rgba(0, 0, 0, 0.12);
 
-	--background-img: none;
-	--background-size: none;
-
-
 	--border-thin: 1px solid #000000;
-	--background-img: linear-gradient(45deg, 	--bg-shell: #D8D0C1, 25%, transparent 25%),
-	linear-gradient(-45deg, #e5e 25%, transparent 25%),
-	linear-gradient(45deg, transparent 75%, #D8D0C1 75%),
-	linear-gradient(-45deg, transparent 75%, #e5e 75%);
-	--background-size: 20px 20px;
+
+	/* Tokens sémantiques : à utiliser dans les sections plutôt que des couleurs en dur,
+	   ils ont chacun leur valeur dark ci-dessous. */
+	--text-primary: var(--primary);
+	--text-muted: var(--secondary);
+	--surface: rgba(252, 252, 248, 0.84);
+	--surface-soft: rgba(250, 250, 246, 0.72);
+	--surface-strong: rgba(250, 250, 246, 0.96);
+	--surface-active: #5e6f67;
+	--on-active: #f8f8f4;
+	--line: rgba(60, 76, 70, 0.16);
+	--line-soft: rgba(60, 76, 70, 0.08);
+	--chip-bg: rgba(94, 111, 103, 0.12);
+
+	/* Alias utilisés par les pages secondaires (/contact, /infos) */
+	--bg-main: var(--background);
+	--bg-shell: var(--background-offset);
+	--bg-secondary: var(--background-offset);
+
+	/* Échelle du graphe d'activité GitHub : de la sauge claire au vert principal */
+	--heat-0: rgba(61, 76, 70, 0.07);
+	--heat-1: color-mix(in oklab, var(--green) 62%, #f4f5ef);
+	--heat-2: color-mix(in oklab, var(--green) 80%, var(--primary));
+	--heat-3: color-mix(in oklab, var(--green) 45%, var(--primary));
+	--heat-4: var(--primary);
 
 
 	--bubble-green-dark: color-mix(in oklab, var(--green) 78%, var(--background-offset));
@@ -56,8 +72,29 @@ html {
 	--text: #f0f0f0;
 	--text-light: #b0b0b0;
 	--border-thin: 1px solid #333333;
-	--background-img: none;
-	--background-size: none;
+
+	--text-primary: color-mix(in oklab, var(--green) 70%, white);
+	--text-muted: #9aa7a1;
+	--surface: rgba(46, 52, 49, 0.84);
+	--surface-soft: rgba(52, 58, 55, 0.72);
+	--surface-strong: rgba(36, 41, 39, 0.96);
+	--line: rgba(255, 255, 255, 0.12);
+	--line-soft: rgba(255, 255, 255, 0.07);
+	--chip-bg: rgba(143, 156, 133, 0.16);
+
+	/* Échelle inversée : plus il y a de contributions, plus la pastille s'éclaire */
+	--heat-0: rgba(255, 255, 255, 0.06);
+	--heat-1: color-mix(in oklab, var(--green) 35%, var(--background));
+	--heat-2: color-mix(in oklab, var(--green) 60%, var(--background));
+	--heat-3: color-mix(in oklab, var(--green) 85%, var(--background));
+	--heat-4: color-mix(in oklab, var(--green) 70%, white);
+
+	color-scheme: dark;
+}
+
+body {
+	background-color: var(--background);
+	color: var(--text);
 }
 
 .header {

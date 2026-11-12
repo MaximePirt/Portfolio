@@ -22,7 +22,9 @@
   - `--background #dbdfd8`, `--background-offset` (color-mix), `--text`, `--text-light`
   - `--border-thick`, `--border-thin`, `--shadow-card`, `--shadow-btn`
   - `--bubble-green-dark|mid|light`, `--bubble-grey-green`, `--bubble-orange-main|dark`, `--bubble-highlight`
-- Dark mode : `[data-theme="dark"]` redéfinit `--background`, `--text`, `--text-light`, `--border-thin`… Toute nouvelle couleur doit avoir sa valeur dark si nécessaire.
+  - Tokens sémantiques (light + dark) à préférer dans les sections : `--text-primary` (titres/valeurs, au lieu de `--primary` en texte), `--text-muted` (labels, au lieu de `--secondary` en texte), `--surface` / `--surface-soft` / `--surface-strong` (fonds de cartes), `--surface-active` + `--on-active` (état actif), `--line` / `--line-soft` (bordures, séparateurs), `--chip-bg`, `--heat-0..4` (graphe GitHub)
+  - Alias pages secondaires : `--bg-main`, `--bg-shell`, `--bg-secondary`
+- Dark mode : `[data-theme="dark"]` redéfinit `--background`, `--text`, `--text-light`, `--border-thin` et tous les tokens sémantiques (+ `color-scheme: dark`). Jamais de `rgba(...)`/hex clair en dur dans une section : utiliser un token, ou en ajouter un avec ses deux valeurs.
 - Responsive : vérifier mobile (375px) et iPad ; le hero a une version mobile dédiée (`MobileHeroShapes`).
 
 ## i18n

@@ -80,7 +80,7 @@
 }
 
 .projects-header__title {
-	color: var(--primary);
+	color: var(--text-primary);
 	font-size: clamp(2.5rem, 6vw, 5rem);
 	line-height: 0.95;
 }
@@ -101,18 +101,18 @@
 }
 
 .projects-filter {
-	border: 1px solid rgba(60, 76, 70, 0.2);
+	border: 1px solid var(--line);
 	border-radius: 9999px;
 	padding: 0.8rem 1.2rem;
-	background: rgba(250, 250, 246, 0.84);
+	background: var(--surface);
 	color: var(--text);
 	font-size: 0.95rem;
 	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
 }
 
 .projects-filter.is-active {
-	background: #5e6f67;
-	color: #f6f5f2;
+	background: var(--surface-active);
+	color: var(--on-active);
 }
 
 /* Language filter: "Filter" toggle before the category pills, banner of language chips below. */
@@ -139,7 +139,7 @@
 
 .projects-filter--toggle.is-open {
 	border-style: solid;
-	border-color: var(--primary);
+	border-color: var(--text-primary);
 }
 
 .projects-languages {
@@ -166,7 +166,7 @@
 
 .projects-languages__reset {
 	font-size: 0.85rem;
-	color: var(--secondary);
+	color: var(--text-muted);
 	text-decoration: underline;
 	text-underline-offset: 0.2em;
 }
@@ -204,9 +204,9 @@
 	place-items: center;
 	min-height: 220px;
 	border-radius: 2rem;
-	background: rgba(250, 250, 246, 0.75);
+	background: var(--surface-soft);
 	color: var(--text-light);
-	border: 1px solid rgba(60, 76, 70, 0.14);
+	border: 1px solid var(--line);
 }
 
 .project-pill {
@@ -215,17 +215,18 @@
 	align-items: flex-start;
 	gap: 0.25rem;
 	width: 100%;
-	border: 1px solid rgba(60, 76, 70, 0.15);
+	border: 1px solid var(--line);
 	border-radius: 1.5rem;
 	padding: 1rem 1.25rem;
-	background: rgba(252, 252, 248, 0.88);
+	background: var(--surface);
+	color: var(--text);
 	text-align: left;
 	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
 }
 
 .project-pill.is-active {
-	background: #5e6f67;
-	color: #f8f8f4;
+	background: var(--surface-active);
+	color: var(--on-active);
 }
 
 .project-pill__title {
@@ -241,8 +242,8 @@
 .project-detail {
 	border-radius: 2rem;
 	padding: 1rem;
-	background: #5e6f67;
-	color: #f8f8f4;
+	background: var(--surface-active);
+	color: var(--on-active);
 	box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
 }
 
@@ -274,7 +275,7 @@
 }
 
 .project-detail__links a {
-	border: 1px solid rgba(255, 255, 255, 0.16);
+	border: 1px solid color-mix(in oklab, var(--on-active) 16%, transparent);
 	border-radius: 9999px;
 	padding: 0.65rem 1rem;
 	color: inherit;
@@ -288,7 +289,7 @@
 
 .project-card-block {
 	border-radius: 1.5rem;
-	background: rgba(250, 250, 246, 0.96);
+	background: var(--surface-strong);
 	color: var(--text);
 	padding: 1rem;
 }
@@ -312,7 +313,7 @@
 .project-stack__chip {
 	border-radius: 9999px;
 	padding: 0.55rem 0.85rem;
-	background: rgba(94, 111, 103, 0.12);
+	background: var(--chip-bg);
 	font-size: 0.92rem;
 }
 
@@ -332,7 +333,7 @@
 	overflow: hidden;
 	border-radius: 1rem;
 	aspect-ratio: 16 / 10;
-	background: rgba(94, 111, 103, 0.08);
+	background: var(--chip-bg);
 }
 
 .project-preview__media {
@@ -409,7 +410,7 @@
 	background: transparent;
 	border-style: dashed;
 	box-shadow: none;
-	color: var(--primary);
+	color: var(--text-primary);
 	font-weight: 600;
 	text-align: center;
 }
@@ -457,14 +458,14 @@
 	flex-direction: column;
 	gap: 0.4rem;
 	max-width: 60%;
-	color: var(--primary);
+	color: var(--text-primary);
 }
 
 .project-cover__eyebrow {
 	font-size: max(0.75rem, 2.6cqw);
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
-	color: var(--secondary);
+	color: var(--text-muted);
 }
 
 .project-cover__title {
