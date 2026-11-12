@@ -35,3 +35,4 @@ Cocher `[x]` puis supprimer l'entrée au commit suivant quand c'est réglé. Ajo
 
 ## Déploiement
 - [ ] `nginx/entrypoint.sh` : fallback certificat auto-signé marqué TODO.
+- [ ] En dev, `/api/projects` (monté par Vite) n'a pas de cache : chaque rechargement relit tous les repos et épuise vite les 60 req/h GitHub sans `GITHUB_TOKEN` (502 ensuite). Contournement : le snapshot local prend le relais.

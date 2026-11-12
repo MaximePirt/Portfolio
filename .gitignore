@@ -35,3 +35,6 @@ dist-ssr
 .claude/settings.local.json
 .claude/hooks/.state
 .claude/worktrees/
+
+# Local snapshot of the GitHub projects (testing only: npm --prefix front run snapshot:projects)
+front/src/pages/projects/projects.snapshot.json

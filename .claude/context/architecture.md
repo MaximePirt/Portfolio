@@ -14,9 +14,10 @@ front/
 │   └── projects/<id>/poster.webp, trailer.webm
 ├── api/
 │   └── projects.js            # fonction Vercel GET /api/projects (aussi montée par Vite en dev, voir vite.config.js)
-├── server/                    # logique Node partagée api/ + scripts/ : github.mjs (API + raw), parseYaml.mjs, buildProject.mjs, collectProjects.mjs, localMedia.mjs
+├── server/                    # logique Node partagée api/ + scripts/ : github.mjs (API + raw), parseYaml.mjs, buildProject.mjs, collectProjects.mjs (+ `PORTFOLIO_OWNER`), localMedia.mjs, diskMedia.mjs (médias lus sur le disque, pour les scripts)
 ├── scripts/
-│   └── check-projects.mjs     # contrôle les repos marqués (✓/⚠/✗), n'écrit rien
+│   ├── check-projects.mjs     # contrôle les repos marqués (✓/⚠/✗), n'écrit rien
+│   └── snapshot-projects.mjs  # écrit le snapshot local de test (GitHub, ou `--from <site>` pour copier un /api/projects déployé)
 └── src/
     ├── main.jsx               # importe i18n + index.css, monte <App/> en StrictMode
     ├── App.jsx                # BrowserRouter + ordre des sections (voir plus bas)
@@ -46,6 +47,7 @@ front/
     │   ├── Presentation.jsx   # NON importé (exporte une fonction nommée Home)
     │   └── projects/
     │       ├── projects.manual.js   # projets hors GitHub (ft_transcendance tant qu'il n'a pas le topic)
+    │       ├── projects.snapshot.js # lit projects.snapshot.json (GIT-IGNORÉ, tests seulement) via import.meta.glob ; [] s'il manque
     │       ├── projects.api.js      # fetchRemoteProjects : appelle /api/projects et vérifie la version du schéma
     │       ├── useProjects.js       # hook : projets GitHub + manuels fusionnés, status loading/ready/error
     │       ├── lib/                 # pur JS partagé front/serveur : projectSchema, projectFilters (catégories + langages), projectText, projectActions, generatedCover, mergeProjects
@@ -77,6 +79,7 @@ Seul le bloc `<Routes>` dépend de l'URL ; le reste est toujours rendu.
 - En dev, `vite.config.js` monte le même handler sur `/api/projects` (plugin `projects-api`).
 - Forme canonique (`lib/projectSchema.js`, `normalizeProject`) : `{ id, repo, title, summary{fr,en}, description{fr,en}, status, origin, domains[], stack[], links{github,demo}, media{cover,webm,mp4}, featured, order, createdAt, run }`. `run` est réservé au futur lancement des projets (non lu par l'UI). `SCHEMA_VERSION` à incrémenter si la forme change (le front rejette une autre version).
 - Fusion (`useProjects` → `lib/mergeProjects.js`) : `MANUAL_PROJECTS` puis projets GitHub (GitHub gagne à id égal), tri `compareProjects` (featured → order → date de création).
+- Snapshot de test : si `/api/projects` échoue ou n'existe pas (`vite preview`, Docker, quota GitHub, hors ligne), `useProjects` remplace les projets GitHub par `projects.snapshot.json` quand il existe. Fichier jamais commité (`.gitignore`) : Vercel build sans lui, la prod reste en direct.
 - Filtres (`lib/projectFilters.js`) : `all`, origines `42 | personal | freelance`, domaines `frontend | backend | systems | devops | data` ; un projet matche par `origin` ou `domains`. Libellés `filters.*`, origines `origins.*`.
 - Filtre langages (`LanguageFilter` + `getAvailableLanguages`/`matchesLanguages`) : langages = valeurs de `stack` regroupées par `toLanguageKey` (casse, séparateurs `. - _ espace`, suffixe « js » et alias JS/TS/Golang… ignorés : « Node.js » = « NodeJS »), multi-sélection en **OU**, combiné (ET) avec la catégorie active ; compteurs calculés sur les projets de la catégorie. Libellés `projectsSection.languageFilter.*`.
 - Textes (`lib/projectText.js`) : clé `projects.<id>.<field>` si elle existe, sinon texte du projet (langue courante → fr → en) ; `summary` vide → « origine • 2 technos ».

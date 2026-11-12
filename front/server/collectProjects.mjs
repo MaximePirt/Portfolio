@@ -9,6 +9,9 @@ import { YamlError, parseYaml } from './parseYaml.mjs'
 
 const METADATA_PATH = '.github/portfolio.yml'
 
+// GitHub user whose repos are scanned (overridable for tests or a fork).
+export const PORTFOLIO_OWNER = process.env.PORTFOLIO_GITHUB_OWNER || 'MaximePirt'
+
 /**
  * @brief Reads and parses `.github/portfolio.yml` of a repo.
  * @param {string} owner - GitHub user.

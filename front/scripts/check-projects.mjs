@@ -7,25 +7,9 @@
 // Output: ✓ valid, ⚠ warning, ✗ error (exit 1 if an error remains).
 // Variables: GITHUB_TOKEN (optional, API quota), PORTFOLIO_GITHUB_OWNER (default MaximePirt).
 
-import { readdir } from 'node:fs/promises'
-import { collectProjects } from '../server/collectProjects.mjs'
-import { createFsMediaFinder } from '../server/localMedia.mjs'
+import { PORTFOLIO_OWNER, collectProjects } from '../server/collectProjects.mjs'
+import { findDiskMedia } from '../server/diskMedia.mjs'
 
-const OWNER = process.env.PORTFOLIO_GITHUB_OWNER || 'MaximePirt'
-const PUBLIC_PROJECTS_DIR = new URL('../public/projects/', import.meta.url)
-
-/**
- * @brief Lists the files of `public/projects/<id>/`.
- * @param {string} id - Project id.
- * @returns {Promise<string[]>} File names (empty if the folder is missing).
- */
-async function readProjectDir(id) {
-	try {
-		return await readdir(new URL(`${id}/`, PUBLIC_PROJECTS_DIR))
-	} catch {
-		return []
-	}
-}
 
 /**
  * @brief Prints the result of each repo: ✓ / ✗ with its warnings and errors.
@@ -45,8 +29,8 @@ function report(results) {
  */
 async function main() {
 	const { projects, results, repoCount } = await collectProjects({
-		owner: OWNER,
-		findLocalMedia: createFsMediaFinder(readProjectDir),
+		owner: PORTFOLIO_OWNER,
+		findLocalMedia: findDiskMedia,
 	})
 
 	report(results)

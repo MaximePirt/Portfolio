@@ -16,6 +16,7 @@ Portfolio personnel one-page (FR/EN) : React 19 + Vite 8 + Tailwind 4 + i18next 
 - `npm --prefix front run lint` / `npm --prefix front run build`
 - `node .claude/hooks/i18n-parity.mjs` — vérifie que fr/en ont les mêmes clés
 - `npm --prefix front run check:projects` — contrôle les repos GitHub marqués (n'écrit rien ; le site lit GitHub tout seul)
+- `npm --prefix front run snapshot:projects [-- --from https://maxime-pierrot.com]` — snapshot local git-ignoré des projets, affiché quand `/api/projects` manque (preview, Docker)
 - `/check` lance les trois. `docker compose up --build` pour la stack nginx.
 
 ## Carte express

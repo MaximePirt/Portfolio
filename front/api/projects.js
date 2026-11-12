@@ -4,10 +4,9 @@
 //   GITHUB_TOKEN (API quota), PORTFOLIO_GITHUB_OWNER (default MaximePirt), PORTFOLIO_SITE_URL (default: request host).
 
 import { SCHEMA_VERSION } from '../src/pages/projects/lib/projectSchema.js'
-import { collectProjects } from '../server/collectProjects.mjs'
+import { PORTFOLIO_OWNER, collectProjects } from '../server/collectProjects.mjs'
 import { createHttpMediaFinder } from '../server/localMedia.mjs'
 
-const OWNER = process.env.PORTFOLIO_GITHUB_OWNER || 'MaximePirt'
 
 // Browser: 5 min. CDN: 1 h, then the stale response is served (up to 24 h) while it is recomputed in the background.
 const CACHE_OK = 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400'
@@ -52,7 +51,7 @@ export default async function handler(req, res) {
 
 	try {
 		const { projects } = await collectProjects({
-			owner: OWNER,
+			owner: PORTFOLIO_OWNER,
 			findLocalMedia: createHttpMediaFinder(getSiteOrigin(req)),
 		})
 		sendJson(res, 200, { version: SCHEMA_VERSION, projects }, CACHE_OK)
