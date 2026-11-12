@@ -48,10 +48,12 @@ front/
     │       ├── projects.manual.js   # projets hors GitHub (ft_transcendance tant qu'il n'a pas le topic)
     │       ├── projects.api.js      # fetchRemoteProjects : appelle /api/projects et vérifie la version du schéma
     │       ├── useProjects.js       # hook : projets GitHub + manuels fusionnés, status loading/ready/error
-    │       ├── lib/                 # pur JS partagé front/serveur : projectSchema, projectFilters, projectText, projectActions, generatedCover, mergeProjects
+    │       ├── lib/                 # pur JS partagé front/serveur : projectSchema, projectFilters (catégories + langages), projectText, projectActions, generatedCover, mergeProjects
     │       ├── useProjectText.js    # hook getText(project, 'title'|'summary'|'description')
     │       ├── ProjectsSection.jsx  # id="project", filtres + liste + détail — styles/projects.css
     │       ├── ProjectFilters.jsx   # pills de filtre avec compteur (seulement les filtres non vides)
+    │       ├── LanguageFilter.jsx   # bouton « Filtre » devant les pills + bandeau animé (`motion/react`) de chips langages (multi-sélection)
+    │       ├── useDismiss.js        # hook : ferme sur Échap ou clic extérieur
     │       ├── ProjectStatusBadge.jsx # badge « En cours »
     │       ├── ProjectCover.jsx     # cover de bulles générée quand il n'y a ni image ni vidéo
     │       ├── ProjectsList.jsx     # pills (titleKey/metaKey), état vide en dur
@@ -76,6 +78,7 @@ Seul le bloc `<Routes>` dépend de l'URL ; le reste est toujours rendu.
 - Forme canonique (`lib/projectSchema.js`, `normalizeProject`) : `{ id, repo, title, summary{fr,en}, description{fr,en}, status, origin, domains[], stack[], links{github,demo}, media{cover,webm,mp4}, featured, order, createdAt, run }`. `run` est réservé au futur lancement des projets (non lu par l'UI). `SCHEMA_VERSION` à incrémenter si la forme change (le front rejette une autre version).
 - Fusion (`useProjects` → `lib/mergeProjects.js`) : `MANUAL_PROJECTS` puis projets GitHub (GitHub gagne à id égal), tri `compareProjects` (featured → order → date de création).
 - Filtres (`lib/projectFilters.js`) : `all`, origines `42 | personal | freelance`, domaines `frontend | backend | systems | devops | data` ; un projet matche par `origin` ou `domains`. Libellés `filters.*`, origines `origins.*`.
+- Filtre langages (`LanguageFilter` + `getAvailableLanguages`/`matchesLanguages`) : langages = valeurs de `stack` regroupées par `toLanguageKey` (casse, séparateurs `. - _ espace`, suffixe « js » et alias JS/TS/Golang… ignorés : « Node.js » = « NodeJS »), multi-sélection en **OU**, combiné (ET) avec la catégorie active ; compteurs calculés sur les projets de la catégorie. Libellés `projectsSection.languageFilter.*`.
 - Textes (`lib/projectText.js`) : clé `projects.<id>.<field>` si elle existe, sinon texte du projet (langue courante → fr → en) ; `summary` vide → « origine • 2 technos ».
 - Liste : « Chargement des projets… » tant que l'API n'a pas répondu ; 6 projets puis « Voir plus » (+6) ; desktop : hauteur calée sur le détail avec défilement interne ; mobile : filtres sur une ligne défilante.
 - Preview : image + vidéo au survol ; vidéo seule → première frame ; rien → `ProjectCover`.

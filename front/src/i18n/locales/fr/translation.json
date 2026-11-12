@@ -75,7 +75,13 @@
 			"github": "GitHub",
 			"demo": "Démo"
 		},
-		"loading": "Chargement des projets…"
+		"loading": "Chargement des projets…",
+		"languageFilter": {
+			"toggle": "Filtre",
+			"title": "Langages",
+			"reset": "Réinitialiser",
+			"panelLabel": "Filtrer par langage"
+		}
 	},
 	"githubActivity": {
 		"activity": "Activité",

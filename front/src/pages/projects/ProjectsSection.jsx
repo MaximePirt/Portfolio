@@ -1,7 +1,14 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import useProjects from './useProjects'
-import { getAvailableFilters, matchesFilter } from './lib/projectFilters.js'
+import {
+	getAvailableFilters,
+	getAvailableLanguages,
+	matchesFilter,
+	matchesLanguages,
+	toggleValue,
+} from './lib/projectFilters.js'
+import LanguageFilter from './LanguageFilter'
 import ProjectFilters from './ProjectFilters'
 import ProjectsList from './ProjectsList'
 import ProjectDetail from './ProjectDetail'
@@ -13,21 +20,40 @@ import '../../styles/projects.css'
  */
 function ProjectsSection() {
 	const [activeFilter, setActiveFilter] = useState('all')
+	const [selectedLanguages, setSelectedLanguages] = useState([])
 	const [selectedProjectId, setSelectedProjectId] = useState(null)
 	const { t } = useTranslation()
 	const { projects, status } = useProjects()
 
 	const availableFilters = useMemo(() => getAvailableFilters(projects), [projects])
 
-	const filteredProjects = useMemo(
+	const categoryProjects = useMemo(
 		() => projects.filter((project) => matchesFilter(project, activeFilter)),
 		[projects, activeFilter]
+	)
+
+	const availableLanguages = useMemo(
+		() => getAvailableLanguages(categoryProjects, selectedLanguages),
+		[categoryProjects, selectedLanguages]
+	)
+
+	const filteredProjects = useMemo(
+		() => categoryProjects.filter((project) => matchesLanguages(project, selectedLanguages)),
+		[categoryProjects, selectedLanguages]
 	)
 
 	const selectedProject =
 		filteredProjects.find((project) => project.id === selectedProjectId) ||
 		filteredProjects[0] ||
 		null
+
+	/**
+	 * @brief Selects or unselects a language of the language filter.
+	 * @param {string} language - Clicked language.
+	 */
+	const toggleLanguage = (language) => {
+		setSelectedLanguages((languages) => toggleValue(languages, language))
+	}
 
 	return (
 		<section className="projects-section" id="project" aria-busy={status === 'loading'}>
@@ -37,15 +63,22 @@ function ProjectsSection() {
 					<p className="projects-header__subtitle">{t('projectsSection.subtitle')}</p>
 				</header>
 
-				<ProjectFilters
-					filters={availableFilters}
-					activeFilter={activeFilter}
-					onChange={setActiveFilter}
-				/>
+				<LanguageFilter
+					languages={availableLanguages}
+					selected={selectedLanguages}
+					onToggle={toggleLanguage}
+					onReset={() => setSelectedLanguages([])}
+				>
+					<ProjectFilters
+						filters={availableFilters}
+						activeFilter={activeFilter}
+						onChange={setActiveFilter}
+					/>
+				</LanguageFilter>
 
 				<div className="projects-layout">
 					<ProjectsList
-						key={activeFilter}
+						key={`${activeFilter}|${selectedLanguages.join(',')}`}
 						projects={filteredProjects}
 						selectedProjectId={selectedProject?.id ?? null}
 						onSelect={setSelectedProjectId}

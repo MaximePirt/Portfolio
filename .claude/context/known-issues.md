@@ -11,7 +11,7 @@ Cocher `[x]` puis supprimer l'entrée au commit suivant quand c'est réglé. Ajo
 - [ ] `index.css` : `--background-img` contient une déclaration cassée (`--bg-shell: #D8D0C1` au milieu d'un gradient) ; `--border-thin` défini deux fois.
 - [ ] Variables utilisées mais jamais définies : `--bg-secondary`, `--bg-main`, `--bg-shell`.
 - [ ] Dark mode : `--green` et les `--bubble-*` ne sont pas redéfinis ; le choix n'est pas persisté.
-- [ ] Dark mode section Projets : les cartes (`.project-card-block`, filtres) ont des fonds clairs en dur alors que `--text` devient clair → libellés illisibles (préexistant, `projects.css`).
+- [ ] Dark mode section Projets : les cartes (`.project-card-block`, filtres, y compris les chips du bandeau langages) ont des fonds clairs en dur alors que `--text` devient clair → libellés illisibles (préexistant, `projects.css`).
 
 ## Structure
 - [ ] `Contact` rendu deux fois sur `/contact` (route + section fixe dans `App.jsx`).

@@ -115,6 +115,78 @@
 	color: #f6f5f2;
 }
 
+/* Language filter: "Filter" toggle before the category pills, banner of language chips below. */
+.projects-filters {
+	margin-bottom: 2rem;
+}
+
+.projects-filters__row {
+	display: flex;
+	gap: 0.75rem;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+.projects-filters .projects-toolbar {
+	min-width: 0;
+	margin-bottom: 0;
+}
+
+.projects-filter--toggle {
+	flex-shrink: 0;
+	border-style: dashed;
+}
+
+.projects-filter--toggle.is-open {
+	border-style: solid;
+	border-color: var(--primary);
+}
+
+.projects-languages {
+	overflow: hidden;
+}
+
+.projects-languages__inner {
+	margin-top: 1rem;
+	padding: 1rem;
+	border: var(--border-thin);
+	border-radius: 1.5rem;
+	background: var(--background-offset);
+	box-shadow: var(--shadow-card);
+	color: var(--text);
+}
+
+.projects-languages__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 0.8rem;
+}
+
+.projects-languages__reset {
+	font-size: 0.85rem;
+	color: var(--secondary);
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+.projects-languages__reset:hover {
+	color: var(--accent);
+}
+
+.projects-languages__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+}
+
+.projects-filter--chip {
+	padding: 0.55rem 0.95rem;
+	font-size: 0.88rem;
+	box-shadow: var(--shadow-btn);
+}
+
 .projects-layout {
 	display: grid;
 	gap: 1.5rem;
@@ -423,6 +495,25 @@
 	.projects-filter {
 		flex-shrink: 0;
 		scroll-snap-align: start;
+	}
+
+	/* The "Filter" toggle stays visible, the category pills scroll next to it. */
+	.projects-filters {
+		margin-bottom: 1.5rem;
+	}
+
+	.projects-filters__row {
+		justify-content: flex-start;
+	}
+
+	.projects-filters .projects-toolbar {
+		flex: 1;
+		margin: 0 -1rem 0 0;
+		padding-left: 0;
+	}
+
+	.projects-filter--toggle {
+		margin-top: 0.25rem;
 	}
 }
 
