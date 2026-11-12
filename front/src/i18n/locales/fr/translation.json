@@ -1,41 +1,59 @@
 {
 	"hero": {
-		"title": "Architecte data & bases de données",
-		"subtitle": "Un regard neuf sur les défis technologiques, prêt a rejoindre votre équipe.",
-		"tagline": "Passionné par la création de solutions innovantes"
+		"title": "Étudiant développeur à l'École 42.",
+		"subtitle": "Disponible pour un stage de 6 mois, un CDD ou un CDI dans la data.",
+		"ctaProjects": "Voir les projets",
+		"ctaContact": "Me contacter",
+		"portraitAlt": "Portrait de Maxime Pierrot"
 	},
 	"footer": {
-		"rights": "Tous droits réservés"
+		"rights": "Tous droits réservés",
+		"links": "Liens de contact"
 	},
 	"profile": {
 		"name": "Maxime Pierrot",
-		"role": "Fullstack Developer",
-		"description": "Passionné par la création de solutions innovantes"
+		"role": "Étudiant développeur à l'École 42",
+		"description": "Étudiant développeur à l'École 42, disponible pour un stage de 6 mois, un CDD ou un CDI"
 	},
 	"banner": {
-		"title": "Bienvenue sur mon portfolio",
-		"subtitle": "Passionné par la création de solutions web modernes, je développe des projets full-stack mêlant frontend soigné, logique backend et architecture propre. Formé au sein de l'École 42, je construis actuellement mon portfolio, des projets freelance et des applications interactives en React et Node.js."
+		"title": "Quelques projets",
+		"subtitle": "À 42, il n'y a ni cours ni professeurs : on apprend en construisant des projets et en relisant le code des autres étudiants. J'y ai codé aussi bien en C qu'en React, et c'est là que la data a commencé à m'intéresser.",
+		"highlights": {
+			"rag": "Un pipeline de RAG complet en TypeScript : ingestion de documents, découpage, index TF-IDF et recherche par similarité cosinus.",
+			"transcendance": "Une application web multijoueur développée en équipe : quiz en temps réel, comptes utilisateurs, architecture en micro-services.",
+			"irc": "Un serveur IRC en C++ qui gère de nombreux clients en même temps sur des sockets.",
+			"minishell": "Un shell Unix écrit en C, avec pipes, redirections et gestion des signaux.",
+			"inception": "Une infrastructure Docker Compose : Nginx, WordPress et MariaDB, chacun dans son conteneur.",
+			"data": "Analyse de données avec NumPy et pandas, puis une régression linéaire codée sans bibliothèque de ML."
+		}
 	},
 	"nav": {
 		"home": "Accueil",
 		"contact": "Contact",
 		"back": "Retour",
-		"copy": "Copier"
+		"copy": "Copier",
+		"presentation": "À propos",
+		"projects": "Projets",
+		"activity": "Activité",
+		"label": "Sections de la page",
+		"theme": "Basculer le mode sombre",
+		"language": "Afficher le site en anglais",
+		"menu": "Menu",
+		"github": "Mon profil GitHub"
 	},
 	"filters": {
-		"all": "Tous",
 		"school42": "42",
 		"frontend": "Frontend",
 		"backend": "Backend",
 		"freelance": "Freelance",
-		"personal": "Perso",
+		"personal": "Personnel",
 		"systems": "Systèmes",
 		"devops": "DevOps",
 		"data": "Data"
 	},
 	"origins": {
 		"42": "42",
-		"personal": "Perso",
+		"personal": "Personnel",
 		"freelance": "Freelance"
 	},
 	"projects": {
@@ -56,13 +74,13 @@
 		}
 	},
 	"projectsSection": {
-		"empty": "Sélectionne un projet pour afficher son aperçu.",
+		"empty": "Sélectionnez un projet pour afficher son aperçu.",
 		"selectedProject": "Projet sélectionné",
-		"preview": "Preview",
+		"preview": "Aperçu",
 		"stack": "Stack",
 		"description": "Description",
-		"title": "PROJETS",
-		"subtitle": "Une sélection de mes projets techniques, scolaires et freelance.",
+		"title": "Projets",
+		"subtitle": "Une sélection de projets réalisés à l'École 42 et en autonomie.",
 		"filtersLabel": "Filtres des projets",
 		"listLabel": "Liste des projets",
 		"emptyList": "Aucun projet dans cette catégorie pour le moment.",
@@ -81,15 +99,18 @@
 			"title": "Langages",
 			"reset": "Réinitialiser",
 			"panelLabel": "Filtrer par langage",
-			"other": "Autres"
-		}
+			"other": "Autres",
+			"domainsTitle": "Catégories"
+		},
+		"eyebrow": "Réalisations",
+		"closeDetail": "Fermer le projet"
 	},
 	"githubActivity": {
 		"activity": "Activité",
 		"title": "Activité GitHub",
-		"subtitle": "Voici un aperçu de mon activité récente sur GitHub, mettant en avant mes contributions, projets et collaborations.",
+		"subtitle": "Mes contributions publiques sur GitHub au cours des douze derniers mois.",
 		"noActivity": "Aucune activité récente à afficher.",
-		"loading": "Chargement de l'activité GitHub...",
+		"loading": "Chargement de l'activité GitHub…",
 		"know": "À savoir :",
 		"note1": "L’affichage des commits dépend des règles GitHub liées aux contributions visibles sur le profil, à la visibilité des dépôts et aux paramètres du compte.",
 		"note2": "Cette section montre donc les contributions reconnues par GitHub et non l'ensemble du travail réalisé localement.",
@@ -102,25 +123,41 @@
 		"tooltipCount_zero": "Aucune contribution",
 		"tooltipCount_one": "{{formattedCount}} contribution",
 		"tooltipCount_other": "{{formattedCount}} contributions",
-		"graphLabel": "Graphe des contributions GitHub : {{formattedCount}} contributions sur les 12 derniers mois."
+		"graphLabel": "Graphe des contributions GitHub : {{formattedCount}} contributions sur les 12 derniers mois.",
+		"languagesTitle": "Langages de mes projets",
+		"languagesCount_one": "{{count}} projet",
+		"languagesCount_other": "{{count}} projets",
+		"recentTitle": "Derniers projets",
+		"recentLink": "Voir {{title}} sur GitHub"
 	},
 	"contact": {
 		"contact": "Contact",
-		"title": "Parlons de votre projet.",
-		"subtitle": "Intéressé par une collaboration ou simplement envie de discuter ? N'hésitez pas à me contacter !",
-		"tagline": "Je suis ouvert à de nouvelles opportunités et collaborations passionnantes.",
-		"text": "Que vous ayez un projet en tête ou que vous souhaitiez discuter d'éventuelles collaborations, n'hésitez pas à me contacter. Je suis toujours ravie de rencontrer des professionnels qui partagent mes idées et d'explorer ensemble de nouvelles opportunités.",
+		"title": "Travaillons ensemble.",
+		"subtitle": "Vous cherchez un stagiaire ou un développeur junior ? Parlons-en.",
+		"tagline": "Disponible pour un stage de 6 mois, un CDD ou un CDI.",
+		"text": "Pour une offre de stage, de CDD ou de CDI, ou simplement une question sur mon parcours, écrivez-moi par email ou sur LinkedIn.",
 		"mailText": "M'écrire par email",
-		"linkedinText": "Me rejoindre sur LinkedIn",
+		"linkedinText": "Voir mon profil LinkedIn",
 		"githubText": "Voir mon profil GitHub",
 		"email-label": "Email",
 		"email": "pierrot.maxime.49@icloud.com",
 		"stack-label": "Stack",
 		"availability-label": "Disponibilité",
-		"availability": "Ouvert aux missions freelance et aux projets web sur mesure",
+		"availability": "Stage de 6 mois, CDD ou CDI",
 		"label-location": "Basé à",
-		"location": "Angers, France",
+		"location": "Rennes, France",
 		"linkedin": "LinkedIn",
-		"github": "GitHub"
+		"github": "GitHub",
+		"mobility": "Mobile : Bretagne · Pays de la Loire · Paris"
+	},
+	"meta": {
+		"title": "Maxime Pierrot · Étudiant développeur à l'École 42",
+		"description": "Portfolio de Maxime Pierrot, étudiant développeur à l'École 42, basé à Rennes. Disponible pour un stage de 6 mois, un CDD ou un CDI dans la data."
+	},
+	"availability": {
+		"label": "Disponible pour",
+		"internship": "Stage de 6 mois",
+		"fixedTerm": "CDD",
+		"permanent": "CDI"
 	}
 }

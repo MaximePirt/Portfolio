@@ -22,14 +22,28 @@
   - `--background #dbdfd8`, `--background-offset` (color-mix), `--text`, `--text-light`
   - `--border-thick`, `--border-thin`, `--shadow-card`, `--shadow-btn`
   - `--bubble-green-dark|mid|light`, `--bubble-grey-green`, `--bubble-orange-main|dark`, `--bubble-highlight`
+  - Lisibilité : `--text-light` (#525e59) et `--text-muted` (#4a5752) sont réglés pour ≥ 4.5:1 sur `--background` et les dégradés de section (≤ 10 % de `--primary`). Ne pas foncer un fond de section sans revérifier le contraste.
   - Tokens sémantiques (light + dark) à préférer dans les sections : `--text-primary` (titres/valeurs, au lieu de `--primary` en texte), `--text-muted` (labels, au lieu de `--secondary` en texte), `--surface` / `--surface-soft` / `--surface-strong` (fonds de cartes), `--surface-active` + `--on-active` (état actif), `--line` / `--line-soft` (bordures, séparateurs), `--chip-bg`, `--heat-0..4` (graphe GitHub)
   - Alias pages secondaires : `--bg-main`, `--bg-shell`, `--bg-secondary`
+  - Matériau : `--glass` (fond translucide du header, dérivé de `--background`), `--glass-solid` (repli `prefers-reduced-transparency`)
+  - Mouvement : `--ease-out`, `--duration-press`, `--duration-reveal`, `--reveal-step` ; typo : `--tracking-display` (titre de l'intro), `--tracking-title` (titres de section)
+  - Ombres / voile : `--shadow-lift` (survol, feuilles), `--scrim` (voile derrière une feuille modale, valeur dark plus sombre)
 - Dark mode : `[data-theme="dark"]` redéfinit `--background`, `--text`, `--text-light`, `--border-thin` et tous les tokens sémantiques (+ `color-scheme: dark`). Jamais de `rgba(...)`/hex clair en dur dans une section : utiliser un token, ou en ajouter un avec ses deux valeurs.
-- Responsive : vérifier mobile (375px) et iPad ; le hero a une version mobile dédiée (`MobileHeroShapes`).
+- Responsive : vérifier mobile (375px), tablette (768px) et ≥1024px. Seuils : 400px (nom dans le header), 640px (libellé GitHub), 900px (projets : feuille vs détail à côté), 1024px (intro épinglée, capsule de nav).
+- Boutons : `.button--primary` / `.button--ghost` (index.css) pour les actions ; `.header-button` pour les boutons ronds du header. Icônes : uniquement `react-icons/io5` (variantes Outline + logos), taille commune.
+- En-têtes de section : toujours `SectionHeader` (pas de styles de titre par section).
+
+## Mouvement
+- Valeurs uniquement depuis `src/lib/motion.js` (pas de ressort ni de durée inline) ; motion s'importe depuis `motion/react` et on alias les composants (`const MotionDiv = motion.div`) pour ESLint.
+- Ressort sans rebond par défaut ; rebond seulement après un geste (lâcher de drag) ou pour l'apparition des bulles.
+- Animer seulement `transform` / `opacity`. Pas de `getBoundingClientRect` par événement : passer par `useClusterPointer` (une mesure par frame).
+- Toute animation doit avoir son équivalent réduit : `MotionConfig reducedMotion="user"` (App) couvre motion, `useReducedMotion` coupe boucles et effets liés au scroll/pointeur, et chaque classe CSS animée est neutralisée dans `@media (prefers-reduced-motion: reduce)`.
+- Apparition au scroll : `const [ref, isRevealed] = useReveal()`, `is-revealed` sur le bloc, `.reveal` (+ `--reveal-index`, `--reveal-opacity`) sur les enfants. Retour au toucher : classe `.press`.
 
 ## i18n
 - `front/src/i18n/locales/{fr,en}/translation.json`, mêmes clés dans les deux (vérifié par `.claude/hooks/i18n-parity.mjs`).
-- Namespaces existants : `hero`, `footer`, `profile`, `banner`, `nav`, `filters`, `origins`, `projects`, `projectsSection`, `githubActivity`, `contact`, `github`.
+- Namespaces existants : `meta` (titre d'onglet, description), `hero`, `footer`, `profile`, `banner` (bio de l'intro), `nav`, `filters`, `origins`, `projects`, `projectsSection`, `githubActivity`, `contact`.
+- Ton des textes : vouvoiement envers le lecteur, phrases simples et concrètes (pas de formule « passionné de… »). Profil : étudiant à l'École 42, disponible pour un stage de 6 mois, un CDD ou un CDI (`availability.*`). Ne rien inventer d'autre (dates, campus) sans que Maxime le donne.
 - `projects.<id>.{title, summary, description}` surcharge les textes venant de GitHub (optionnel).
 - Langue par défaut et fallback : `fr`. Pas de détection navigateur ni persistance.
 - Utilisation : `const { t } = useTranslation()` puis `t('namespace.cle')`.

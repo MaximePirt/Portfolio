@@ -20,8 +20,10 @@ Portfolio personnel one-page (FR/EN) : React 19 + Vite 8 + Tailwind 4 + i18next 
 - `/check` lance les trois. `docker compose up --build` pour la stack nginx.
 
 ## Carte express
-- Tout le code app est dans `front/src`. `App.jsx` rend dans l'ordre : `Header` → `LanguageSwitcher` → `HeroSection` → `<Routes>` (`/` Home=Banner, `/contact`, `/infos`) → `ProjectsSection` → `GithubActivitySection` → `Contact` → `Footer` → `Analytics`.
-- Navigation = ancres (`#home`, `#project`, `#activity`, `#contact`) dans `Banner.jsx`.
+- Tout le code app est dans `front/src`. `App.jsx` rend dans l'ordre : `Header` → `IntroSection` → `<Routes>` (`/` vide, `/contact`, `/infos`) → `ProjectsSection` → `GithubActivitySection` → `Contact` → `Footer` → `Analytics`.
+- Navigation = ancres (`#home`, `#presentation`, `#project`, `#activity`, `#contact`) dans `components/layout/HeaderNav.jsx` (capsule du header ≥1024px) et `HeaderMenuSheet.jsx` (feuille mobile), section courante via `useActiveSection`.
+- Ouverture = `components/sections/Intro/` : récit au scroll épinglé ≥1024px (titre → bulles autour du portrait → bio), empilé sinon ou en reduced motion.
+- Mouvement : valeurs partagées dans `front/src/lib/motion.js`, `<MotionConfig reducedMotion="user">` dans `App.jsx`, apparitions au scroll via `useReveal` + classes `.reveal` / `is-revealed`.
 - Projets : lus en direct sur GitHub par la fonction Vercel `front/api/projects.js` (cache CDN 1 h) — topic `portfolio` + `.github/portfolio.yml`, règles dans `docs/portfolio-flags.md`. Hook `useProjects` côté front ; hors GitHub : `projects.manual.js`. Logique partagée dans `front/server/` et `front/src/pages/projects/lib/`. Textes surchargeables via `projects.<id>.*` des `translation.json`, médias dans `front/public/projects/<id>/`.
 - Thème : variables CSS dans `front/src/styles/index.css`, dark mode via `data-theme` posé par `Header.jsx`.
 

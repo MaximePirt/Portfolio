@@ -1,8 +1,19 @@
 import { useTranslation } from 'react-i18next'
+import { motion } from 'motion/react'
 import { getProjectActions } from './lib/projectActions.js'
 import useProjectText from './useProjectText'
 import ProjectPreview from './ProjectPreview'
 import ProjectStatusBadge from './ProjectStatusBadge'
+import { FADE_SWAP, SPRING } from '../../lib/motion'
+
+const MotionSection = motion.section
+
+// The previous project fades out quickly, the newly selected one rises in.
+const DETAIL_ENTER = {
+	initial: { opacity: 0, y: 8 },
+	animate: { opacity: 1, y: 0, transition: SPRING },
+	exit: { opacity: 0, transition: FADE_SWAP },
+}
 
 /**
  * @brief Detail of a project: preview, texts, stack and action links.
@@ -26,7 +37,7 @@ function ProjectDetail({ project }) {
 	const description = getText(project, 'description')
 
 	return (
-		<section className="project-detail" aria-labelledby={`project-title-${project.id}`}>
+		<MotionSection className="project-detail" aria-labelledby={`project-title-${project.id}`} {...DETAIL_ENTER}>
 			<div className="project-detail__header">
 				<div>
 					<p className="project-detail__label">
@@ -78,7 +89,7 @@ function ProjectDetail({ project }) {
 					<p className="project-description__text">{description}</p>
 				</div>
 			)}
-		</section>
+		</MotionSection>
 	)
 }
 

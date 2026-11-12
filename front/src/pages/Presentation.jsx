@@ -35,7 +35,7 @@ function Home() {
 			</div>
 
 			<div className="md:col-span-2 text-center md:text-left">
-				<p className="text-sm justify-center pl-8">{t('hero.tagline')}</p>
+				<p className="text-sm justify-center pl-8">{t('profile.description')}</p>
 			</div>
 		</div>
 

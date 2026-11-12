@@ -2,12 +2,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
-import Home from './pages/Home'
 import Contact from './pages/Contact'
 import Infos from './pages/Infos'
-import LanguageSwitcher from './components/ui/LanguageSwitcher'
-import HeroSection from './components/ui/HeroSection'
-import Bubble from './components/ui/Bubble'
+import IntroSection from './components/sections/Intro/IntroSection'
+import { MotionConfig } from 'motion/react'
 import ProjectsSection from './pages/projects/ProjectsSection'
 import GithubActivitySection from './components/sections/GithubActivity/GithubActivitySection'
 import { Analytics } from "@vercel/analytics/react"
@@ -21,13 +19,14 @@ import { Analytics } from "@vercel/analytics/react"
  */
 function App() {
   return (
+    // reducedMotion="user": with the OS setting on, motion keeps fades and drops movement.
+    <MotionConfig reducedMotion="user">
     <BrowserRouter>
       <Header />
-      <LanguageSwitcher />
-      <HeroSection />
-        
+      <IntroSection />
+
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={null} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/infos" element={<Infos />} />
       </Routes>
@@ -39,6 +38,7 @@ function App() {
       <Analytics />
 
     </BrowserRouter>
+    </MotionConfig>
   )
 }
 
