@@ -26,16 +26,32 @@
 }
 
 .banner-nav-item {
+	position: relative;
+	isolation: isolate;
 	border: none;
+	border-radius: 9999px;
+	padding: 0.45rem 0.6rem;
 	background: transparent;
 	color: var(--text);
-	font-size: 0.95rem;
+	font-size: 0.85rem;
 	font-weight: 500;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
 	cursor: pointer;
 }
 
 .banner-nav-item--active {
 	font-weight: 700;
+}
+
+/* Pastille qui glisse d'un lien à l'autre (layoutId de BannerNav) */
+.banner-nav-highlight {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	border-radius: inherit;
+	background: var(--surface);
+	box-shadow: var(--shadow-btn);
 }
 
 .banner-heading {
@@ -49,7 +65,7 @@
 	color: var(--text-primary);
 	font-size: 2.5rem;
 	font-weight: 600;
-	letter-spacing: 0.03em;
+	letter-spacing: var(--tracking-title);
 }
 
 .banner-heading__subtitle {
@@ -91,8 +107,8 @@
 	border: 1px solid var(--line);
 	border-radius: 1.75rem;
 	background-color: color-mix(in oklab, var(--background-offset) 94%, white 6%);
-	backdrop-filter: blur(8px);
-	-webkit-backdrop-filter: blur(8px);
+	backdrop-filter: blur(20px) saturate(160%);
+	-webkit-backdrop-filter: blur(20px) saturate(160%);
 	box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
 }
 
@@ -109,12 +125,16 @@
 		padding: 2.5rem 2rem;
 	}
 
+	/* Largeur selon le libellé : « Activités récentes » ne déborde plus sur ses voisins */
 	.banner-nav {
-		grid-template-columns: repeat(5, minmax(0, 1fr));
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
 	}
 
 	.banner-nav-item {
-		font-size: 1.25rem;
+		font-size: clamp(0.8rem, 0.45rem + 0.7vw, 1.15rem);
+		white-space: nowrap;
 	}
 
 	.banner-heading {

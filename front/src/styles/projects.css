@@ -115,6 +115,38 @@
 	color: var(--on-active);
 }
 
+/* Retour au toucher sur les pills et les filtres */
+.projects-filter,
+.project-pill {
+	transition:
+		transform var(--duration-press) var(--ease-out),
+		color 200ms ease;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.projects-filter:active,
+.project-pill:active {
+	transform: scale(0.97);
+}
+
+/* Catégories : la couleur active est portée par la pastille qui glisse (ProjectFilters) */
+.projects-filter--category {
+	position: relative;
+	isolation: isolate;
+}
+
+.projects-filter--category.is-active {
+	background: var(--surface);
+}
+
+.projects-filter__highlight {
+	position: absolute;
+	inset: -1px;
+	z-index: -1;
+	border-radius: inherit;
+	background: var(--surface-active);
+}
+
 /* Language filter: "Filter" toggle before the category pills, banner of language chips below. */
 .projects-filters {
 	margin-bottom: 2rem;
@@ -387,7 +419,8 @@
 }
 
 .project-pill {
-	animation: project-pill-in 320ms ease both;
+	/* backwards : l'état final n'est pas figé, le :active (scale) reste possible */
+	animation: project-pill-in 320ms ease backwards;
 	animation-delay: calc(var(--pill-delay, 0) * 45ms);
 }
 
@@ -476,6 +509,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+	.projects-filter:active,
+	.project-pill:active {
+		transform: none;
+	}
+
 	.project-pill {
 		animation: none;
 	}

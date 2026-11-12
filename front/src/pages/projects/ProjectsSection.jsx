@@ -12,6 +12,7 @@ import LanguageFilter from './LanguageFilter'
 import ProjectFilters from './ProjectFilters'
 import ProjectsList from './ProjectsList'
 import ProjectDetail from './ProjectDetail'
+import useReveal from '../../components/ui/useReveal'
 import '../../styles/projects.css'
 
 /**
@@ -24,6 +25,7 @@ function ProjectsSection() {
 	const [selectedProjectId, setSelectedProjectId] = useState(null)
 	const { t } = useTranslation()
 	const { projects, status } = useProjects()
+	const [shellRef, isRevealed] = useReveal()
 
 	const availableFilters = useMemo(() => getAvailableFilters(projects), [projects])
 
@@ -57,8 +59,8 @@ function ProjectsSection() {
 
 	return (
 		<section className="projects-section" id="project" aria-busy={status === 'loading'}>
-			<div className="projects-shell">
-				<header className="projects-header">
+			<div ref={shellRef} className={`projects-shell ${isRevealed ? 'is-revealed' : ''}`}>
+				<header className="projects-header reveal">
 					<h2 className="projects-header__title">{t('projectsSection.title')}</h2>
 					<p className="projects-header__subtitle">{t('projectsSection.subtitle')}</p>
 				</header>
@@ -85,7 +87,7 @@ function ProjectsSection() {
 						isLoading={status === 'loading'}
 					/>
 
-					<ProjectDetail project={selectedProject} />
+					<ProjectDetail key={selectedProject?.id ?? 'empty'} project={selectedProject} />
 				</div>
 			</div>
 		</section>

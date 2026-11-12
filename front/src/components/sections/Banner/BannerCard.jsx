@@ -8,7 +8,7 @@ function BannerCard() {
 	const { t } = useTranslation()
 
 	return (
-		<div className="banner-card">
+		<div className="banner-card reveal" style={{ '--reveal-index': 2 }}>
 		<p className="banner-card__text">
 			{t('banner.subtitle')}
 		</p>

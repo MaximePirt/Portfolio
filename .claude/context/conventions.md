@@ -24,8 +24,17 @@
   - `--bubble-green-dark|mid|light`, `--bubble-grey-green`, `--bubble-orange-main|dark`, `--bubble-highlight`
   - Tokens sémantiques (light + dark) à préférer dans les sections : `--text-primary` (titres/valeurs, au lieu de `--primary` en texte), `--text-muted` (labels, au lieu de `--secondary` en texte), `--surface` / `--surface-soft` / `--surface-strong` (fonds de cartes), `--surface-active` + `--on-active` (état actif), `--line` / `--line-soft` (bordures, séparateurs), `--chip-bg`, `--heat-0..4` (graphe GitHub)
   - Alias pages secondaires : `--bg-main`, `--bg-shell`, `--bg-secondary`
+  - Matériau : `--glass` (fond translucide du header, dérivé de `--background`), `--glass-solid` (repli `prefers-reduced-transparency`)
+  - Mouvement : `--ease-out`, `--duration-press`, `--duration-reveal`, `--reveal-step` ; typo : `--tracking-display` (hero), `--tracking-title` (titres de section)
 - Dark mode : `[data-theme="dark"]` redéfinit `--background`, `--text`, `--text-light`, `--border-thin` et tous les tokens sémantiques (+ `color-scheme: dark`). Jamais de `rgba(...)`/hex clair en dur dans une section : utiliser un token, ou en ajouter un avec ses deux valeurs.
-- Responsive : vérifier mobile (375px) et iPad ; le hero a une version mobile dédiée (`MobileHeroShapes`).
+- Responsive : vérifier mobile (375px), tablette (768px) et ≥1024px ; le hero passe en deux colonnes (texte + cluster) à 1024px, en dessous il affiche `MobileHeroShapes`.
+
+## Mouvement
+- Valeurs uniquement depuis `src/lib/motion.js` (pas de ressort ni de durée inline) ; motion s'importe depuis `motion/react` et on alias les composants (`const MotionDiv = motion.div`) pour ESLint.
+- Ressort sans rebond par défaut ; rebond seulement après un geste (lâcher de drag) ou pour l'apparition des bulles.
+- Animer seulement `transform` / `opacity`. Pas de `getBoundingClientRect` par événement : passer par `useClusterPointer` (une mesure par frame).
+- Toute animation doit avoir son équivalent réduit : `MotionConfig reducedMotion="user"` (App) couvre motion, `useReducedMotion` coupe boucles et effets liés au scroll/pointeur, et chaque classe CSS animée est neutralisée dans `@media (prefers-reduced-motion: reduce)`.
+- Apparition au scroll : `const [ref, isRevealed] = useReveal()`, `is-revealed` sur le bloc, `.reveal` (+ `--reveal-index`, `--reveal-opacity`) sur les enfants. Retour au toucher : classe `.press`.
 
 ## i18n
 - `front/src/i18n/locales/{fr,en}/translation.json`, mêmes clés dans les deux (vérifié par `.claude/hooks/i18n-parity.mjs`).

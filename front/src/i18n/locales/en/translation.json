@@ -20,7 +20,13 @@
 		"home": "Home",
 		"contact": "Contact",
 		"back": "Back",
-		"copy": "Copy"
+		"copy": "Copy",
+		"presentation": "Presentation",
+		"projects": "Projects",
+		"activity": "Recent activity",
+		"label": "Page sections",
+		"theme": "Toggle dark mode",
+		"language": "Change language"
 	},
 	"filters": {
 		"all": "All",

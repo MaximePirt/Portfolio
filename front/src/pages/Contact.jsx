@@ -1,5 +1,6 @@
 import '../styles/contact.css'
 import { useTranslation } from 'react-i18next'
+import useReveal from '../components/ui/useReveal'
 
 /**
  * @brief Contact section with the ways to reach me.
@@ -7,11 +8,13 @@ import { useTranslation } from 'react-i18next'
  */
 function ContactSection() {
 	const { t } = useTranslation()
+	const [shellRef, isRevealed] = useReveal()
+
 	return (
 		<section className="contact-section" id="contact">
-			<div className="contact-shell">
+			<div ref={shellRef} className={`contact-shell ${isRevealed ? 'is-revealed' : ''}`}>
 				<div className="contact-layout">
-					<div className="contact-copy">
+					<div className="contact-copy reveal">
 						<p className="contact-copy__eyebrow">{t('contact.contact')}</p>
 
 						<h2 className="contact-copy__title">
@@ -42,7 +45,7 @@ function ContactSection() {
 						</div>
 					</div>
 
-					<aside className="contact-card">
+					<aside className="contact-card reveal" style={{ '--reveal-index': 2 }}>
 						<div className="contact-card__block">
 							<p className="contact-card__label">{t('contact.email-label')}</p>
 							<a href={`mailto:${t('contact.email')}`} className="contact-card__value">

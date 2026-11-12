@@ -4,7 +4,7 @@ Cocher `[x]` puis supprimer l'entrée au commit suivant quand c'est réglé. Ajo
 
 ## i18n
 - [x] Section Projets : textes en dur (titre, sous-titre, aria-labels, état vide, GitHub/Demo) et `alt` de la preview — passés en `t()`.
-- [ ] `Banner.jsx` : libellés de nav en dur (ACCUEIL, PRESENTATION…).
+- [x] Libellés de nav en dur — passés en `nav.*` dans `BannerNav.jsx`.
 - [ ] `Contact.jsx` : liste de stack en dur.
 
 ## Styles
@@ -16,11 +16,12 @@ Cocher `[x]` puis supprimer l'entrée au commit suivant quand c'est réglé. Ajo
 
 ## Structure
 - [ ] `Contact` rendu deux fois sur `/contact` (route + section fixe dans `App.jsx`).
-- [ ] Ancre `#presentation` sans cible ; `pages/Presentation.jsx` non utilisé (et exporte `Home`).
+- [x] Ancre `#presentation` : pointe maintenant sur `Banner`. Reste : `pages/Presentation.jsx` non utilisé (et exporte `Home`).
 - [ ] `pages/Infos.jsx` et `InfoCards.jsx` quasi inutilisés.
-- [ ] `FloatingBubble.jsx` importe `framer-motion` alors que la dépendance déclarée est `motion` (fonctionne car transitive).
-- [ ] **`npm run lint` échoue** : `FloatingBubble.jsx:2` — `'motion' is defined but never used` (ESLint ne voit pas l'usage JSX `<motion.div>` : pas de règle `jsx-uses-vars`). Toute édition de ce fichier sera signalée par le hook de lint tant que ce n'est pas corrigé.
-- [ ] `CLUSTER_BASE_SIZE` déclaré mais inutilisé dans `HeroSection.jsx`.
+- [x] `FloatingBubble.jsx` importe désormais `motion/react`.
+- [x] `npm run lint` repasse (alias `MotionDiv = motion.div`).
+- [x] `CLUSTER_BASE_SIZE` centralisé dans `lib/repel.js`.
+- [ ] Réduction des animations vérifiée à la lecture du code seulement (le volet navigateur ne sait pas émuler `prefers-reduced-motion`) : à confirmer sur un appareil avec le réglage activé.
 
 ## Assets / HTML
 - [ ] `/favicon.svg` référencé dans `index.html` mais absent de `public/`.

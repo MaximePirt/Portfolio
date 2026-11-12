@@ -1,7 +1,7 @@
 import { useCallback, useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import useDismiss from './useDismiss'
+import useDismiss from '../../components/ui/useDismiss'
 
 const PANEL_TRANSITION = { duration: 0.25, ease: 'easeOut' }
 const MotionDiv = motion.div

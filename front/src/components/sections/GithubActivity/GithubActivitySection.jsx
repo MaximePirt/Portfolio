@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { FaGithub } from 'react-icons/fa'
 import { FiArrowUpRight } from 'react-icons/fi'
 import FloatingShape from '../../ui/FloatingBubble'
+import useClusterPointer from '../../ui/useClusterPointer'
+import useReveal from '../../ui/useReveal'
 import { useGithubContributions } from './useGithubContributions'
 import '../../../styles/github-activity.css'
 
@@ -141,6 +143,8 @@ function GithubActivitySection() {
 	const cardRef = useRef(null)
 	const scrollRef = useRef(null)
 	const [tooltip, setTooltip] = useState(null)
+	const pointer = useClusterPointer(sectionRef, clusterRef)
+	const [shellRef, isRevealed] = useReveal()
 
 	const { status, days, stats } = useGithubContributions(GITHUB_USERNAME)
 
@@ -206,8 +210,8 @@ function GithubActivitySection() {
 			className="github-activity-section"
 			id="activity"
 		>
-			<div className="github-activity-shell">
-				<header className="github-activity-header">
+			<div ref={shellRef} className={`github-activity-shell ${isRevealed ? 'is-revealed' : ''}`}>
+				<header className="github-activity-header reveal">
 					<p className="github-activity-header__eyebrow">{t('githubActivity.activity')}</p>
 					<h2 className="github-activity-header__title">{t('githubActivity.title')}</h2>
 					<p className="github-activity-header__subtitle">
@@ -215,7 +219,7 @@ function GithubActivitySection() {
 					</p>
 				</header>
 
-				<div ref={cardRef} className="github-card">
+				<div ref={cardRef} className="github-card reveal" style={{ '--reveal-index': 2 }}>
 					<div className="github-card__top">
 						<dl className="github-stats" aria-busy={status === 'loading'}>
 							{status === 'ready'
@@ -348,8 +352,7 @@ function GithubActivitySection() {
 					<FloatingShape
 						key={shape.id}
 						{...shape}
-						sectionRef={sectionRef}
-						clusterRef={clusterRef}
+						pointer={pointer}
 					/>
 				))}
 			</div>

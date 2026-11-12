@@ -1,11 +1,28 @@
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import Bubble from './Bubble'
 import FloatingShape from './FloatingBubble'
+import useClusterPointer from './useClusterPointer'
+import { RISE_IN, SPRING_ENTRANCE, STAGGER } from '../../lib/motion'
 
 import '../../styles/bubble.css'
+import '../../styles/hero.css'
 
-const CLUSTER_BASE_SIZE = 520
+const MotionDiv = motion.div
+const MotionH1 = motion.h1
+const MotionP = motion.p
+
+// Title then subtitle, one after the other.
+const COPY_STAGGER = {
+	hidden: {},
+	visible: { transition: { staggerChildren: STAGGER * 2, delayChildren: 0.1 } },
+}
+
+// Share of the section scrolled (0 → 1) over which the text steps back.
+const SCROLL_FADE_END = 0.7
+const COPY_SCROLL_SCALE = 0.94
+const CLUSTER_PARALLAX = 80
 
 const SHAPES = [
 	{
@@ -90,12 +107,12 @@ const SHAPES = [
 
 
 /**
- * @brief Faded decorative bubbles shown on mobile only, in place of the animated cluster.
+ * @brief Faded decorative bubbles shown below the large layout, in place of the animated cluster.
  * @returns {JSX.Element} The static bubbles.
  */
 function MobileHeroShapes() {
 	return (
-		<div className="absolute inset-0 md:hidden pointer-events-none overflow-hidden">
+		<div className="hero__shapes-mobile" aria-hidden="true">
 			<Bubble
 				variant="bubble-orange"
 				size="clamp(120px, 32vw, 180px)"
@@ -125,65 +142,63 @@ function MobileHeroShapes() {
 }
 
 
+/**
+ * @brief Scroll-linked styles: the text fades and steps back while the hero leaves the screen,
+ * the cluster drifts slower than the page. None when reduced motion is requested.
+ * @param {{current: HTMLElement|null}} sectionRef - Hero section.
+ * @returns {{copy: Object|undefined, cluster: Object|undefined}} Motion styles.
+ */
+function useHeroScrollStyles(sectionRef) {
+	const reduceMotion = useReducedMotion()
+	const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] })
+	const opacity = useTransform(scrollYProgress, [0, SCROLL_FADE_END], [1, 0])
+	const scale = useTransform(scrollYProgress, [0, SCROLL_FADE_END], [1, COPY_SCROLL_SCALE])
+	const clusterY = useTransform(scrollYProgress, [0, 1], [0, CLUSTER_PARALLAX])
 
+	if (reduceMotion) return { copy: undefined, cluster: undefined }
+	return { copy: { opacity, scale }, cluster: { y: clusterY } }
+}
 
 
 /**
- * @brief Hero section with the presentation text and the floating bubble cluster.
+ * @brief Hero section: presentation text entering line by line, next to the floating bubble cluster.
  * @returns {JSX.Element} The section.
  */
 function HeroSection() {
 	const { t } = useTranslation()
 	const sectionRef = useRef(null)
 	const clusterRef = useRef(null)
+	const pointer = useClusterPointer(sectionRef, clusterRef)
+	const scrollStyles = useHeroScrollStyles(sectionRef)
 
 	return (
-	<section
-		ref={sectionRef}
-		id="home"
-		className="relative min-h-screen overflow-hidden flex items-center"
-		style={{ backgroundColor: 'var(--background)' }}
-	>
-		<MobileHeroShapes />
-		<div className="relative z-10 w-full max-w-[92vw] md:max-w-[60vw] px-6 sm:px-10 md:px-16 lg:px-40">
-		<h1
-			className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4 leading-none "
-			style={{ color: 'var(--text-primary)' }}
-		>
-			{t('hero.title')}
-		</h1>
+		<section ref={sectionRef} id="home" className="hero">
+			<MobileHeroShapes />
 
-		<p
-			className="text-base sm:text-lg md:text-xl max-w-[32rem]"
-			style={{ color: 'var(--text-light)' }}
-		>
-			{t('hero.subtitle')}
-		</p>
-		</div>
+			<div className="hero__inner">
+				<MotionDiv
+					className="hero__copy"
+					variants={COPY_STAGGER}
+					initial="hidden"
+					animate="visible"
+					style={scrollStyles.copy}
+				>
+					<MotionH1 className="hero__title" variants={RISE_IN} transition={SPRING_ENTRANCE}>
+						{t('hero.title')}
+					</MotionH1>
 
-	<div
-	ref={clusterRef}
-	className="absolute pointer-events-none hidden md:block"
-	style={{
-		'--cluster-size': 'clamp(320px, 42vw, 680px)',
-		width: 'var(--cluster-size)',
-		height: 'var(--cluster-size)',
-		left: '50%',
-		top: '50%',
-		transform: 'translate(-50%, -50%)',
-	}}
-	>
-		{SHAPES.map((shape) => (
-			<FloatingShape
-			key={shape.id}
-			{...shape}
-			sectionRef={sectionRef}
-			clusterRef={clusterRef}
-			/>
-		))}
-	</div>
+					<MotionP className="hero__subtitle" variants={RISE_IN} transition={SPRING_ENTRANCE}>
+						{t('hero.subtitle')}
+					</MotionP>
+				</MotionDiv>
 
-	</section>
+				<MotionDiv ref={clusterRef} className="hero__cluster" style={scrollStyles.cluster} aria-hidden="true">
+					{SHAPES.map((shape) => (
+						<FloatingShape key={shape.id} {...shape} pointer={pointer} isDraggable />
+					))}
+				</MotionDiv>
+			</div>
+		</section>
 	)
 }
 

@@ -1,6 +1,9 @@
 import Bubble from '../../ui/Bubble'
 import '../../../styles/bubble.css'
 
+// Bubbles enter quicker than text blocks: a fraction of a reveal step each.
+const BUBBLE_STAGGER = 0.4
+
 const desktopBubbles = [
 	{ id: 1, x: '12%', y: '40%', variant: 'bubble-green-dark', size: '150px' },
 	{ id: 2, x: '24%', y: '40%', variant: 'bubble-green-light', size: '150px' },
@@ -40,7 +43,7 @@ function BannerBubbles() {
 	return (
 		<>
 			<div className="banner-bubbles banner-bubbles--desktop" aria-hidden="true">
-				{desktopBubbles.map((bubble) => (
+				{desktopBubbles.map((bubble, index) => (
 					<div
 						key={bubble.id}
 						className="banner-bubble"
@@ -52,14 +55,15 @@ function BannerBubbles() {
 						<Bubble
 							variant={bubble.variant}
 							size={`clamp(82px, 8vw, ${bubble.size})`}
-							className={bubble.active ? 'bubble-active' : ''}
+							className="reveal reveal--pop"
+							style={{ '--reveal-index': index * BUBBLE_STAGGER }}
 						/>
 					</div>
 				))}
 			</div>
 
 			<div className="banner-bubbles banner-bubbles--mobile" aria-hidden="true">
-				{mobileBubbles.map((bubble) => (
+				{mobileBubbles.map((bubble, index) => (
 					<div
 						key={bubble.id}
 						className="banner-bubble"
@@ -71,7 +75,8 @@ function BannerBubbles() {
 						<Bubble
 							variant={bubble.variant}
 							size={bubble.size}
-							style={{ opacity: bubble.opacity }}
+							className="reveal reveal--pop"
+							style={{ '--reveal-opacity': bubble.opacity, '--reveal-index': index }}
 						/>
 					</div>
 				))}

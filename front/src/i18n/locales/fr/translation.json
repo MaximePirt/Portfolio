@@ -20,7 +20,13 @@
 		"home": "Accueil",
 		"contact": "Contact",
 		"back": "Retour",
-		"copy": "Copier"
+		"copy": "Copier",
+		"presentation": "Présentation",
+		"projects": "Projets",
+		"activity": "Activités récentes",
+		"label": "Sections de la page",
+		"theme": "Basculer le mode sombre",
+		"language": "Changer de langue"
 	},
 	"filters": {
 		"all": "Tous",

@@ -24,20 +24,29 @@ front/
     ├── i18n/
     │   ├── index.js           # i18next, ressources fr/en, lng 'fr', fallback 'fr'
     │   └── locales/{fr,en}/translation.json
+    ├── lib/
+    │   ├── motion.js          # vocabulaire de mouvement partagé : SPRING, SPRING_MOMENTUM, SPRING_ENTRANCE, SPRING_REPEL, DRAG_RELEASE, STAGGER, variants RISE_IN / POP_IN
+    │   └── repel.js           # getRepelOffset (pur) : poussée des bulles par le pointeur, nulle au centre pour qu'on puisse les attraper
     ├── components/
     │   ├── layout/
-    │   │   ├── Header.jsx     # logo + nom, toggle dark mode (state local → data-theme sur <html>), lien GitHub
+    │   │   ├── Header.jsx     # barre collante translucide : logo + nom, toggle dark mode (data-theme sur <html>), lien GitHub
+    │   │   ├── useHideOnScroll.js # cache la barre en descendant, la réaffiche en remontant (is-hidden / is-scrolled)
     │   │   └── Footer.jsx     # © année + profile.name + footer.rights
     │   ├── sections/
-    │   │   ├── Banner/Banner.jsx        # nav par ancres (labels EN DUR), titre, BannerCard, portrait, BannerBubbles — styles/banner.css
+    │   │   ├── Banner/Banner.jsx        # id="presentation" : BannerNav, titre, BannerCard, portrait, BannerBubbles, apparition au scroll — styles/banner.css
+    │   │   ├── Banner/BannerNav.jsx     # nav par ancres (libellés nav.*), pastille motion layoutId qui suit survol/focus puis la section courante
+    │   │   ├── Banner/useActiveSection.js # IntersectionObserver : id de la section au milieu de l'écran
     │   │   ├── Banner/BannerCard.jsx    # texte banner.subtitle
-    │   │   ├── Banner/BannerBubble.jsx  # bulles statiques desktop/mobile positionnées en %
-    │   │   └── GithubActivity/GithubActivitySection.jsx # id="activity", lib github-calendar (user MaximePirt), bulles FloatingShape — styles/github-activity.css
+    │   │   ├── Banner/BannerBubble.jsx  # bulles desktop/mobile positionnées en %, apparition en cascade (.reveal--pop)
+    │   │   └── GithubActivity/GithubActivitySection.jsx # id="activity", contributions GitHub (user MaximePirt), bulles FloatingShape (non déplaçables) — styles/github-activity.css
     │   └── ui/
-    │       ├── HeroSection.jsx      # id="home", hero.title/subtitle, cluster de FloatingShape (SHAPES) desktop + MobileHeroShapes
-    │       ├── Bubble.jsx           # cercle : props variant, size, absolute, x, y, style — styles/bubble.css
-    │       ├── FloatingBubble.jsx   # export FloatingShape : flottement motion + répulsion souris (repelRadius/repelForce mis à l'échelle sur CLUSTER_BASE_SIZE=520). Nécessite sectionRef + clusterRef + --cluster-size
-    │       ├── LanguageSwitcher.jsx # bouton fixe bas-gauche, menu FR/EN (i18n.changeLanguage)
+    │       ├── HeroSection.jsx      # id="home" : texte (entrée en cascade, recul au scroll) + cluster de FloatingShape déplaçables (≥1024px), MobileHeroShapes en dessous — styles/hero.css
+    │       ├── Bubble.jsx           # cercle : props variant, size, absolute, x, y, className, style — styles/bubble.css
+    │       ├── FloatingBubble.jsx   # export FloatingShape : apparition, flottement, poussée du pointeur (lib/repel), drag optionnel (isDraggable) qui revient à sa place avec la vitesse du lâcher. Props pointer (useClusterPointer) + --cluster-size sur le parent
+    │       ├── useClusterPointer.js # un seul écouteur pointermove par section, lu une fois par frame → MotionValue {x, y, size} | null
+    │       ├── useReveal.js         # [ref, isRevealed] (useInView once) ; mettre `is-revealed` sur le bloc, `.reveal` (+ --reveal-index) sur les enfants
+    │       ├── useDismiss.js        # ferme sur Échap ou clic extérieur (LanguageSwitcher, LanguageFilter)
+    │       ├── LanguageSwitcher.jsx # bouton fixe bas-gauche, menu FR/EN qui sort du bouton (AnimatePresence), Échap pour fermer
     │       ├── InfoCards.jsx        # export InfoCard (non utilisé actuellement)
     │       └── Backbutton.jsx       # export BackButton (utilisé par Infos)
     ├── pages/
@@ -53,17 +62,16 @@ front/
     │       ├── lib/                 # pur JS partagé front/serveur : projectSchema, projectFilters (catégories + langages), languages (catalogue des langages), projectText, projectActions, generatedCover, mergeProjects
     │       ├── useProjectText.js    # hook getText(project, 'title'|'summary'|'description')
     │       ├── ProjectsSection.jsx  # id="project", filtres + liste + détail — styles/projects.css
-    │       ├── ProjectFilters.jsx   # pills de filtre avec compteur (seulement les filtres non vides)
+    │       ├── ProjectFilters.jsx   # pills de filtre avec compteur (seulement les filtres non vides), pastille active qui glisse (layoutId)
     │       ├── LanguageFilter.jsx   # bouton « Filtre » devant les pills + bandeau animé (`motion/react`) de chips langages (multi-sélection)
-    │       ├── useDismiss.js        # hook : ferme sur Échap ou clic extérieur
     │       ├── ProjectStatusBadge.jsx # badge « En cours »
     │       ├── ProjectCover.jsx     # cover de bulles générée quand il n'y a ni image ni vidéo
     │       ├── ProjectsList.jsx     # pills (titleKey/metaKey), état vide en dur
-    │       ├── ProjectDetail.jsx    # header, liens GitHub/Demo, preview, stack (chips), description
+    │       ├── ProjectDetail.jsx    # header, liens GitHub/Demo, preview, stack (chips), description ; remonté (key) et fondu à chaque sélection
     │       └── ProjectPreview.jsx   # image coverSrc, vidéo webm/mp4 jouée au survol
     └── styles/
         ├── index.css          # @import tailwindcss, variables :root + [data-theme="dark"], header/lang-btn/footer/info-card
-        ├── banner.css, bubble.css, contact.css, github-activity.css, projects.css
+        ├── banner.css, bubble.css, contact.css, github-activity.css, hero.css, projects.css
 ```
 
 ## Ordre de rendu (`App.jsx`)
@@ -71,7 +79,13 @@ front/
 Seul le bloc `<Routes>` dépend de l'URL ; le reste est toujours rendu.
 
 ## Ancres de navigation
-`#home` (HeroSection), `#presentation` (aucune cible actuellement), `#project` (ProjectsSection), `#activity` (GithubActivity), `#contact` (Contact).
+`#home` (HeroSection), `#presentation` (Banner, route `/` seulement), `#project` (ProjectsSection), `#activity` (GithubActivity), `#contact` (Contact). `html { scroll-padding-top }` évite que le header collant masque la cible.
+
+## Mouvement
+- `App.jsx` enveloppe tout dans `<MotionConfig reducedMotion="user">` : avec « réduire les animations », motion garde les fondus et supprime les déplacements. Les boucles (flottement) et la poussée du pointeur sont coupées via `useReducedMotion`, le recul du hero au scroll aussi.
+- Valeurs : uniquement `lib/motion.js` (ressorts sans rebond par défaut, rebond seulement après un geste ou pour l'apparition des bulles).
+- CSS : `.press` (réaction à l'appui), `.reveal` / `.reveal--pop` + `is-revealed` (apparition au scroll), tous neutralisés dans `@media (prefers-reduced-motion: reduce)` d'`index.css`.
+- Seuls `transform` et `opacity` sont animés.
 
 ## Données projets
 - Source : repos publics GitHub `MaximePirt` avec le topic `portfolio` (et/ou `.github/portfolio.yml`). `front/api/projects.js` (fonction Vercel) les lit via `server/collectProjects.mjs` et renvoie `{ version, projects }` avec `Cache-Control: public, max-age=300, s-maxage=3600, stale-while-revalidate=86400` : le site suit GitHub sans commit ni déploiement (≈ 1 h de délai). Erreur GitHub → 502 non mis en cache ; le front garde alors les projets manuels. Règles : `docs/portfolio-flags.md`.
@@ -89,7 +103,7 @@ Seul le bloc `<Routes>` dépend de l'URL ; le reste est toujours rendu.
 
 ## Bulles
 - Variants CSS : `bubble-orange`, `bubble-grey`, `bubble-green-light`, `bubble-green-dark` (bubble.css, couleurs `--bubble-*` d'index.css).
-- `FloatingShape` : `x`,`y` en % du cluster, `size` en % de `--cluster-size`, `delay`, `floatY`, `floatRotate`, `repelRadius`, `repelForce`.
+- `FloatingShape` : `x`,`y` en % du cluster, `size` en % de `--cluster-size`, `delay`, `floatY`, `floatRotate`, `repelRadius`, `repelForce` (réglés sur `CLUSTER_BASE_SIZE` = 520 dans `lib/repel.js`), `pointer`, `isDraggable`.
 
 ## Dépendances runtime
-react 19, react-dom, react-router-dom 7, i18next + react-i18next, motion (import réel : `framer-motion`), clsx, react-icons, github-calendar, @vercel/analytics.
+react 19, react-dom, react-router-dom 7, i18next + react-i18next, motion (import `motion/react`), clsx, react-icons, @vercel/analytics.

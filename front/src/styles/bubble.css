@@ -45,3 +45,13 @@
 }
 
 
+
+/* Bulle qu'on peut attraper et lancer (FloatingShape isDraggable) */
+.floating-shape--draggable {
+	pointer-events: auto;
+	cursor: grab;
+}
+
+.floating-shape--draggable:active {
+	cursor: grabbing;
+}
