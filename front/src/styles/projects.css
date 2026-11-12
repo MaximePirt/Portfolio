@@ -537,42 +537,33 @@
 }
 
 /* Mobile: filters on a single scrolling line, centered when they fit. */
+/* ── Mobile : pastilles centrées qui passent à la ligne, liste verticale compacte, détail en feuille ── */
 @media (max-width: 899px) {
-	.projects-toolbar {
-		flex-wrap: nowrap;
-		justify-content: safe center;
-		overflow-x: auto;
-		margin: 0 -1rem 1.5rem;
-		padding: 0.25rem 1rem 0.75rem;
-		scroll-snap-type: x proximity;
-		scrollbar-width: none;
+	.projects-section {
+		padding: 4.5rem 1rem 5rem;
 	}
 
-	.projects-filter {
-		flex-shrink: 0;
-		scroll-snap-align: start;
-	}
-
-	/* The "Filter" toggle stays visible, the category pills scroll next to it. */
 	.projects-filters {
-		margin-bottom: 1.5rem;
+		margin-bottom: 1.25rem;
 	}
 
-	.projects-filters__row {
-		justify-content: flex-start;
+	.projects-filters__row,
+	.projects-filters .projects-toolbar {
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5rem;
 	}
 
 	.projects-filters .projects-toolbar {
-		flex: 1;
-		margin: 0 -1rem 0 0;
-		padding-left: 0;
+		margin: 0;
 	}
 
-	.projects-filter--toggle {
-		margin-top: 0.25rem;
+	.projects-filter {
+		min-height: 2.75rem;
+		padding: 0.6rem 1rem;
+		font-size: 0.9rem;
 	}
 
-	/* La liste devient une rangée de cartes qu'on fait défiler au doigt (inertie et aimantation natives) */
 	.projects-layout,
 	.projects-list {
 		min-width: 0;
@@ -582,105 +573,27 @@
 		grid-template-columns: minmax(0, 1fr);
 	}
 
-	.projects-list__body {
-		flex-direction: row;
-		align-items: stretch;
-		gap: 0.75rem;
-		margin: 0 -1rem;
-		padding: 0.5rem 1rem 1.5rem;
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		scroll-padding-inline: 1rem;
-		overscroll-behavior-x: contain;
-		scrollbar-width: none;
-	}
-
+	.projects-list__body,
 	.projects-list__scroll {
-		display: contents;
+		gap: 0.6rem;
 	}
 
 	.project-pill {
-		flex: 0 0 min(78vw, 320px);
-		justify-content: space-between;
-		min-height: 7.5rem;
-		scroll-snap-align: start;
+		border-radius: 1.1rem;
+		padding: 0.85rem 1rem;
+	}
+
+	.project-pill__title {
+		font-size: 1rem;
+	}
+
+	.project-pill__meta {
+		font-size: 0.85rem;
 	}
 
 	.project-pill--more {
-		flex-basis: 44vw;
-		justify-content: center;
+		margin-top: 0.25rem;
 	}
-
-	.projects-list__status {
-		flex: 0 0 60vw;
-		align-self: center;
-	}
-}
-
-/* ── Feuille projet (petit écran) : monte du bas, se ferme en tirant sa poignée (ProjectSheet) ── */
-.project-sheet {
-	position: fixed;
-	inset: 0;
-	z-index: 6000;
-}
-
-.project-sheet__scrim {
-	position: absolute;
-	inset: 0;
-	background: var(--scrim);
-}
-
-.project-sheet__panel {
-	position: absolute;
-	inset: auto 0 0;
-	display: flex;
-	flex-direction: column;
-	max-height: 92vh;
-	max-height: 92svh;
-	/* Déborde sous l'écran : pas de jour quand la feuille cède un peu vers le haut */
-	margin-bottom: -2rem;
-	padding-bottom: calc(2rem + env(safe-area-inset-bottom));
-	border-radius: 1.75rem 1.75rem 0 0;
-	background: var(--background);
-	box-shadow: var(--shadow-lift);
-	outline: none;
-}
-
-.project-sheet__handle {
-	flex-shrink: 0;
-	display: flex;
-	justify-content: center;
-	padding: 0.7rem 0 1.1rem;
-	cursor: grab;
-	touch-action: none;
-}
-
-.project-sheet__grabber {
-	width: 2.5rem;
-	height: 0.3rem;
-	border-radius: 9999px;
-	background: var(--line);
-}
-
-.project-sheet__close {
-	position: absolute;
-	top: 0.6rem;
-	right: 0.75rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 2.25rem;
-	height: 2.25rem;
-	border-radius: 9999px;
-	background: var(--chip-bg);
-	color: var(--text);
-}
-
-.project-sheet__content {
-	min-height: 0;
-	padding: 0.75rem 0.75rem 1rem;
-	overflow-y: auto;
-	overscroll-behavior: contain;
 }
 
 @media (min-width: 900px) {

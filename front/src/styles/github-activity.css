@@ -18,8 +18,15 @@
 /* Graphe à gauche, langages et derniers projets à droite (empilés sous 1100px) */
 .github-activity-layout {
 	display: grid;
+	grid-template-columns: minmax(0, 1fr);
 	gap: 1.25rem;
 	align-items: start;
+}
+
+/* Le graphe défile dans sa carte : la carte, elle, ne dépasse jamais l'écran */
+.github-card,
+.activity-aside {
+	min-width: 0;
 }
 
 .activity-aside {
@@ -195,7 +202,7 @@
 
 .github-stat__label {
 	color: var(--text-muted);
-	font-size: 0.7rem;
+	font-size: 0.75rem;
 	text-transform: uppercase;
 	letter-spacing: 0.12em;
 }
@@ -433,23 +440,52 @@
 	margin-left: 0.2rem;
 }
 
+/* ── Mobile : statistiques sur une ligne de trois, lien pleine largeur, panneaux resserrés ── */
 @media (max-width: 768px) {
 	.github-activity-section {
-		padding: 3.5rem 0 3rem;
+		padding: 4rem 0 3.5rem;
 	}
-
 
 	.github-card {
 		border-radius: 1.5rem;
 		padding: 1.15rem 1rem 1rem;
 	}
 
+	.github-card__top {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
 	.github-stats {
-		gap: 0.9rem 1.5rem;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.75rem;
 	}
 
 	.github-stat__value {
 		font-size: 1.6rem;
+	}
+
+	/* Libellés en casse normale : en capitales espacées ils débordent sur la colonne voisine */
+	.github-stat {
+		min-width: 0;
+	}
+
+	.github-stat__label {
+		font-size: 0.78rem;
+		line-height: 1.3;
+		text-transform: none;
+		letter-spacing: 0;
+	}
+
+	.github-card__link {
+		justify-content: center;
+		min-height: 2.75rem;
+	}
+
+	.activity-panel {
+		border-radius: 1.5rem;
+		padding: 1.1rem 1rem;
 	}
 }
 

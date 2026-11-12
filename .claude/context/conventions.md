@@ -29,7 +29,7 @@
   - Mouvement : `--ease-out`, `--duration-press`, `--duration-reveal`, `--reveal-step` ; typo : `--tracking-display` (titre de l'intro), `--tracking-title` (titres de section)
   - Ombres / voile : `--shadow-lift` (survol, feuilles), `--scrim` (voile derrière une feuille modale, valeur dark plus sombre)
 - Dark mode : `[data-theme="dark"]` redéfinit `--background`, `--text`, `--text-light`, `--border-thin` et tous les tokens sémantiques (+ `color-scheme: dark`). Jamais de `rgba(...)`/hex clair en dur dans une section : utiliser un token, ou en ajouter un avec ses deux valeurs.
-- Responsive : vérifier mobile (375px), tablette (768px) et ≥1024px. Seuils : 400px (nom dans le header), 640px (libellé GitHub), 900px (projets : feuille vs détail à côté), 1024px (intro épinglée, capsule de nav).
+- Responsive : vérifier 360, 375, 414 (mobile), 768 (tablette) et ≥1024px, avec `document.documentElement.scrollWidth === innerWidth` (aucun débordement). Mobile d'abord : espacements de section ~4–5rem sous 900px (les grands paddings ne valent qu'au-dessus), cibles tactiles ≥ 44px, texte ≥ 12px, colonnes de grille en `minmax(0, 1fr)` pour qu'un contenu large (graphe GitHub) défile dans sa carte au lieu d'élargir la page. Seuils : 400px (nom dans le header), 640px (libellé GitHub), 900px (projets : feuille vs détail à côté), 1024px (intro épinglée, capsule de nav).
 - Boutons : `.button--primary` / `.button--ghost` (index.css) pour les actions ; `.header-button` pour les boutons ronds du header. Icônes : uniquement `react-icons/io5` (variantes Outline + logos), taille commune.
 - En-têtes de section : toujours `SectionHeader` (pas de styles de titre par section).
 
