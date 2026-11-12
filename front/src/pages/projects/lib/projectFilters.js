@@ -1,12 +1,15 @@
-// Filters of the Projects section: an origin (42, personal, freelance) or a domain, plus a multi-select on the languages of the stack.
+// Filters of the Projects section: an origin shown as pills (42, personal, freelance), and in the
+// "Filter" panel a multi-select on the domains and on the languages of the stack.
 
 import { getLanguageLabel, getStackLanguages } from './languages.js'
 
-export const PROJECT_FILTERS = [
-	{ value: 'all', labelKey: 'filters.all' },
+export const ORIGIN_FILTERS = [
 	{ value: '42', labelKey: 'filters.school42' },
 	{ value: 'personal', labelKey: 'filters.personal' },
 	{ value: 'freelance', labelKey: 'filters.freelance' },
+]
+
+export const DOMAIN_FILTERS = [
 	{ value: 'frontend', labelKey: 'filters.frontend' },
 	{ value: 'backend', labelKey: 'filters.backend' },
 	{ value: 'systems', labelKey: 'filters.systems' },
@@ -15,29 +18,47 @@ export const PROJECT_FILTERS = [
 ]
 
 /**
- * @brief Tells whether a project belongs to a filter, by origin or domain.
- * @param {object} project - Project with `origin` and `domains` fields.
- * @param {string} filter - Filter value ('all' matches every project).
- * @returns {boolean} True if the project matches the filter.
+ * @brief Tells whether a project comes from the selected origin.
+ * @param {object} project - Project with an `origin` field.
+ * @param {string|null} origin - Selected origin (null matches every project).
+ * @returns {boolean} True if the project matches.
  */
-export function matchesFilter(project, filter) {
-	if (filter === 'all') return true
-	return project.origin === filter || project.domains.includes(filter)
+export function matchesOrigin(project, origin) {
+	return !origin || project.origin === origin
 }
 
 /**
- * @brief Returns the filters that match at least one project, each with its count.
- * The "all" filter is always kept.
- * @param {object[]} projects - Projects to count against.
- * @returns {{value: string, labelKey: string, count: number}[]} Available filters with counts.
+ * @brief Tells whether a project belongs to at least one of the selected domains.
+ * @param {object} project - Project with a `domains` field.
+ * @param {string[]} domains - Selected domains (empty matches every project).
+ * @returns {boolean} True if the project matches.
  */
-export function getAvailableFilters(projects) {
-	return PROJECT_FILTERS
-		.map((filter) => ({
-			...filter,
-			count: projects.filter((project) => matchesFilter(project, filter.value)).length,
-		}))
-		.filter((filter) => filter.value === 'all' || filter.count > 0)
+export function matchesDomains(project, domains) {
+	return !domains.length || project.domains.some((domain) => domains.includes(domain))
+}
+
+/**
+ * @brief Origins that match at least one project, each with its count.
+ * @param {object[]} projects - Projects to count against.
+ * @returns {{value: string, labelKey: string, count: number}[]} Available origins.
+ */
+export function getAvailableOrigins(projects) {
+	return ORIGIN_FILTERS
+		.map((filter) => ({ ...filter, count: projects.filter((project) => project.origin === filter.value).length }))
+		.filter((filter) => filter.count > 0)
+}
+
+/**
+ * @brief Domains that match at least one project, each with its count. Selected domains are
+ * always kept so they can be unchecked.
+ * @param {object[]} projects - Projects to count against.
+ * @param {string[]} selected - Currently selected domains.
+ * @returns {{value: string, labelKey: string, count: number}[]} Available domains.
+ */
+export function getAvailableDomains(projects, selected) {
+	return DOMAIN_FILTERS
+		.map((filter) => ({ ...filter, count: projects.filter((project) => project.domains.includes(filter.value)).length }))
+		.filter((filter) => filter.count > 0 || selected.includes(filter.value))
 }
 
 // Chip gathering the projects whose stack names no recognized language (e.g. a Docker-only project).

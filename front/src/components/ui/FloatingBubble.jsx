@@ -53,6 +53,8 @@ function getFloatAnimation({ rotate, delay, floatY, floatRotate }, isResting) {
  * @param {Object} props - Position/size in % of the cluster, float and repel settings.
  * @param {import('motion/react').MotionValue} props.pointer - Pointer tracked by `useClusterPointer`.
  * @param {boolean} [props.isDraggable] - Lets the user grab and throw the bubble.
+ * @param {{x: MotionValue, y: MotionValue, scale: MotionValue}} [props.travel] - Extra offset (px) and scale
+ * that move the whole bubble away from its place, e.g. driven by the scroll.
  * @returns {JSX.Element} The animated bubble.
  */
 function FloatingShape({
@@ -68,6 +70,7 @@ function FloatingShape({
 	repelForce,
 	pointer,
 	isDraggable = false,
+	travel,
 }) {
 	const reduceMotion = useReducedMotion()
 	const [isDragging, setIsDragging] = useState(false)
@@ -76,18 +79,21 @@ function FloatingShape({
 
 	useMotionValueEvent(pointer, 'change', (point) => {
 		const isIgnored = reduceMotion || isDragging
-		const offset = getRepelOffset(isIgnored ? null : point, { x, y, repelRadius, repelForce })
+		const shift = { x: travel?.x.get() ?? 0, y: travel?.y.get() ?? 0 }
+		const offset = getRepelOffset(isIgnored ? null : point, { x, y, repelRadius, repelForce, shift })
 		repelX.set(offset.x)
 		repelY.set(offset.y)
 	})
 
 	return (
-		<div
+		<MotionDiv
 			className="absolute"
 			style={{
 				left: `${x}%`,
 				top: `${y}%`,
-				transform: 'translate(-50%, -50%)',
+				// Centered with margins: the transform stays free for the travel offset.
+				margin: `calc(var(--cluster-size) * ${size} / -200)`,
+				...travel,
 			}}
 		>
 			<MotionDiv
@@ -111,7 +117,7 @@ function FloatingShape({
 					</MotionDiv>
 				</MotionDiv>
 			</MotionDiv>
-		</div>
+		</MotionDiv>
 	)
 }
 

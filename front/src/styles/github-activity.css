@@ -11,43 +11,137 @@
 .github-activity-shell {
 	position: relative;
 	z-index: 1;
-	width: min(760px, calc(100vw - 2rem));
-	margin: 0 0 0 clamp(1rem, 7vw, 7rem);
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
+	width: min(1200px, calc(100vw - 2rem));
+	margin: 0 auto;
 }
 
-/* ── Header ── */
-
-.github-activity-header {
-	width: 100%;
-	max-width: 34rem;
-	margin: 0 0 1.75rem 0;
-	text-align: left;
+/* Graphe à gauche, langages et derniers projets à droite (empilés sous 1100px) */
+.github-activity-layout {
+	display: grid;
+	gap: 1.25rem;
+	align-items: start;
 }
 
-.github-activity-header__eyebrow {
-	margin: 0 0 0.5rem 0;
-	color: var(--text-light);
-	font-size: 0.82rem;
+.activity-aside {
+	display: grid;
+	gap: 1.25rem;
+}
+
+.activity-panel {
+	border: 1px solid var(--line-soft);
+	border-radius: 1.75rem;
+	padding: 1.25rem 1.35rem;
+	background: var(--surface);
+	box-shadow: var(--shadow-card);
+}
+
+.activity-panel__title {
+	margin-bottom: 0.9rem;
+	color: var(--text-muted);
+	font-size: 0.72rem;
+	font-weight: 600;
 	text-transform: uppercase;
-	letter-spacing: 0.16em;
+	letter-spacing: 0.12em;
 }
 
-.github-activity-header__title {
-	margin: 0;
+/* Langages : nom + nombre de projets, barre proportionnelle (scaleX, rien d'autre ne bouge) */
+.activity-languages {
+	display: grid;
+	gap: 0.7rem;
+}
+
+.activity-languages__item {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 0.3rem 0.75rem;
+	font-size: 0.9rem;
+}
+
+.activity-languages__name {
 	color: var(--text-primary);
-	font-size: clamp(2rem, 4vw, 3.4rem);
-	line-height: 0.95;
-	letter-spacing: var(--tracking-title);
+	font-weight: 600;
 }
 
-.github-activity-header__subtitle {
-	margin: 0.9rem 0 0 0;
-	color: var(--text-light);
-	font-size: 1rem;
-	line-height: 1.6;
+.activity-languages__count {
+	color: var(--text-muted);
+	font-size: 0.8rem;
+	font-variant-numeric: tabular-nums;
+}
+
+.activity-languages__track {
+	grid-column: 1 / -1;
+	height: 0.4rem;
+	overflow: hidden;
+	border-radius: 9999px;
+	background: var(--heat-0);
+}
+
+.activity-languages__fill {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--heat-3);
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition: transform 900ms var(--ease-out);
+	transition-delay: calc(300ms + var(--bar-index, 0) * 80ms);
+}
+
+.is-revealed .activity-languages__fill {
+	transform: scaleX(var(--ratio));
+}
+
+/* Derniers projets : lignes cliquables vers le dépôt */
+.activity-projects {
+	display: grid;
+	gap: 0.25rem;
+}
+
+.activity-projects__link {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	margin: 0 -0.6rem;
+	border-radius: 0.9rem;
+	padding: 0.55rem 0.6rem;
+	transition: background-color 180ms ease;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.activity-projects__link:hover,
+.activity-projects__link:focus-visible {
+	background: var(--chip-bg);
+}
+
+.activity-projects__text {
+	display: grid;
+	min-width: 0;
+}
+
+.activity-projects__title {
+	overflow: hidden;
+	color: var(--text-primary);
+	font-size: 0.92rem;
+	font-weight: 600;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.activity-projects__meta {
+	color: var(--text-muted);
+	font-size: 0.8rem;
+}
+
+.activity-projects__icon {
+	flex-shrink: 0;
+	color: var(--text-muted);
+}
+
+@media (min-width: 1100px) {
+	.github-activity-layout {
+		grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+	}
 }
 
 /* ── Card ── */
@@ -339,35 +433,11 @@
 	margin-left: 0.2rem;
 }
 
-/* ── Decorative bubbles ── */
-
-.github-activity-bubbles {
-	--cluster-size: clamp(220px, 22vw, 320px);
-
-	position: absolute;
-	top: 4.5rem;
-	right: clamp(1.5rem, 6vw, 5rem);
-	width: var(--cluster-size);
-	height: var(--cluster-size);
-	pointer-events: none;
-	z-index: 0;
-}
-
-@media (max-width: 1100px) {
-	.github-activity-bubbles {
-		display: none;
-	}
-}
-
 @media (max-width: 768px) {
 	.github-activity-section {
 		padding: 3.5rem 0 3rem;
 	}
 
-	.github-activity-shell {
-		width: calc(100vw - 2rem);
-		margin: 0 1rem;
-	}
 
 	.github-card {
 		border-radius: 1.5rem;
@@ -387,5 +457,9 @@
 	.github-heatmap__grid .github-cell,
 	.github-heatmap__grid--skeleton {
 		animation: none !important;
+	}
+
+	.activity-languages__fill {
+		transition: none;
 	}
 }

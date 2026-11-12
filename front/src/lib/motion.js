@@ -29,3 +29,19 @@ export const POP_IN = {
 	hidden: { opacity: 0, scale: 0.6 },
 	visible: { opacity: 1, scale: 1 },
 }
+
+// Quick fade for content swapped in place (project detail).
+export const FADE_SWAP = { duration: 0.14, ease: 'easeOut' }
+
+// Same deceleration as a native scroll.
+const DECELERATION_RATE = 0.998
+
+/**
+ * @brief Distance a released gesture would still travel if it kept its momentum
+ * (same exponential decay as a native scroll). Lets a flick count, not only the drag distance.
+ * @param {number} velocity - Release velocity in px/s.
+ * @returns {number} Projected extra distance in px.
+ */
+export function projectMomentum(velocity) {
+	return ((velocity / 1000) * DECELERATION_RATE) / (1 - DECELERATION_RATE)
+}

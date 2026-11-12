@@ -1,0 +1,313 @@
+/* ── Ouverture : titre + bulles, puis présentation ──
+   Par défaut les deux temps sont empilés. `.intro--pinned` (posée par IntroSection sur grand
+   écran, hors « réduire les animations ») épingle la scène et les superpose : le scroll les enchaîne. */
+.intro {
+	position: relative;
+	background-color: var(--background);
+}
+
+.intro__stage {
+	position: relative;
+	overflow: hidden;
+}
+
+.intro__inner {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	align-items: center;
+	gap: 3rem;
+	width: min(1320px, 100%);
+	margin: 0 auto;
+	padding: 2rem 1.5rem 5rem;
+}
+
+/* ── Temps 1 : le titre ── */
+.intro__copy {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: calc(100svh - 9rem);
+	transform-origin: left center;
+}
+
+.intro__eyebrow {
+	margin-bottom: 1rem;
+	color: var(--text-muted);
+	font-size: 0.85rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+}
+
+.intro__title {
+	margin-bottom: 1.25rem;
+	color: var(--text-primary);
+	font-size: clamp(2.75rem, 1.6rem + 5.2vw, 6.25rem);
+	font-weight: 700;
+	line-height: 0.98;
+	letter-spacing: var(--tracking-display);
+}
+
+.intro__subtitle {
+	max-width: 32rem;
+	color: var(--text-light);
+	font-size: clamp(1rem, 0.9rem + 0.5vw, 1.3rem);
+	line-height: 1.5;
+}
+
+.intro__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.85rem;
+	margin-top: 2rem;
+}
+
+.intro__cluster {
+	--cluster-size: clamp(340px, 36vw, 560px);
+
+	position: relative;
+	z-index: 2;
+	display: none;
+	justify-self: center;
+	width: var(--cluster-size);
+	height: var(--cluster-size);
+	pointer-events: none;
+}
+
+.intro__backdrop {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+/* ── Temps 2 : la présentation ── */
+.intro__about {
+	display: grid;
+	justify-items: center;
+	gap: 2.5rem;
+}
+
+.intro-portrait {
+	position: relative;
+	width: clamp(200px, 56vw, 280px);
+	aspect-ratio: 28 / 23;
+	margin-top: 5rem;
+}
+
+.intro-portrait::before {
+	content: '';
+	position: absolute;
+	inset: 12% 0 0;
+	border-radius: 2rem;
+	background: var(--surface);
+	border: 1px solid var(--line);
+	box-shadow: var(--shadow-card);
+}
+
+.intro-portrait__image {
+	position: absolute;
+	left: 50%;
+	bottom: 2px;
+	width: 91%;
+	height: auto;
+	transform: translateX(-50%) scale(1.52);
+	transform-origin: center bottom;
+}
+
+.intro__bio {
+	width: 100%;
+	max-width: 38rem;
+	text-align: left;
+}
+
+.intro__name {
+	color: var(--text-primary);
+	font-size: clamp(2rem, 1.5rem + 1.6vw, 2.75rem);
+	font-weight: 600;
+	line-height: 1.02;
+	letter-spacing: var(--tracking-title);
+}
+
+.intro__lead {
+	margin-top: 0.7rem;
+	color: var(--text-light);
+	font-size: clamp(1rem, 0.95rem + 0.25vw, 1.12rem);
+	line-height: 1.55;
+}
+
+.intro__list-title {
+	margin: 1.25rem 0 0.5rem;
+	color: var(--text-muted);
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+}
+
+/* Liste « réglages » : une carte de verre, une ligne par projet, séparées par un filet */
+.intro-highlights {
+	border: 1px solid var(--line);
+	border-radius: 1.25rem;
+	background: var(--surface);
+	backdrop-filter: blur(20px) saturate(160%);
+	-webkit-backdrop-filter: blur(20px) saturate(160%);
+	box-shadow: var(--shadow-card);
+}
+
+.intro-highlights__item {
+	padding: 0.5rem 1rem;
+}
+
+.intro-highlights__item + .intro-highlights__item {
+	border-top: 1px solid var(--line-soft);
+}
+
+.intro-highlights__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 0.1rem 0.75rem;
+}
+
+.intro-highlights__project {
+	color: var(--text-primary);
+	font-size: 0.95rem;
+	font-weight: 600;
+}
+
+.intro-highlights__origin {
+	margin-left: 0.5rem;
+	border: 1px solid var(--line);
+	border-radius: 9999px;
+	padding: 0.05rem 0.45rem;
+	color: var(--text-muted);
+	font-size: 0.68rem;
+	font-weight: 500;
+	vertical-align: 0.1em;
+}
+
+.intro-highlights__stack {
+	color: var(--text-muted);
+	font-size: 0.75rem;
+	font-weight: 500;
+}
+
+.intro-highlights__text {
+	margin-top: 0.1rem;
+	color: var(--text-light);
+	font-size: 0.86rem;
+	line-height: 1.4;
+}
+
+.intro-availability {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 0.75rem;
+	margin-top: 0.9rem;
+}
+
+.intro-availability__label {
+	color: var(--text-muted);
+	font-size: 0.85rem;
+	font-weight: 500;
+}
+
+.intro-availability__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
+.intro-availability__chip {
+	border-radius: 9999px;
+	padding: 0.3rem 0.75rem;
+	background: var(--surface-active);
+	color: var(--on-active);
+	font-size: 0.82rem;
+	font-weight: 500;
+}
+
+/* Cible du lien « Présentation » : la seconde moitié de la section */
+.intro__anchor {
+	position: absolute;
+	inset: 55% 0 0;
+	pointer-events: none;
+}
+
+@media (min-width: 640px) {
+	.intro__inner {
+		padding-inline: 2.5rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	.intro__inner {
+		grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+		padding-inline: 4rem;
+	}
+
+	.intro__cluster {
+		display: block;
+	}
+
+	.intro__backdrop {
+		display: none;
+	}
+
+	.intro__about {
+		grid-column: 1 / -1;
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+		align-items: center;
+		justify-items: start;
+	}
+
+	.intro-portrait {
+		justify-self: center;
+		width: clamp(220px, 21vw, 300px);
+		margin-top: 0;
+	}
+
+}
+
+/* ── Scène épinglée (IntroSection, même seuil que PINNED_QUERY) : les deux temps partagent la même case ── */
+@media (min-width: 1024px) and (min-height: 760px) {
+	.intro--pinned {
+		height: 240vh;
+	}
+
+	.intro--pinned .intro__stage {
+		position: sticky;
+		top: 0;
+		display: flex;
+		align-items: center;
+		height: 100vh;
+		height: 100svh;
+	}
+
+	/* Centre la scène dans la partie visible, sous le header collant */
+	.intro--pinned .intro__inner {
+		padding-block: 4.5rem 0.5rem;
+	}
+
+	.intro--pinned .intro__copy {
+		grid-area: 1 / 1;
+		min-height: 0;
+	}
+
+	.intro--pinned .intro__cluster {
+		grid-area: 1 / 2;
+	}
+
+	/* Laisse passer le pointeur vers le titre tant que la présentation n'est pas arrivée */
+	/* Au-dessus des bulles : une bulle lancée passe derrière le texte, jamais devant */
+	.intro--pinned .intro__about {
+		position: relative;
+		z-index: 3;
+		grid-area: 1 / 1 / 2 / -1;
+		pointer-events: none;
+	}
+}

@@ -1,104 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FaGithub } from 'react-icons/fa'
-import { FiArrowUpRight } from 'react-icons/fi'
-import FloatingShape from '../../ui/FloatingBubble'
-import useClusterPointer from '../../ui/useClusterPointer'
+import { IoLogoGithub, IoOpenOutline } from 'react-icons/io5'
+import ActivityAside from './ActivityAside'
 import useReveal from '../../ui/useReveal'
+import SectionHeader from '../../ui/SectionHeader'
+import { GITHUB_PROFILE_URL, GITHUB_USERNAME } from '../../../lib/links'
 import { useGithubContributions } from './useGithubContributions'
 import '../../../styles/github-activity.css'
 
-const GITHUB_USERNAME = 'MaximePirt'
-const GITHUB_PROFILE_URL = `https://github.com/${GITHUB_USERNAME}`
 const SKELETON_WEEKS = 53
 const LABELLED_WEEKDAYS = [1, 3, 5]
-
-const ACTIVITY_SHAPES = [
-	{
-		id: 1,
-		x: 68,
-		y: 16,
-		size: 12,
-		variant: 'bubble-grey',
-		delay: 0,
-		floatY: 7,
-		floatRotate: 2,
-		repelRadius: 160,
-		repelForce: 55,
-	},
-	{
-		id: 2,
-		x: 84,
-		y: 20,
-		size: 18,
-		variant: 'bubble-orange',
-		delay: 0.15,
-		floatY: 9,
-		floatRotate: 3,
-		repelRadius: 180,
-		repelForce: 60,
-	},
-	{
-		id: 3,
-		x: 92,
-		y: 34,
-		size: 10,
-		variant: 'bubble-green-light',
-		delay: 0.3,
-		floatY: 6,
-		floatRotate: 2,
-		repelRadius: 150,
-		repelForce: 50,
-	},
-	{
-		id: 4,
-		x: 74,
-		y: 42,
-		size: 14,
-		variant: 'bubble-grey',
-		delay: 0.45,
-		floatY: 8,
-		floatRotate: 3,
-		repelRadius: 170,
-		repelForce: 58,
-	},
-	{
-		id: 5,
-		x: 92,
-		y: 53,
-		size: 22,
-		variant: 'bubble-green-light',
-		delay: 0.2,
-		floatY: 10,
-		floatRotate: 4,
-		repelRadius: 190,
-		repelForce: 65,
-	},
-	{
-		id: 6,
-		x: 66,
-		y: 60,
-		size: 11,
-		variant: 'bubble-orange',
-		delay: 0.55,
-		floatY: 7,
-		floatRotate: 2,
-		repelRadius: 150,
-		repelForce: 50,
-	},
-	{
-		id: 7,
-		x: 82,
-		y: 70,
-		size: 16,
-		variant: 'bubble-grey',
-		delay: 0.35,
-		floatY: 8,
-		floatRotate: 3,
-		repelRadius: 175,
-		repelForce: 58,
-	},
-]
 
 /**
  * @brief Computes the layout of the calendar grid: first weekday, week count and month labels.
@@ -132,18 +43,16 @@ function buildCalendar(days, locale) {
 }
 
 /**
- * @brief Section showing the GitHub contribution graph, its statistics and a tooltip per day.
+ * @brief Section showing the GitHub contribution graph, its statistics and a tooltip per day,
+ * next to the languages and latest projects drawn from my repositories.
  * @returns {JSX.Element} The section.
  */
 function GithubActivitySection() {
 	const { t, i18n } = useTranslation()
 	const locale = i18n.language
-	const sectionRef = useRef(null)
-	const clusterRef = useRef(null)
 	const cardRef = useRef(null)
 	const scrollRef = useRef(null)
 	const [tooltip, setTooltip] = useState(null)
-	const pointer = useClusterPointer(sectionRef, clusterRef)
 	const [shellRef, isRevealed] = useReveal()
 
 	const { status, days, stats } = useGithubContributions(GITHUB_USERNAME)
@@ -206,155 +115,143 @@ function GithubActivitySection() {
 
 	return (
 		<section
-			ref={sectionRef}
 			className="github-activity-section"
 			id="activity"
 		>
 			<div ref={shellRef} className={`github-activity-shell ${isRevealed ? 'is-revealed' : ''}`}>
-				<header className="github-activity-header reveal">
-					<p className="github-activity-header__eyebrow">{t('githubActivity.activity')}</p>
-					<h2 className="github-activity-header__title">{t('githubActivity.title')}</h2>
-					<p className="github-activity-header__subtitle">
-						{t('githubActivity.subtitle')}
-					</p>
-				</header>
+				<SectionHeader
+					eyebrow={t('githubActivity.activity')}
+					title={t('githubActivity.title')}
+					subtitle={t('githubActivity.subtitle')}
+					align="left"
+				/>
 
-				<div ref={cardRef} className="github-card reveal" style={{ '--reveal-index': 2 }}>
-					<div className="github-card__top">
-						<dl className="github-stats" aria-busy={status === 'loading'}>
-							{status === 'ready'
-								? statItems.map((stat) => (
-										<div key={stat.key} className="github-stat">
-											<dt className="github-stat__label">{stat.label}</dt>
-											<dd className="github-stat__value">{numberFormat.format(stat.value)}</dd>
+				<div className="github-activity-layout">
+					<div ref={cardRef} className="github-card reveal" style={{ '--reveal-index': 2 }}>
+						<div className="github-card__top">
+							<dl className="github-stats" aria-busy={status === 'loading'}>
+								{status === 'ready'
+									? statItems.map((stat) => (
+											<div key={stat.key} className="github-stat">
+												<dt className="github-stat__label">{stat.label}</dt>
+												<dd className="github-stat__value">{numberFormat.format(stat.value)}</dd>
+											</div>
+										))
+									: status === 'loading' && (
+											<div className="github-stat github-stat--placeholder">
+												<dt className="github-stat__label">{t('githubActivity.loading')}</dt>
+												<dd className="github-stat__value">—</dd>
+											</div>
+										)}
+							</dl>
+
+							<a
+								className="github-card__link"
+								href={GITHUB_PROFILE_URL}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<IoLogoGithub aria-hidden="true" />
+								<span>@{GITHUB_USERNAME}</span>
+								<IoOpenOutline aria-hidden="true" />
+							</a>
+						</div>
+
+						{status === 'error' ? (
+							<p className="github-card__error">{t('githubActivity.error')}</p>
+						) : (
+							<div ref={scrollRef} className="github-heatmap-scroll">
+								<div
+									className="github-heatmap"
+									style={{ '--weeks': calendar?.weekCount ?? SKELETON_WEEKS }}
+								>
+									<div className="github-heatmap__months" aria-hidden="true">
+										{calendar?.months.map((month) => (
+											<span key={month.column} style={{ gridColumnStart: month.column + 1 }}>
+												{month.label}
+											</span>
+										))}
+									</div>
+
+									<div className="github-heatmap__weekdays" aria-hidden="true">
+										{weekdayLabels.map((weekday) => (
+											<span key={weekday.row} style={{ gridRowStart: weekday.row }}>
+												{weekday.label}
+											</span>
+										))}
+									</div>
+
+									{calendar ? (
+										<div
+											className="github-heatmap__grid"
+											role="img"
+											aria-label={t('githubActivity.graphLabel', {
+												count: stats.total,
+												formattedCount: numberFormat.format(stats.total),
+											})}
+											onMouseOver={showTooltip}
+											onMouseLeave={() => setTooltip(null)}
+										>
+											{days.map((day, index) => (
+												<span
+													key={day.iso}
+													className="github-cell"
+													data-level={day.level}
+													data-index={index}
+													style={{
+														gridRowStart: index === 0 ? calendar.firstWeekday + 1 : undefined,
+														'--week': Math.floor((calendar.firstWeekday + index) / 7),
+													}}
+												/>
+											))}
 										</div>
-									))
-								: status === 'loading' && (
-										<div className="github-stat github-stat--placeholder">
-											<dt className="github-stat__label">{t('githubActivity.loading')}</dt>
-											<dd className="github-stat__value">—</dd>
+									) : (
+										<div className="github-heatmap__grid github-heatmap__grid--skeleton" aria-hidden="true">
+											{Array.from({ length: SKELETON_WEEKS * 7 }, (_, index) => (
+												<span key={index} className="github-cell" data-level="0" />
+											))}
 										</div>
 									)}
-						</dl>
-
-						<a
-							className="github-card__link"
-							href={GITHUB_PROFILE_URL}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<FaGithub aria-hidden="true" />
-							<span>@{GITHUB_USERNAME}</span>
-							<FiArrowUpRight aria-hidden="true" />
-						</a>
-					</div>
-
-					{status === 'error' ? (
-						<p className="github-card__error">{t('githubActivity.error')}</p>
-					) : (
-						<div ref={scrollRef} className="github-heatmap-scroll">
-							<div
-								className="github-heatmap"
-								style={{ '--weeks': calendar?.weekCount ?? SKELETON_WEEKS }}
-							>
-								<div className="github-heatmap__months" aria-hidden="true">
-									{calendar?.months.map((month) => (
-										<span key={month.column} style={{ gridColumnStart: month.column + 1 }}>
-											{month.label}
-										</span>
-									))}
 								</div>
-
-								<div className="github-heatmap__weekdays" aria-hidden="true">
-									{weekdayLabels.map((weekday) => (
-										<span key={weekday.row} style={{ gridRowStart: weekday.row }}>
-											{weekday.label}
-										</span>
-									))}
-								</div>
-
-								{calendar ? (
-									<div
-										className="github-heatmap__grid"
-										role="img"
-										aria-label={t('githubActivity.graphLabel', {
-											count: stats.total,
-											formattedCount: numberFormat.format(stats.total),
-										})}
-										onMouseOver={showTooltip}
-										onMouseLeave={() => setTooltip(null)}
-									>
-										{days.map((day, index) => (
-											<span
-												key={day.iso}
-												className="github-cell"
-												data-level={day.level}
-												data-index={index}
-												style={{
-													gridRowStart: index === 0 ? calendar.firstWeekday + 1 : undefined,
-													'--week': Math.floor((calendar.firstWeekday + index) / 7),
-												}}
-											/>
-										))}
-									</div>
-								) : (
-									<div className="github-heatmap__grid github-heatmap__grid--skeleton" aria-hidden="true">
-										{Array.from({ length: SKELETON_WEEKS * 7 }, (_, index) => (
-											<span key={index} className="github-cell" data-level="0" />
-										))}
-									</div>
-								)}
 							</div>
+						)}
+
+						<div className="github-card__bottom">
+							<p className="github-card__note">
+								<span className="github-card__note-title">{t('githubActivity.know')}</span>{' '}
+								{t('githubActivity.note1')} {t('githubActivity.note2')}
+							</p>
+
+							{status !== 'error' && (
+								<div className="github-legend" aria-hidden="true">
+									<span>{t('githubActivity.less')}</span>
+									{[0, 1, 2, 3, 4].map((level) => (
+										<span key={level} className="github-cell" data-level={level} />
+									))}
+									<span>{t('githubActivity.more')}</span>
+								</div>
+							)}
 						</div>
-					)}
 
-					<div className="github-card__bottom">
-						<p className="github-card__note">
-							<span className="github-card__note-title">{t('githubActivity.know')}</span>{' '}
-							{t('githubActivity.note1')} {t('githubActivity.note2')}
-						</p>
-
-						{status !== 'error' && (
-							<div className="github-legend" aria-hidden="true">
-								<span>{t('githubActivity.less')}</span>
-								{[0, 1, 2, 3, 4].map((level) => (
-									<span key={level} className="github-cell" data-level={level} />
-								))}
-								<span>{t('githubActivity.more')}</span>
+						{tooltip && (
+							<div
+								className="github-tooltip"
+								role="presentation"
+								style={{ left: tooltip.x, top: tooltip.y }}
+							>
+								<strong>
+									{t('githubActivity.tooltipCount', {
+										count: tooltip.count,
+										formattedCount: numberFormat.format(tooltip.count),
+									})}
+								</strong>
+								<span>{tooltip.date}</span>
 							</div>
 						)}
 					</div>
 
-					{tooltip && (
-						<div
-							className="github-tooltip"
-							role="presentation"
-							style={{ left: tooltip.x, top: tooltip.y }}
-						>
-							<strong>
-								{t('githubActivity.tooltipCount', {
-									count: tooltip.count,
-									formattedCount: numberFormat.format(tooltip.count),
-								})}
-							</strong>
-							<span>{tooltip.date}</span>
-						</div>
-					)}
+					<ActivityAside />
 				</div>
-			</div>
-
-			<div
-				ref={clusterRef}
-				className="github-activity-bubbles"
-				aria-hidden="true"
-			>
-				{ACTIVITY_SHAPES.map((shape) => (
-					<FloatingShape
-						key={shape.id}
-						{...shape}
-						pointer={pointer}
-					/>
-				))}
 			</div>
 		</section>
 	)

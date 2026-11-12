@@ -15,15 +15,17 @@ function useProjects() {
 	const [status, setStatus] = useState('loading')
 
 	useEffect(() => {
-		const controller = new AbortController()
+		// The request is shared by every section: only its answer is ignored after unmount.
+		let isMounted = true
 
-		fetchRemoteProjects(controller.signal)
+		fetchRemoteProjects()
 			.then((projects) => {
+				if (!isMounted) return
 				setRemoteProjects(projects)
 				setStatus('ready')
 			})
 			.catch((error) => {
-				if (error.name === 'AbortError') return
+				if (!isMounted) return
 				console.error('Projects API unavailable:', error)
 				if (SNAPSHOT_PROJECTS.length) {
 					console.info(`Showing the local snapshot (${SNAPSHOT_PROJECTS.length} projects).`)
@@ -32,7 +34,9 @@ function useProjects() {
 				setStatus('error')
 			})
 
-		return () => controller.abort()
+		return () => {
+			isMounted = false
+		}
 	}, [])
 
 	const projects = useMemo(

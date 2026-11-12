@@ -55,3 +55,12 @@
 .floating-shape--draggable:active {
 	cursor: grabbing;
 }
+
+/* Groupe décoratif (BubbleCluster) : derrière le contenu, ne capte pas le pointeur */
+.bubble-cluster {
+	position: absolute;
+	z-index: 0;
+	width: var(--cluster-size);
+	height: var(--cluster-size);
+	pointer-events: none;
+}

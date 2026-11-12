@@ -1,0 +1,41 @@
+/* En-tête commun des sections : surtitre, grand titre resserré, sous-titre */
+.section-header {
+	margin: 0 auto 2.5rem;
+	max-width: 44rem;
+	text-align: center;
+}
+
+.section-header--left {
+	margin-inline: 0;
+	text-align: left;
+}
+
+.section-header__eyebrow {
+	margin: 0 0 0.75rem;
+	color: var(--text-muted);
+	font-size: 0.82rem;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+}
+
+.section-header__title {
+	margin: 0;
+	color: var(--text-primary);
+	font-size: clamp(2.5rem, 5vw, 4.5rem);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: var(--tracking-title);
+}
+
+.section-header__subtitle {
+	margin: 1.1rem auto 0;
+	max-width: 40rem;
+	color: var(--text-light);
+	font-size: clamp(1rem, 0.95rem + 0.3vw, 1.2rem);
+	line-height: 1.55;
+}
+
+.section-header--left .section-header__subtitle {
+	margin-inline: 0;
+}

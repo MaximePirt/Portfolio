@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { motion } from 'motion/react'
 import useProjectText from './useProjectText'
 import ProjectStatusBadge from './ProjectStatusBadge'
+import { SPRING } from '../../lib/motion'
+
+const MotionSpan = motion.span
 
 // Number of projects revealed on each click of "Show more".
 const PAGE_SIZE = 6
@@ -48,6 +52,14 @@ function ProjectsList({ projects, selectedProjectId, onSelect, isLoading = false
 								onClick={() => onSelect(project.id)}
 								aria-pressed={isActive}
 							>
+								{isActive && (
+									<MotionSpan
+										layoutId="project-pill-highlight"
+										className="project-pill__highlight"
+										transition={SPRING}
+										aria-hidden="true"
+									/>
+								)}
 								<span className="project-pill__title">
 									{getText(project, 'title')}
 									<ProjectStatusBadge status={project.status} />

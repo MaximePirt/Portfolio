@@ -19,20 +19,20 @@ html {
 	--background-offset: color-mix(in oklab, var(--background), var(--secondary) 10%);
 	
 	--text: #040316;
-	--text-light: #989797;
+	/* Texte secondaire : gris-vert de la palette, assez foncé pour 4.5:1 sur le fond */
+	--text-light: #525e59;
 
 	--border-thick: 2px solid #DDDDDD;
-	--border-thin: 1px solid #DDDDDD;
-
 	--shadow-card: 0px 2px 12px rgba(0, 0, 0, 0.08);
 	--shadow-btn: 0px 1px 4px rgba(0, 0, 0, 0.12);
+	--shadow-lift: 0px 14px 28px rgba(0, 0, 0, 0.14);
 
 	--border-thin: 1px solid #000000;
 
 	/* Tokens sémantiques : à utiliser dans les sections plutôt que des couleurs en dur,
 	   ils ont chacun leur valeur dark ci-dessous. */
 	--text-primary: var(--primary);
-	--text-muted: var(--secondary);
+	--text-muted: #4a5752;
 	--surface: rgba(252, 252, 248, 0.84);
 	--surface-soft: rgba(250, 250, 246, 0.72);
 	--surface-strong: rgba(250, 250, 246, 0.96);
@@ -66,6 +66,8 @@ html {
 	/* Matériau translucide des barres flottantes (header) */
 	--glass: color-mix(in oklab, var(--background) 72%, transparent);
 	--glass-solid: var(--background);
+	/* Voile sombre derrière une feuille modale */
+	--scrim: rgba(0, 0, 0, 0.36);
 
 	/* Mouvement : courbes et durées partagées par les transitions CSS */
 	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -97,6 +99,7 @@ html {
 	--line: rgba(255, 255, 255, 0.12);
 	--line-soft: rgba(255, 255, 255, 0.07);
 	--chip-bg: rgba(143, 156, 133, 0.16);
+	--scrim: rgba(0, 0, 0, 0.58);
 
 	/* Échelle inversée : plus il y a de contributions, plus la pastille s'éclaire */
 	--heat-0: rgba(255, 255, 255, 0.06);
@@ -128,14 +131,19 @@ h3 {
 	outline-offset: 3px;
 }
 
-/* ── Header : barre translucide qui se cache en descendant, revient en remontant ── */
+/* ── Header : barre collante translucide, le contenu défile dessous ── */
 .header {
 	position: sticky;
 	top: 0;
+	z-index: 50;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.5rem 0.75rem;
 	background-color: var(--glass);
 	backdrop-filter: blur(20px) saturate(170%);
 	-webkit-backdrop-filter: blur(20px) saturate(170%);
-	transition: transform 420ms var(--ease-out);
 }
 
 /* Fondu sous la barre plutôt qu'un trait, visible seulement quand du contenu passe dessous */
@@ -154,9 +162,242 @@ h3 {
 	opacity: 1;
 }
 
-/* Reste visible tant qu'un de ses éléments a le focus clavier */
-.header.is-hidden:not(:focus-within) {
-	transform: translateY(-100%);
+.header__brand {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	min-width: 0;
+	padding-left: 0.5rem;
+}
+
+.header__logo {
+	flex-shrink: 0;
+	width: 2.5rem;
+	height: 2.5rem;
+	overflow: hidden;
+}
+
+/* La marque se fait plus discrète une fois la page lancée */
+.header.is-scrolled .header__logo {
+	transform: scale(0.88);
+}
+
+.header__actions {
+	grid-column: 3;
+	display: flex;
+	align-items: center;
+	justify-self: end;
+	gap: 0.5rem;
+}
+
+/* Nom masqué sur les très petits écrans : le logo suffit, les boutons gardent leur place */
+.header__name {
+	display: none;
+	min-width: 0;
+	overflow: hidden;
+	font-size: 0.95rem;
+	font-weight: 700;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* Boutons du header : même taille, même bordure, même famille d'icônes */
+.header-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4rem;
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 1px solid var(--line);
+	border-radius: 9999px;
+	background: var(--surface-soft);
+	color: var(--text);
+	-webkit-tap-highlight-color: transparent;
+}
+
+.header-button[aria-pressed='true'] {
+	background: var(--surface-active);
+	color: var(--on-active);
+}
+
+.header-button--text {
+	font-size: 0.78rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+}
+
+.header-button__label {
+	display: none;
+	font-size: 0.85rem;
+	font-weight: 500;
+}
+
+@media (hover: hover) {
+	.header-button:hover {
+		background: var(--surface-strong);
+	}
+
+	.header-button[aria-pressed='true']:hover {
+		background: var(--surface-active);
+	}
+}
+
+.header__menu-button {
+	display: flex;
+}
+
+@media (min-width: 400px) {
+	.header__name {
+		display: block;
+	}
+}
+
+@media (min-width: 640px) {
+	.header-button--wide {
+		width: auto;
+		padding-inline: 0.85rem;
+	}
+
+	.header-button__label {
+		display: inline;
+	}
+}
+
+/* Capsule de navigation (grand écran) : la pastille glisse d'un lien à l'autre (HeaderNav) */
+.header-nav {
+	display: none;
+	align-items: center;
+	gap: 0.15rem;
+	border: 1px solid var(--line);
+	border-radius: 9999px;
+	padding: 0.3rem;
+	background: var(--surface-soft);
+}
+
+.header-nav__item {
+	position: relative;
+	isolation: isolate;
+	border-radius: 9999px;
+	padding: 0.45rem 0.9rem;
+	color: var(--text-muted);
+	font-size: 0.9rem;
+	font-weight: 500;
+	white-space: nowrap;
+	transition: color 200ms ease;
+}
+
+.header-nav__item:hover,
+.header-nav__item.is-active {
+	color: var(--text);
+}
+
+.header-nav__highlight {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	border-radius: inherit;
+	background: var(--surface-strong);
+	box-shadow: var(--shadow-btn);
+}
+
+/* Menu (petit écran) : feuille sous la barre, se ferme d'un glissement vers le haut (HeaderMenuSheet) */
+.header-menu {
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	left: 0.75rem;
+	right: 0.75rem;
+	border: 1px solid var(--line);
+	border-radius: 1.5rem;
+	padding: 0.6rem 0.6rem 0.5rem;
+	background: var(--surface-strong);
+	box-shadow: var(--shadow-card);
+	transform-origin: top right;
+}
+
+.header-menu__item {
+	display: block;
+	border-radius: 1rem;
+	padding: 0.85rem 1rem;
+	color: var(--text);
+	font-size: 1.05rem;
+	font-weight: 500;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.header-menu__item:active,
+.header-menu__item.is-active {
+	background: var(--chip-bg);
+}
+
+.header-menu__grabber {
+	display: block;
+	width: 2.25rem;
+	height: 0.25rem;
+	margin: 0.5rem auto 0;
+	border-radius: 9999px;
+	background: var(--line);
+}
+
+@media (min-width: 768px) {
+	.header {
+		padding: 0.6rem 1.5rem;
+	}
+
+	.header__logo {
+		width: 3rem;
+		height: 3rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	.header-nav {
+		display: flex;
+	}
+
+	.header__menu-button,
+	.header-menu {
+		display: none;
+	}
+}
+
+/* ── Boutons d'action (intro, contact) ── */
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 9999px;
+	padding: 0.9rem 1.35rem;
+	font-size: 0.95rem;
+	font-weight: 500;
+	text-decoration: none;
+	transition: transform 180ms var(--ease-out);
+	-webkit-tap-highlight-color: transparent;
+}
+
+.button--primary {
+	background: var(--surface-active);
+	color: var(--on-active);
+	box-shadow: var(--shadow-card);
+}
+
+.button--ghost {
+	border: 1px solid var(--line);
+	background: var(--surface-soft);
+	color: var(--text);
+}
+
+/* Le survol ne concerne que les pointeurs qui survolent vraiment (pas le tactile) */
+@media (hover: hover) {
+	.button:hover {
+		transform: translateY(-1px);
+	}
+}
+
+/* Réagit dès l'appui, après le survol */
+.button:active {
+	transform: scale(0.97);
+	transition-duration: var(--duration-press);
 }
 
 /* ── Retour au toucher : réagit dès l'appui ── */
@@ -194,12 +435,20 @@ h3 {
 		scroll-behavior: auto;
 	}
 
-	.header,
-	.press {
+	.header__logo,
+	.header-nav__item,
+	.press,
+	.button {
 		transition: none;
 	}
 
-	.press:active {
+	.header.is-scrolled .header__logo {
+		transform: none;
+	}
+
+	.press:active,
+	.button:hover,
+	.button:active {
 		transform: none;
 	}
 
@@ -229,28 +478,6 @@ h3 {
 
 .header-nav-link:hover {
 	opacity: 0.5;
-}
-
-.lang-btn {
-	border: var(--border-thin);
-	background-color: var(--background-offset);
-	color: var(--text);
-	font-size: 0.8rem;
-	font-weight: 500;
-	padding: 4px 10px;
-	border-radius: 20px;
-	cursor: pointer;
-	transition: all 0.15s ease;
-}
-
-.lang-btn:hover {
-	background-color: var(--background-offset);
-}
-
-.lang-btn.active {
-	background-color: var(--secondary);
-	color: var(--text);
-	border-color: var(--primary);
 }
 
 /* ── Boutons principaux ── */
@@ -293,15 +520,36 @@ h3 {
 }
 
 .footer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.9rem;
+	padding: 2rem 1rem 2.25rem;
 	background-color: var(--background-offset);
-	border-top: var(--border-thin);
-	padding: 20px 0;
-	margin-top: auto;
+	color: var(--text-light);
 	text-align: center;
 }
 
-.footer-link:hover {
-	opacity: 0.5;
+.footer__links {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.25rem 1.5rem;
+}
+
+.footer__link {
+	padding: 0.35rem 0;
+	color: var(--text-muted);
+	font-size: 0.9rem;
+	transition: color 200ms ease;
+}
+
+.footer__link:hover {
+	color: var(--text);
+}
+
+.footer__copyright {
+	font-size: 0.75rem;
 }
 
 .info-card {

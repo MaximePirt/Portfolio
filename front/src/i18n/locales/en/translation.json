@@ -1,35 +1,47 @@
 {
 	"hero": {
-		"title": "Data and Database Architect",
-		"subtitle": "A fresh perspective on technological challenges, ready to join your team.",
-		"tagline": "Passionate about creating innovative solutions"
+		"title": "Software development student at École 42.",
+		"subtitle": "Available for a 6-month internship, a fixed-term or a permanent role in data.",
+		"ctaProjects": "See projects",
+		"ctaContact": "Get in touch",
+		"portraitAlt": "Portrait of Maxime Pierrot"
 	},
 	"footer": {
-		"rights": "All rights reserved"
+		"rights": "All rights reserved",
+		"links": "Contact links"
 	},
 	"profile": {
 		"name": "Maxime Pierrot",
-		"role": "Fullstack Developer",
-		"description": "Passionate about creating innovative solutions"
+		"role": "Software development student at École 42",
+		"description": "Software development student at École 42, available for a 6-month internship, a fixed-term or a permanent position"
 	},
 	"banner": {
-		"title": "Welcome to my portfolio",
-		"subtitle": "Passionate about creating modern web solutions, I develop full-stack projects combining polished frontend, backend logic, and clean architecture. Trained at École 42, I am currently building my portfolio, freelance projects, and interactive applications in React and Node.js."
+		"title": "A few projects",
+		"subtitle": "At 42 there are no classes and no teachers: you learn by building projects and reviewing other students' code. I've written everything from C to React there, and that's where I got interested in data.",
+		"highlights": {
+			"rag": "A complete RAG pipeline in TypeScript: document ingestion, chunking, TF-IDF index and cosine-similarity search.",
+			"transcendance": "A multiplayer web app built as a team: real-time quiz, user accounts, microservice architecture.",
+			"irc": "An IRC server in C++ handling many clients at once over sockets.",
+			"minishell": "A Unix shell written in C, with pipes, redirections and signal handling.",
+			"inception": "A Docker Compose infrastructure: Nginx, WordPress and MariaDB, each in its own container.",
+			"data": "Data analysis with NumPy and pandas, then a linear regression written without any ML library."
+		}
 	},
 	"nav": {
 		"home": "Home",
 		"contact": "Contact",
 		"back": "Back",
 		"copy": "Copy",
-		"presentation": "Presentation",
+		"presentation": "About",
 		"projects": "Projects",
-		"activity": "Recent activity",
+		"activity": "Activity",
 		"label": "Page sections",
 		"theme": "Toggle dark mode",
-		"language": "Change language"
+		"language": "Show the site in French",
+		"menu": "Menu",
+		"github": "My GitHub profile"
 	},
 	"filters": {
-		"all": "All",
 		"school42": "42",
 		"frontend": "Frontend",
 		"backend": "Backend",
@@ -63,12 +75,12 @@
 	},
 	"projectsSection": {
 		"empty": "Select a project to view its preview.",
-		"selectedProject": "Selected Project",
+		"selectedProject": "Selected project",
 		"preview": "Preview",
 		"stack": "Stack",
 		"description": "Description",
-		"title": "PROJECTS",
-		"subtitle": "A selection of my technical, school and freelance projects.",
+		"title": "Projects",
+		"subtitle": "A selection of projects built at École 42 and on my own.",
 		"filtersLabel": "Project filters",
 		"listLabel": "Project list",
 		"emptyList": "No project in this category yet.",
@@ -87,13 +99,16 @@
 			"title": "Languages",
 			"reset": "Reset",
 			"panelLabel": "Filter by language",
-			"other": "Other"
-		}
+			"other": "Other",
+			"domainsTitle": "Categories"
+		},
+		"eyebrow": "Work",
+		"closeDetail": "Close project"
 	},
 	"githubActivity": {
 		"activity": "Activity",
 		"title": "GitHub Activity",
-		"subtitle": "Here's a snapshot of my recent activity on GitHub, highlighting my contributions, projects, and collaborations.",
+		"subtitle": "My public contributions on GitHub over the last twelve months.",
 		"noActivity": "No recent activity to display.",
 		"loading": "Loading GitHub activity…",
 		"know": "Good to know:",
@@ -108,25 +123,41 @@
 		"tooltipCount_zero": "No contributions",
 		"tooltipCount_one": "{{formattedCount}} contribution",
 		"tooltipCount_other": "{{formattedCount}} contributions",
-		"graphLabel": "GitHub contribution graph: {{formattedCount}} contributions over the last 12 months."
+		"graphLabel": "GitHub contribution graph: {{formattedCount}} contributions over the last 12 months.",
+		"languagesTitle": "Languages in my projects",
+		"languagesCount_one": "{{count}} project",
+		"languagesCount_other": "{{count}} projects",
+		"recentTitle": "Latest projects",
+		"recentLink": "See {{title}} on GitHub"
 	},
 	"contact": {
 		"contact": "Contact",
-		"title": "Let's talk about your project.",
-		"subtitle": "Interested in collaborating or just want to chat? Feel free to contact me!",
-		"tagline": "I'm open to new opportunities and exciting collaborations.",
-		"text": "Whether you have a project in mind or want to discuss potential collaborations, don't hesitate to contact me. I'm always excited to connect with like-minded professionals and explore new opportunities together.",
+		"title": "Let's work together.",
+		"subtitle": "Looking for an intern or a junior developer? Let’s talk.",
+		"tagline": "Available for a 6-month internship, a fixed-term or a permanent position.",
+		"text": "For an internship, a fixed-term or a permanent position, or just a question about my background, write to me by email or on LinkedIn.",
 		"mailText": "Send me an email",
-		"linkedinText": "Connect on LinkedIn",
+		"linkedinText": "View my LinkedIn profile",
 		"githubText": "View my GitHub profile",
 		"email-label": "Email",
 		"email": "pierrot.maxime.49@icloud.com",
 		"stack-label": "Stack",
-		"availability-label": "Disponibility",
-		"availability": "Open to freelance projects, internships and full-time opportunities",
+		"availability-label": "Availability",
+		"availability": "6-month internship, fixed-term or permanent",
 		"label-location": "Based in",
-		"location": "Angers, France",
+		"location": "Rennes, France",
 		"linkedin": "LinkedIn",
-		"github": "GitHub"
+		"github": "GitHub",
+		"mobility": "Open to: Brittany · Pays de la Loire · Paris"
+	},
+	"meta": {
+		"title": "Maxime Pierrot · Software development student at École 42",
+		"description": "Portfolio of Maxime Pierrot, software development student at École 42, based in Rennes. Available for a 6-month internship, a fixed-term or a permanent role in data."
+	},
+	"availability": {
+		"label": "Available for",
+		"internship": "6-month internship",
+		"fixedTerm": "Fixed-term",
+		"permanent": "Permanent"
 	}
 }

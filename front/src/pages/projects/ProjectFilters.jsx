@@ -6,12 +6,13 @@ import { SPRING } from '../../lib/motion'
 const MotionSpan = motion.span
 
 /**
- * @brief Row of filter buttons with their project count. The active color slides from one filter to the next.
+ * @brief Origin pills (42, personal…) with their project count. One at a time; clicking the
+ * active pill again shows every project. The active color slides from one pill to the next.
  * @param {Object} props
- * @param {{value: string, labelKey: string, count: number}[]} props.filters - Available filters.
- * @param {string} props.activeFilter - Currently selected filter value.
- * @param {(value: string) => void} props.onChange - Called with the clicked filter value.
- * @returns {JSX.Element} The filters.
+ * @param {{value: string, labelKey: string, count: number}[]} props.filters - Available origins.
+ * @param {string|null} props.activeFilter - Selected origin, null for every project.
+ * @param {(value: string|null) => void} props.onChange - Called with the new origin, or null.
+ * @returns {JSX.Element} The pills.
  */
 function ProjectFilters({ filters, activeFilter, onChange }) {
 	const { t } = useTranslation()
@@ -26,7 +27,7 @@ function ProjectFilters({ filters, activeFilter, onChange }) {
 						key={filter.value}
 						type="button"
 						className={clsx('projects-filter projects-filter--category', isActive && 'is-active')}
-						onClick={() => onChange(filter.value)}
+						onClick={() => onChange(isActive ? null : filter.value)}
 						aria-pressed={isActive}
 					>
 						{isActive && (

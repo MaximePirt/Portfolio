@@ -4,15 +4,15 @@ import { getProjectActions } from './lib/projectActions.js'
 import useProjectText from './useProjectText'
 import ProjectPreview from './ProjectPreview'
 import ProjectStatusBadge from './ProjectStatusBadge'
-import { SPRING } from '../../lib/motion'
+import { FADE_SWAP, SPRING } from '../../lib/motion'
 
 const MotionSection = motion.section
 
-// Fades the newly selected project in (the parent remounts the detail on each selection).
+// The previous project fades out quickly, the newly selected one rises in.
 const DETAIL_ENTER = {
 	initial: { opacity: 0, y: 8 },
-	animate: { opacity: 1, y: 0 },
-	transition: SPRING,
+	animate: { opacity: 1, y: 0, transition: SPRING },
+	exit: { opacity: 0, transition: FADE_SWAP },
 }
 
 /**
