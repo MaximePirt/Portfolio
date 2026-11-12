@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
+/**
+ * @brief Presentation page of the hero: title, text and links.
+ * @returns {JSX.Element} The page content.
+ */
 function Home() {
 	const { t } = useTranslation()
 

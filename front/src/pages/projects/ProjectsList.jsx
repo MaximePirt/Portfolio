@@ -13,9 +13,10 @@ const PAGE_SIZE = 6
  * @param {Array<Object>} props.projects - Projects to display, in order.
  * @param {string|null} props.selectedProjectId - Id of the currently selected project.
  * @param {(projectId: string) => void} props.onSelect - Called with the id of the clicked project.
+ * @param {boolean} [props.isLoading] - True while the GitHub projects are still being fetched.
  * @returns {JSX.Element} The project list, or an empty-state message when there are no projects.
  */
-function ProjectsList({ projects, selectedProjectId, onSelect }) {
+function ProjectsList({ projects, selectedProjectId, onSelect, isLoading = false }) {
 	const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 	const { t } = useTranslation()
 	const getText = useProjectText()
@@ -56,6 +57,10 @@ function ProjectsList({ projects, selectedProjectId, onSelect }) {
 						)
 					})}
 				</div>
+
+				{isLoading && (
+					<p className="projects-list__status" role="status">{t('projectsSection.loading')}</p>
+				)}
 
 				{hiddenCount > 0 && (
 					<button

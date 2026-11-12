@@ -2,7 +2,7 @@
 	--activity-bg: color-mix(in oklab, var(--background) 92%, var(--primary) 8%);
 	--activity-ink: rgba(60, 76, 70, 0.1);
 
-	/* Échelle du graphe : du sauge clair au vert principal du site. */
+	/* Graph scale: from light sage to the main green of the site. */
 	--heat-0: rgba(61, 76, 70, 0.07);
 	--heat-1: color-mix(in oklab, var(--green) 62%, #f4f5ef);
 	--heat-2: color-mix(in oklab, var(--green) 80%, var(--primary));
@@ -26,7 +26,7 @@
 	align-items: flex-start;
 }
 
-/* ── En-tête ── */
+/* ── Header ── */
 
 .github-activity-header {
 	width: 100%;
@@ -57,7 +57,7 @@
 	line-height: 1.6;
 }
 
-/* ── Carte ── */
+/* ── Card ── */
 
 .github-card {
 	position: relative;
@@ -156,7 +156,7 @@
 	text-align: center;
 }
 
-/* ── Graphe ── */
+/* ── Graph ── */
 
 .github-heatmap-scroll {
 	overflow-x: auto;
@@ -206,7 +206,7 @@
 .github-heatmap__weekdays span {
 	align-self: center;
 	text-align: left;
-	/* Les libellés ne doivent pas imposer la hauteur des lignes du graphe. */
+	/* Labels must not force the height of the graph rows. */
 	line-height: 0;
 }
 
@@ -270,7 +270,7 @@
 	}
 }
 
-/* ── Infobulle ── */
+/* ── Tooltip ── */
 
 .github-tooltip {
 	position: absolute;
@@ -299,7 +299,7 @@
 	opacity: 0.75;
 }
 
-/* ── Pied de carte ── */
+/* ── Card footer ── */
 
 .github-card__bottom {
 	display: flex;
@@ -346,7 +346,7 @@
 	margin-left: 0.2rem;
 }
 
-/* ── Bulles décoratives ── */
+/* ── Decorative bubbles ── */
 
 .github-activity-bubbles {
 	--cluster-size: clamp(220px, 22vw, 320px);

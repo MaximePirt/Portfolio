@@ -7,6 +7,11 @@ import '../../styles/bubble.css'
 const CLUSTER_BASE_SIZE = 520
 
 
+/**
+ * @brief Bubble that floats on its own and is repelled by the mouse with a spring motion.
+ * @param {Object} props - Position/size in % of the cluster, float and repel settings, and the section/cluster refs.
+ * @returns {JSX.Element} The animated bubble.
+ */
 function FloatingShape({
 	x,
 	y,
@@ -31,6 +36,10 @@ function FloatingShape({
 		const cluster = clusterRef.current
 		if (!section || !cluster) return
 
+		/**
+		 * @brief Computes the distance between the mouse and the bubble and pushes the bubble away when it is within the repel radius.
+		 * @param {MouseEvent} e - Mouse event.
+		 */
 		const handleMouseMove = (e) => {
 			const sectionRect = section.getBoundingClientRect()
 			const clusterRect = cluster.getBoundingClientRect()

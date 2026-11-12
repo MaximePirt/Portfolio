@@ -27,7 +27,8 @@ export default defineConfig([
     },
   },
   {
-    files: ['scripts/**/*.mjs'],
+    // Code run by Node (Vercel function, server logic, scripts), not by the browser.
+    files: ['api/**/*.js', 'server/**/*.mjs', 'scripts/**/*.mjs', 'vite.config.js'],
     extends: [js.configs.recommended],
     languageOptions: {
       ecmaVersion: 'latest',

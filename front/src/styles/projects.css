@@ -286,14 +286,14 @@
 	transition: opacity 180ms ease;
 }
 
-/* Compteur des filtres */
+/* Filter counter */
 .projects-filter__count {
 	margin-left: 0.45rem;
 	font-size: 0.8em;
 	opacity: 0.6;
 }
 
-/* Liste : apparition progressive des pills et bouton « Voir plus » */
+/* List: progressive reveal of the pills and the "Show more" button */
 .projects-list__body,
 .projects-list__scroll {
 	display: flex;
@@ -325,6 +325,13 @@
 	gap: 0.5rem;
 }
 
+/* Indicator shown while GitHub projects are loading */
+.projects-list__status {
+	text-align: center;
+	font-size: 0.92rem;
+	color: var(--text-light);
+}
+
 .project-pill--more {
 	align-items: center;
 	background: transparent;
@@ -335,7 +342,7 @@
 	text-align: center;
 }
 
-/* Badge de statut « En cours » */
+/* Status badge "In progress" */
 .project-status-badge {
 	display: inline-flex;
 	align-items: center;
@@ -363,8 +370,8 @@
 	background: var(--accent);
 }
 
-/* Cover générée quand un projet n'a ni image ni vidéo */
-/* Fond transparent : reprend celui de .project-preview, identique en clair et en sombre. */
+/* Generated cover when a project has neither an image nor a video */
+/* Transparent background: inherits the one of .project-preview, identical in light and dark mode. */
 .project-cover {
 	container-type: inline-size;
 	overflow: hidden;
@@ -401,7 +408,7 @@
 	}
 }
 
-/* Mobile : filtres sur une seule ligne défilante, centrés s'ils tiennent. */
+/* Mobile: filters on a single scrolling line, centered when they fit. */
 @media (max-width: 899px) {
 	.projects-toolbar {
 		flex-wrap: nowrap;
@@ -425,7 +432,7 @@
 		align-items: stretch;
 	}
 
-	/* La liste prend la hauteur du détail : les pills défilent, « Voir plus » reste visible en bas. */
+	/* The list takes the height of the detail: pills scroll, "Show more" stays visible at the bottom. */
 	.projects-list:not(.projects-list--empty) {
 		position: relative;
 	}
@@ -442,7 +449,7 @@
 		margin: -0.5rem -0.75rem 0;
 		padding: 0.5rem 0.75rem 2rem;
 		scrollbar-width: thin;
-		/* masque (seul l'alpha compte) : fondu des pills sous le bord bas */
+		/* mask (only the alpha counts): fade of the pills under the bottom edge */
 		mask-image: linear-gradient(to bottom, currentColor calc(100% - 2rem), transparent);
 	}
 

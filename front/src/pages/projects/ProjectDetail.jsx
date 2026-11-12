@@ -4,6 +4,12 @@ import useProjectText from './useProjectText'
 import ProjectPreview from './ProjectPreview'
 import ProjectStatusBadge from './ProjectStatusBadge'
 
+/**
+ * @brief Detail of a project: preview, texts, stack and action links.
+ * @param {Object} props
+ * @param {object} props.project - Project to display.
+ * @returns {JSX.Element} The detail.
+ */
 function ProjectDetail({ project }) {
 	const { t } = useTranslation()
 	const getText = useProjectText()

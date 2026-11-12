@@ -98,6 +98,12 @@ const ACTIVITY_SHAPES = [
 	},
 ]
 
+/**
+ * @brief Computes the layout of the calendar grid: first weekday, week count and month labels.
+ * @param {{date: Date}[]} days - Contribution days sorted by date.
+ * @param {string} locale - Locale used to format month names.
+ * @returns {{firstWeekday: number, weekCount: number, months: {column: number, label: string}[]}} Grid layout.
+ */
 function buildCalendar(days, locale) {
 	const firstWeekday = days[0].date.getDay()
 	const weekCount = Math.ceil((firstWeekday + days.length) / 7)
@@ -108,14 +114,14 @@ function buildCalendar(days, locale) {
 		const isFirstDay = index === 0
 		if (!isFirstDay && day.date.getDate() !== 1) return
 
-		// Un mois n'est étiqueté que sur une semaine qui commence dans ce mois.
+		// A month is only labelled on a week that starts in that month.
 		const week = Math.floor((firstWeekday + index) / 7)
 		const column = isFirstDay || day.date.getDay() === 0 ? week : week + 1
 		if (column >= weekCount) return
 		months.push({ column, label: monthFormat.format(day.date) })
 	})
 
-	// Évite que deux étiquettes se chevauchent en début de graphe.
+	// Prevents two labels from overlapping at the start of the graph.
 	const spacedMonths = months.filter(
 		(month, index) => !months[index + 1] || months[index + 1].column - month.column > 2,
 	)
@@ -123,6 +129,10 @@ function buildCalendar(days, locale) {
 	return { firstWeekday, weekCount, months: spacedMonths }
 }
 
+/**
+ * @brief Section showing the GitHub contribution graph, its statistics and a tooltip per day.
+ * @returns {JSX.Element} The section.
+ */
 function GithubActivitySection() {
 	const { t, i18n } = useTranslation()
 	const locale = i18n.language
@@ -141,7 +151,7 @@ function GithubActivitySection() {
 
 	const weekdayLabels = useMemo(() => {
 		const format = new Intl.DateTimeFormat(locale, { weekday: 'short' })
-		// Le 4 janvier 2026 est un dimanche : index 0 = dimanche, comme la grille.
+		// January 4, 2026 is a Sunday: index 0 = Sunday, as in the grid.
 		return LABELLED_WEEKDAYS.map((weekday) => ({
 			row: weekday + 1,
 			label: format.format(new Date(2026, 0, 4 + weekday)),
@@ -154,12 +164,16 @@ function GithubActivitySection() {
 		[locale],
 	)
 
-	// Sur petit écran le graphe défile : on montre d'abord les semaines récentes.
+	// On small screens the graph scrolls: show the most recent weeks first.
 	useEffect(() => {
 		if (status !== 'ready' || !scrollRef.current) return
 		scrollRef.current.scrollLeft = scrollRef.current.scrollWidth
 	}, [status])
 
+	/**
+	 * @brief Positions and fills the tooltip for the hovered day cell, kept inside the card.
+	 * @param {React.MouseEvent|React.FocusEvent} event - Event fired on a day cell.
+	 */
 	const showTooltip = (event) => {
 		const cell = event.target.closest('[data-index]')
 		if (!cell || !cardRef.current) return
@@ -170,7 +184,7 @@ function GithubActivitySection() {
 		const x = cellRect.left + cellRect.width / 2 - cardRect.left
 
 		setTooltip({
-			// Garde l'infobulle dans la carte près des bords.
+			// Keeps the tooltip inside the card near the edges.
 			x: Math.min(Math.max(x, 90), cardRect.width - 90),
 			y: cellRect.top - cardRect.top,
 			count: day.count,

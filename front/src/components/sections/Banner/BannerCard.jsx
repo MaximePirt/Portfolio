@@ -1,5 +1,9 @@
 import { useTranslation } from 'react-i18next'
 
+/**
+ * @brief Card of the home banner.
+ * @returns {JSX.Element} The card.
+ */
 function BannerCard() {
 	const { t } = useTranslation()
 

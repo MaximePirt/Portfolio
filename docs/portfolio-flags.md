@@ -3,7 +3,7 @@
 Ce document est autonome : il suffit à un agent pour ajouter, sur un repo GitHub de **MaximePirt**, les informations qui le font apparaître dans la section « Projets » du portfolio. Suis-le à la lettre.
 
 ## Comment ça marche
-- Une GitHub Action du repo `MaximePirt/Portfolio` lit chaque jour tous les repos publics de `MaximePirt`.
+- Le site (`maxime-pierrot.com`) interroge `/api/projects`, une fonction Vercel qui lit les repos publics de `MaximePirt` sur GitHub. La réponse est mise en cache 1 h : un repo marqué apparaît donc au plus tard environ 1 h après (5 min de cache navigateur en plus). Rien à lancer ni à commiter dans le repo Portfolio.
 - Un repo apparaît dans le portfolio s'il porte le **topic GitHub `portfolio`** (ou `portfolio: true` dans `.github/portfolio.yml`).
 - Les détails (textes FR/EN, stack, médias…) viennent, dans l'ordre : de `.github/portfolio.yml` s'il existe, sinon des topics et des infos GitHub du repo (description, langages, site web).
 - **Le README n'est jamais lu.** N'y ajoute ni front matter, ni balise, ni commentaire pour le portfolio.
@@ -120,8 +120,8 @@ portfolio: false
 ## Vérifier
 Depuis un clone du repo Portfolio :
 ```bash
-npm --prefix front run sync:projects -- --check
+npm --prefix front run check:projects
 ```
 Chaque repo marqué est listé avec ✓ (valide), ⚠ (avertissement, ex. origine absente) ou ✗ (erreur à corriger). Le code de sortie vaut 1 s'il reste une erreur. Le cache de `raw.githubusercontent.com` peut retarder la prise en compte d'un `portfolio.yml` de quelques minutes.
 
-La mise en ligne est ensuite automatique (Action quotidienne, ou « Run workflow » sur l'Action « Sync GitHub projects » du repo Portfolio).
+La mise en ligne est ensuite automatique : aucune action requise. Le contrôle lit GitHub directement, comme le site.

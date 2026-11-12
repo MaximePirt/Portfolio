@@ -4,6 +4,10 @@ import InfoCard from '../components/ui/InfoCards'
 import BackButton from '../components/ui/Backbutton'
 
 
+/**
+ * @brief Infos page (route "/infos").
+ * @returns {JSX.Element} The page.
+ */
 function Infos() {
 	const { t } = useTranslation()
 

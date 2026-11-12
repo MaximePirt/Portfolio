@@ -1,5 +1,9 @@
 import Banner from '../components/sections/Banner/Banner'
 
+/**
+ * @brief Home page (route "/"): renders the banner.
+ * @returns {JSX.Element} The page.
+ */
 function Home() {
 	return (
 		<main

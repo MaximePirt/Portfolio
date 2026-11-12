@@ -36,7 +36,7 @@
 - `front/public/projects/<id>/poster.webp` (cover + poster) et `trailer.webm` (préférer webm, mp4 optionnel) ; détectés automatiquement par la synchro. Sans média, une cover de bulles est générée (`ProjectCover`).
 
 ## Flags des repos GitHub
-Référence complète (topics, champs de `.github/portfolio.yml`, YAML accepté) : `docs/portfolio-flags.md`. Toute évolution du schéma (`lib/projectSchema.js`, `scripts/lib/buildProject.mjs`) met ce fichier à jour dans le même changement.
+Référence complète (topics, champs de `.github/portfolio.yml`, YAML accepté) : `docs/portfolio-flags.md`. Toute évolution du schéma (`lib/projectSchema.js`, `server/buildProject.mjs`) met ce fichier à jour dans le même changement.
 - Images globales : `/logo.png`, `/character.png`.
 
 ## Git

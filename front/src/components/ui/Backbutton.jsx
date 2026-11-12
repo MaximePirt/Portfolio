@@ -1,3 +1,10 @@
+/**
+ * @brief Button that goes back, labelled with the given text.
+ * @param {Object} props
+ * @param {string} props.label - Visible button text.
+ * @param {() => void} props.onClick - Called on click.
+ * @returns {JSX.Element} The button.
+ */
 function BackButton({ label, onClick }) {
 	return (
 		<button

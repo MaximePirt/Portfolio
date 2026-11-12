@@ -3,6 +3,10 @@ import BannerBubbles from './BannerBubble'
 import BannerCard from './BannerCard'
 import '../../../styles/banner.css'
 
+/**
+ * @brief Home banner with the navigation anchors (#home, #project, #activity, #contact).
+ * @returns {JSX.Element} The banner.
+ */
 function Banner() {
 	const { t } = useTranslation()
 

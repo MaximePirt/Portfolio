@@ -74,7 +74,8 @@
 		"actions": {
 			"github": "GitHub",
 			"demo": "Démo"
-		}
+		},
+		"loading": "Chargement des projets…"
 	},
 	"githubActivity": {
 		"activity": "Activité",

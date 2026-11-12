@@ -89,6 +89,10 @@ const SHAPES = [
 ]
 
 
+/**
+ * @brief Faded decorative bubbles shown on mobile only, in place of the animated cluster.
+ * @returns {JSX.Element} The static bubbles.
+ */
 function MobileHeroShapes() {
 	return (
 		<div className="absolute inset-0 md:hidden pointer-events-none overflow-hidden">
@@ -124,6 +128,10 @@ function MobileHeroShapes() {
 
 
 
+/**
+ * @brief Hero section with the presentation text and the floating bubble cluster.
+ * @returns {JSX.Element} The section.
+ */
 function HeroSection() {
 	const { t } = useTranslation()
 	const sectionRef = useRef(null)

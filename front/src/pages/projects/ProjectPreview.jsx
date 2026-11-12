@@ -5,6 +5,13 @@ import ProjectCover from './ProjectCover'
 // Without a cover, the #t fragment shows the video's first frame as the preview.
 const FIRST_FRAME = '#t=0.1'
 
+/**
+ * @brief Preview of a project: cover image, with the trailer playing on hover; falls back to a generated cover.
+ * @param {Object} props
+ * @param {object} props.project - Project with its `media`.
+ * @param {string} props.title - Project title.
+ * @returns {JSX.Element} The preview.
+ */
 function ProjectPreview({ project, title }) {
 	const [isHovered, setIsHovered] = useState(false)
 	const videoRef = useRef(null)
@@ -24,6 +31,9 @@ function ProjectPreview({ project, title }) {
 	const isVideoVisible = hasVideo && (isHovered || !cover)
 	const videoSuffix = cover ? '' : FIRST_FRAME
 
+	/**
+	 * @brief Shows the video and restarts it from the beginning (autoplay may be blocked).
+	 */
 	const handleMouseEnter = async () => {
 		setIsHovered(true)
 		if (!videoRef.current) return
@@ -38,6 +48,9 @@ function ProjectPreview({ project, title }) {
 		}
 	}
 
+	/**
+	 * @brief Hides the video and pauses it.
+	 */
 	const handleMouseLeave = () => {
 		setIsHovered(false)
 		if (!videoRef.current) return

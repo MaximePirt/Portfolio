@@ -1,6 +1,10 @@
 import '../styles/contact.css'
 import { useTranslation } from 'react-i18next'
 
+/**
+ * @brief Contact section with the ways to reach me.
+ * @returns {JSX.Element} The section.
+ */
 function ContactSection() {
 	const { t } = useTranslation()
 	return (

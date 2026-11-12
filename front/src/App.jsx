@@ -15,6 +15,10 @@ import { Analytics } from "@vercel/analytics/react"
 
 
 
+/**
+ * @brief Root component: lays out the fixed UI, the routed pages and the page sections in order.
+ * @returns {JSX.Element} The whole application.
+ */
 function App() {
   return (
     <BrowserRouter>

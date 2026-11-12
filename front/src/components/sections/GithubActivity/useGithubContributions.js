@@ -1,14 +1,25 @@
 import { useEffect, useState } from 'react'
 
-// Même source que la lib github-calendar : un proxy qui renvoie le HTML du
-// graphe de contributions GitHub. On n'en garde que les données.
+// Same source as the github-calendar lib: a proxy that returns the HTML of the
+// GitHub contribution graph. We only keep the data.
 const PROXY_URL = 'https://api.bloggify.net/gh-calendar/?username='
 
+/**
+ * @brief Parses a "YYYY-MM-DD" string as a local date (avoids the UTC shift of `new Date(iso)`).
+ * @param {string} iso - Date as "YYYY-MM-DD".
+ * @returns {Date} Local date at midnight.
+ */
 function parseLocalDate(iso) {
 	const [year, month, day] = iso.split('-').map(Number)
 	return new Date(year, month - 1, day)
 }
 
+/**
+ * @brief Extracts the contribution days from the HTML of the GitHub graph.
+ * @param {string} html - HTML returned by the proxy.
+ * @returns {{iso: string, date: Date, level: number, count: number}[]} Days sorted by date.
+ * @throws {Error} If the HTML has no contribution data.
+ */
 function parseContributions(html) {
 	const doc = new DOMParser().parseFromString(html, 'text/html')
 
@@ -25,7 +36,7 @@ function parseContributions(html) {
 				iso: cell.dataset.date,
 				date: parseLocalDate(cell.dataset.date),
 				level,
-				// Si l'infobulle manque, on garde au moins l'info "actif / inactif".
+				// If the tooltip is missing, at least keep the "active / inactive" info.
 				count: counts.get(cell.id) ?? (level > 0 ? 1 : 0),
 			}
 		})
@@ -35,6 +46,11 @@ function parseContributions(html) {
 	return days
 }
 
+/**
+ * @brief Computes the total, the number of active days and the longest streak.
+ * @param {{count: number}[]} days - Contribution days sorted by date.
+ * @returns {{total: number, activeDays: number, longestStreak: number}} Statistics.
+ */
 function computeStats(days) {
 	let total = 0
 	let activeDays = 0
@@ -55,6 +71,11 @@ function computeStats(days) {
 	return { total, activeDays, longestStreak }
 }
 
+/**
+ * @brief Hook fetching the GitHub contribution graph of a user.
+ * @param {string} username - GitHub username.
+ * @returns {{status: 'loading' | 'ready' | 'error', days: object[], stats: object|null}} Fetch status, days and statistics.
+ */
 export function useGithubContributions(username) {
 	const [state, setState] = useState({ status: 'loading', days: [], stats: null })
 

@@ -1,5 +1,13 @@
 import { useTranslation } from 'react-i18next'
 
+/**
+ * @brief Row of filter buttons with their project count.
+ * @param {Object} props
+ * @param {{value: string, labelKey: string, count: number}[]} props.filters - Available filters.
+ * @param {string} props.activeFilter - Currently selected filter value.
+ * @param {(value: string) => void} props.onChange - Called with the clicked filter value.
+ * @returns {JSX.Element} The filters.
+ */
 function ProjectFilters({ filters, activeFilter, onChange }) {
 	const { t } = useTranslation()
 

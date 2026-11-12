@@ -1,5 +1,5 @@
 // Projects missing from the GitHub sync (private repo, freelance, unmarked project…).
-// Same shape as projects.generated.json; on an equal id, the generated version wins.
+// Same shape as the /api/projects projects (see lib/projectSchema.js); on an equal id, the GitHub version wins.
 // Texts: projects.<id>.* keys in translation.json.
 
 // The entry below is only an example: ft_transcendance is the current project.

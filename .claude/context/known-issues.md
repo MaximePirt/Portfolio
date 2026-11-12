@@ -27,9 +27,11 @@ Cocher `[x]` puis supprimer l'entrée au commit suivant quand c'est réglé. Ajo
 - [ ] `index.html` : `lang="en"` alors que la langue par défaut est le français ; pas de meta description.
 
 ## Projets / synchro GitHub
-- [ ] `Get_next_line` porte encore un front matter dans son README (format abandonné) et pas de topic `portfolio` : il n'apparaît pas tant que le topic n'est pas ajouté.
-- [ ] `ft_transcendance` reste dans `projects.manual.js` en attendant son topic `portfolio`.
-- [ ] L'Action de synchro n'a pas encore tourné (à lancer via « Run workflow » après push).
+- [x] Les projets viennent de `/api/projects` (GitHub en direct, cache 1 h) : plus de fichier généré ni d'Action (la facturation GitHub bloquée n'a plus d'impact).
+- [ ] `ft_transcendance` reste dans `projects.manual.js` en attendant son topic `portfolio` (vider `MANUAL_PROJECTS` ensuite).
+- [ ] À faire une fois en prod : ajouter `GITHUB_TOKEN` dans Vercel et vérifier `curl -i https://maxime-pierrot.com/api/projects` (200 + JSON ; sinon le rewrite de `vercel.json` capture la route).
+- [ ] La détection des médias par HEAD (`server/localMedia.mjs`) dépend du site déployé : un média ajouté au repo Portfolio n'est pris en compte qu'après son déploiement + expiration du cache.
+- [ ] Le chemin d'erreur du hook `useProjects` (API en échec → projets manuels seuls) n'a été testé qu'au niveau du handler (502), pas dans le navigateur.
 
 ## Déploiement
 - [ ] `nginx/entrypoint.sh` : fallback certificat auto-signé marqué TODO.

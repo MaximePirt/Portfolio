@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
+/**
+ * @brief Floating language menu (fr/en) fixed at the bottom left of the screen.
+ * @returns {JSX.Element} The switcher.
+ */
 function LanguageSwitcher() {
 	const { i18n } = useTranslation()
 	const currentLang = i18n.language
 	const [isOpen, setIsOpen] = useState(false)
 
 	useEffect(() => {
+		/**
+		 * @brief Closes the menu when the click happens outside of it.
+		 * @param {MouseEvent} e - Mouse event.
+		 */
 		const handleClickOutside = (e) => {
 			if (!e.target.closest('#lang-switcher')) setIsOpen(false)
 		}
@@ -14,6 +22,10 @@ function LanguageSwitcher() {
 		return () => document.removeEventListener('mousedown', handleClickOutside)
 	}, [])
 
+	/**
+	 * @brief Changes the current i18n language.
+	 * @param {string} lang - Language code (e.g. 'fr' or 'en').
+	 */
 	const switchLang = (lang) => {
 		i18n.changeLanguage(lang)
 	}

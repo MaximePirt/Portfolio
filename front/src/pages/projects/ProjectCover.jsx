@@ -2,6 +2,13 @@ import { useMemo } from 'react'
 import Bubble from '../../components/ui/Bubble'
 import { getCoverBubbles } from './lib/generatedCover.js'
 
+/**
+ * @brief Generated cover (bubbles + title) for a project without image or video.
+ * @param {Object} props
+ * @param {object} props.project - Project, its id seeds the layout.
+ * @param {string} props.title - Title shown on the cover.
+ * @returns {JSX.Element} The cover.
+ */
 // Fallback visual when a project has neither an image nor a video.
 function ProjectCover({ project, title }) {
 	const bubbles = useMemo(() => getCoverBubbles(project.id), [project.id])

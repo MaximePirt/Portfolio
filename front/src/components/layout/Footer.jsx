@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
+/**
+ * @brief Page footer.
+ * @returns {JSX.Element} The footer.
+ */
 function Footer() {
 	const { t } = useTranslation()
 	const year = new Date().getFullYear()

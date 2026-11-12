@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "sync:projects": "node scripts/sync-projects.mjs"
+    "check:projects": "node scripts/check-projects.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

@@ -5,11 +5,11 @@
 - `front/vercel.json` : rewrite `/(.*)` → `/` pour le routing SPA.
 - `@vercel/analytics` monté dans `App.jsx`.
 
-## Synchro des projets (GitHub Action)
-- `.github/workflows/sync-projects.yml` : cron 06:00 UTC + `workflow_dispatch` + `repository_dispatch` (`sync-projects`). Node 20, aucune dépendance installée.
-- Lance `node front/scripts/sync-projects.mjs` avec le `GITHUB_TOKEN` de l'Action, puis commit `chore: sync github projects` par `github-actions[bot]` et push sur `main` si `projects.generated.json` a changé → Vercel redéploie.
-- Le build (Vercel/Docker) ne fait aucun appel réseau : il utilise le JSON commité.
-- Limites : repos publics uniquement (un PAT en secret serait nécessaire pour les privés) ; GitHub suspend les crons après 60 jours sans activité du repo ; une protection de branche sur `main` bloquerait le push du bot.
+## Projets : fonction Vercel `/api/projects`
+- `front/api/projects.js` est déployée automatiquement par Vercel (racine du projet = `front/`, aucune config à ajouter). Elle lit GitHub à la demande ; le CDN met la réponse en cache 1 h (`s-maxage=3600`) puis la sert périmée pendant son recalcul. Aucune Action GitHub, aucun commit de données.
+- Variables Vercel recommandées : `GITHUB_TOKEN` (token en lecture seule sur les repos publics, évite la limite de 60 req/h des IP partagées de Vercel). Optionnelles : `PORTFOLIO_GITHUB_OWNER`, `PORTFOLIO_SITE_URL`.
+- `front/vercel.json` n'est pas modifié : son rewrite `/(.*)` → `/` ne s'applique qu'aux chemins sans fichier ni fonction, donc `/api/projects` reste servie par la fonction (à vérifier une fois après le premier déploiement avec `curl -i https://maxime-pierrot.com/api/projects`).
+- Limite : la stack Docker/nginx n'a pas de fonctions Vercel : `/api/projects` n'y existe pas, la section n'y affiche que `projects.manual.js`.
 
 ## Docker (auto-hébergement)
 - `docker-compose.yml` : service `nginx` (build `nginx/Dockerfile`, ports 80/443, env `DOMAIN_NAME`, `WEB_PORT`, volumes `certs` et `certbot-webroot`) + service `certbot` (renouvellement toutes les 12 h).

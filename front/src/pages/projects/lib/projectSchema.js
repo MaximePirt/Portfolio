@@ -1,4 +1,4 @@
-// Canonical shape of a project, shared by the front and by front/scripts/sync-projects.mjs.
+// Canonical shape of a project, shared by the front and by the server code (front/server/, front/api/).
 // Plain JS (neither React nor Node): imports include extensions so Node can read them.
 // Any format change: bump SCHEMA_VERSION and update docs/portfolio-flags.md.
 

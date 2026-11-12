@@ -32,6 +32,10 @@ const mobileBubbles = [
 	{ id: 3, x: '70%', y: '68%', variant: 'bubble-green-light', size: '110px', opacity: 0.72 },
 ]
 
+/**
+ * @brief Decorative bubbles of the home banner.
+ * @returns {JSX.Element} The bubbles.
+ */
 function BannerBubbles() {
 	return (
 		<>

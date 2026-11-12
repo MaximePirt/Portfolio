@@ -15,13 +15,13 @@ Portfolio personnel one-page (FR/EN) : React 19 + Vite 8 + Tailwind 4 + i18next 
 - `npm --prefix front run dev` — serveur Vite (preview : config `portfolio-front` de `.claude/launch.json`, port 5183)
 - `npm --prefix front run lint` / `npm --prefix front run build`
 - `node .claude/hooks/i18n-parity.mjs` — vérifie que fr/en ont les mêmes clés
-- `npm --prefix front run sync:projects` (`-- --check` pour valider sans écrire) — régénère la liste des projets depuis GitHub
+- `npm --prefix front run check:projects` — contrôle les repos GitHub marqués (n'écrit rien ; le site lit GitHub tout seul)
 - `/check` lance les trois. `docker compose up --build` pour la stack nginx.
 
 ## Carte express
 - Tout le code app est dans `front/src`. `App.jsx` rend dans l'ordre : `Header` → `LanguageSwitcher` → `HeroSection` → `<Routes>` (`/` Home=Banner, `/contact`, `/infos`) → `ProjectsSection` → `GithubActivitySection` → `Contact` → `Footer` → `Analytics`.
 - Navigation = ancres (`#home`, `#project`, `#activity`, `#contact`) dans `Banner.jsx`.
-- Projets : synchronisés depuis GitHub (topic `portfolio` + `.github/portfolio.yml`, règles dans `docs/portfolio-flags.md`) vers `projects.generated.json` par `front/scripts/sync-projects.mjs` (Action quotidienne `.github/workflows/sync-projects.yml`). Hors GitHub : `projects.manual.js`. Modèle partagé dans `front/src/pages/projects/lib/`. Textes surchargeables via `projects.<id>.*` des `translation.json`, médias dans `front/public/projects/<id>/`.
+- Projets : lus en direct sur GitHub par la fonction Vercel `front/api/projects.js` (cache CDN 1 h) — topic `portfolio` + `.github/portfolio.yml`, règles dans `docs/portfolio-flags.md`. Hook `useProjects` côté front ; hors GitHub : `projects.manual.js`. Logique partagée dans `front/server/` et `front/src/pages/projects/lib/`. Textes surchargeables via `projects.<id>.*` des `translation.json`, médias dans `front/public/projects/<id>/`.
 - Thème : variables CSS dans `front/src/styles/index.css`, dark mode via `data-theme` posé par `Header.jsx`.
 
 ## Conventions clés

@@ -8,6 +8,10 @@ import { IoSunnySharp } from "react-icons/io5";
 import { useState, useEffect } from 'react'
 
 
+/**
+ * @brief Top bar with the section anchors and the dark mode toggle (sets `data-theme`).
+ * @returns {JSX.Element} The header.
+ */
 function Header() {
 	const { t } = useTranslation()
 	const [isDarkMode, setIsDarkMode] = useState(false)
@@ -16,6 +20,9 @@ function Header() {
 	document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light')
 	}, [isDarkMode])
 
+	/**
+	 * @brief Switches between light and dark theme.
+	 */
 	const toggleDarkMode = () => setIsDarkMode(prev => !prev)
 
 	return (
