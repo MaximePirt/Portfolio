@@ -5,12 +5,13 @@ Dernière mise à jour : 2026-11-12 (refonte Apple, branche `feat/main-page-appl
 ## Arbre
 ```
 front/
-├── index.html                 # lang fr, titre + meta description + Open Graph (recruteurs, aperçus de lien), favicon /logo.png
+├── index.html                 # lang fr, titre, meta SEO (canonical, robots), Open Graph/Twitter, JSON-LD Person, favicon /logo.png, contenu de secours dans #root (remplacé par React)
 ├── vite.config.js             # plugins react() + tailwindcss()
 ├── eslint.config.js           # flat config, react-hooks + react-refresh, no-unused-vars ignore ^[A-Z_]
 ├── vercel.json                # rewrite SPA /(.*) → /
 ├── public/
 │   ├── logo.png, character.png
+│   ├── robots.txt, sitemap.xml   # SEO (une seule URL : /)
 │   └── projects/<id>/poster.webp, trailer.webm
 ├── api/
 │   └── projects.js            # fonction Vercel GET /api/projects (aussi montée par Vite en dev, voir vite.config.js)

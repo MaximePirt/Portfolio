@@ -7,17 +7,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Maxime Pierrot · Étudiant développeur à l'École 42</title>
     <meta name="description" content="Portfolio de Maxime Pierrot, étudiant développeur à l'École 42, basé à Rennes. Disponible pour un stage de 6 mois, un CDD ou un CDI dans la data." />
+    <meta name="author" content="Maxime Pierrot" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://maxime-pierrot.com/" />
     <meta name="theme-color" content="#dbdfd8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1e1e1e" media="(prefers-color-scheme: dark)" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Maxime Pierrot" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale:alternate" content="en_GB" />
     <meta property="og:url" content="https://maxime-pierrot.com/" />
     <meta property="og:title" content="Maxime Pierrot · Étudiant développeur à l'École 42" />
     <meta property="og:description" content="Étudiant à l'École 42, disponible pour un stage de 6 mois, un CDD ou un CDI dans la data." />
     <meta property="og:image" content="https://maxime-pierrot.com/character.png" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image:width" content="1368" />
+    <meta property="og:image:height" content="768" />
+    <meta property="og:image:alt" content="Portrait illustré de Maxime Pierrot" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Maxime Pierrot · Étudiant développeur à l'École 42" />
+    <meta name="twitter:description" content="Étudiant à l'École 42, disponible pour un stage de 6 mois, un CDD ou un CDI dans la data." />
+    <meta name="twitter:image" content="https://maxime-pierrot.com/character.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Maxime Pierrot",
+        "url": "https://maxime-pierrot.com/",
+        "image": "https://maxime-pierrot.com/character.png",
+        "jobTitle": "Étudiant développeur",
+        "description": "Étudiant développeur à l'École 42, basé à Rennes. Disponible pour un stage de 6 mois, un CDD ou un CDI dans la data.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Rennes",
+          "addressCountry": "FR"
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "École 42"
+        },
+        "knowsAbout": ["C", "C++", "Python", "React", "Data"],
+        "sameAs": [
+          "https://github.com/MaximePirt",
+          "https://www.linkedin.com/in/maxime-pierrot-42479420b"
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Readable without JS (crawlers, link previews); replaced by React on load. -->
+    <div id="root">
+      <main>
+        <h1>Maxime Pierrot</h1>
+        <p>Étudiant développeur à l'École 42, basé à Rennes. Disponible pour un stage de 6 mois, un CDD ou un CDI dans la data.</p>
+        <p>À 42, il n'y a ni cours ni professeurs : on apprend en construisant des projets et en relisant le code des autres étudiants. J'y ai codé aussi bien en C qu'en React, et c'est là que la data a commencé à m'intéresser.</p>
+        <p>
+          <a href="https://github.com/MaximePirt">GitHub</a> ·
+          <a href="https://www.linkedin.com/in/maxime-pierrot-42479420b">LinkedIn</a>
+        </p>
+      </main>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -18,6 +18,12 @@
 - `nginx/nginx.conf` : module ModSecurity, TLS 1.2/1.3, `limit_req` 20 r/s, port 80 → redirection HTTPS (seulement GET/HEAD/OPTIONS), challenge ACME sur `/.well-known/acme-challenge/`.
 - Variables (`.env.example`) : `DOMAIN_NAME`, `WEB_PORT`, `SSL_PORT`. Le vrai `.env` ne doit jamais être lu.
 
+## SEO & mesure d'audience (sans cookies)
+- `front/public/robots.txt` (tout autorisé + lien sitemap) et `front/public/sitemap.xml` (seule URL `/` : `/contact` et `/infos` sont des feuilles sur la même page, la canonical pointe vers `/`). Mettre à jour `lastmod` après une refonte notable.
+- `front/index.html` : canonical, robots, Open Graph/Twitter (`summary_large_image`, `character.png` 1368×768), JSON-LD `Person` (`sameAs` GitHub/LinkedIn, à garder synchro avec les liens du site) et un contenu de secours FR dans `#root` pour les robots, remplacé au montage React.
+- Le JSON-LD est un bloc de données non exécuté : compatible avec la CSP `script-src 'self'` de nginx.
+- Mesure : uniquement `@vercel/analytics` (sans cookies → pas de bandeau CNIL). Pas de Google Analytics. Référencement suivi dans Google Search Console (propriété Domaine, vérif DNS TXT, sitemap soumis) et Bing Webmaster Tools.
+
 ## Points d'attention
 - Toute modif de `nginx/*`, `docker-compose.yml` ou `vercel.json` doit être annoncée avant (garde-fou n°3).
 - Node 20 dans le Dockerfile ; vérifier la compatibilité si Vite/deps exigent plus récent.
